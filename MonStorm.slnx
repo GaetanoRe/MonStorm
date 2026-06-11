@@ -1,5 +1,5 @@
 ﻿<Solution>
-  <Project Path="Polyperfect.LowPolyAnimatedFantasyCreatures.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Polyperfect.LowPolyAnimatedFantasyCreatures.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>

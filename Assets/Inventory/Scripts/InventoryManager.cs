@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class InventoryManager : MonoBehaviour
 {
+    /// <summary>The item currently held on the cursor.</summary>
     public InventoryItem HeldItem
     {
         get => heldItem;

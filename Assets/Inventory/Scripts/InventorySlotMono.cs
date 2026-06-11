@@ -5,14 +5,20 @@ using System;
 
 public class InventorySlotMono : MonoBehaviour, IPointerClickHandler
 {
+    /// <summary>Invoked when the left mouse button clicks this object.</summary>
     public event Action<InventorySlotMono> OnClicked;
+
+    /// <summary>Invoked when the right mouse button clicks this object.</summary>
     public event Action<InventorySlotMono> OnSecondaryClicked;
+
+    /// <summary>The associated InventorySlot with this object.</summary>
     public InventorySlot Slot { get; private set; }
 
     [SerializeField] Image icon;
     [SerializeField] Text amount;
 
 
+    // Called from Unity
     public void OnPointerClick(PointerEventData eventData)
     {
         if (Slot == null)
@@ -31,6 +37,7 @@ public class InventorySlotMono : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    /// <summary>Initializes the object with the provided InventorySlot.</summary>
     public void Initialize(InventorySlot slot)
     {
         Slot = slot;

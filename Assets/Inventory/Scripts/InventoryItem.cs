@@ -3,8 +3,13 @@ using System;
 
 public class InventoryItem
 {
+    /// <summary>Invoked when the amount of the held InventoryItem changes.</summary>
     public event Action OnAmountUpdated;
+
+    /// <summary>The data associated with this InventoryItem.</summary>
     public IInventoryItemData Data { get; private set; }
+
+    /// <summary>The amount of an InventoryItem held.</summary>
     public int Amount
     {
         get => amount;
@@ -18,6 +23,7 @@ public class InventoryItem
     int amount;
 
 
+    /// <summary>Initializes the InventoryItem with the provided data and amount.</summary>
     public InventoryItem(IInventoryItemData data, int amount)
     {
         if (amount < 1)
@@ -40,8 +46,9 @@ public class InventoryItem
         Amount = amount;
     }
 
-    // Adds an amount if the item is stackable
-    // returns an InventoryItem with the remainder amount if added amount exceeds MaxStackSize, else returns null
+    /// <summary>Adds the provided amount to the InventoryItem.</summary>
+    /// <param name="amountToAdd">The amount to add.</param>
+    /// <returns>An InventoryItem with the remainder amount if added amount exceeds MaxStackSize, null otherwise.</returns>
     public InventoryItem AddAmount(int amountToAdd)
     {
         if (!Data.IsStackable || amountToAdd <= 0) return null;
@@ -51,7 +58,9 @@ public class InventoryItem
         return remainder == 0 ? null : new(Data, remainder);
     }
 
-    // Returns true if the amount was successfully removed, false otherwise
+    /// <summary>Removes the provided amount from the InventoryItem.</summary>
+    /// <param name="amountToRemove">The amount to remove.</param>
+    /// <returns>True if the amount was successfully removed, false otherwise.</returns>
     public bool RemoveAmount(int amountToRemove)
     {
         if (amountToRemove <= 0) return false;

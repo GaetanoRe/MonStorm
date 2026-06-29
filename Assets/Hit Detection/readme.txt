@@ -22,7 +22,7 @@ Hit Applier object (the weapon that will do the damage)
  - To use from a script, simply call HitApplier.SetActive(true) when an attack starts, and HitApplier.SetActive(false) when it ends.
 
 Hittable Object (the object that will get hit and take damage)
- - Hittable Object (parent), add HitDetectionManager script and Rigidbody
+ - Hittable Object (parent), add a script that inherits from IHitDetectionManager interface and Rigidbody
  - Add child objects for each separate body component that needs to take different amount of damage (head, arms, etc.),
    add Hit Detector script to each and set the Damage Multiplier variable, also add a trigger box collider component
    which will be the hitbox of that particular part.

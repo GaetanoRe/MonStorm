@@ -1,9 +1,15 @@
+using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem; // Requires Input System Package
 
 [RequireComponent(typeof(CharacterController))]
 public class MonStormCharacterController : MonoBehaviour
 {
+    [Header("Cinemachine Camera Settings")]
+    public CinemachineCamera playerCamera;
+
+
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float rotationSpeed = 720f;
@@ -16,31 +22,35 @@ public class MonStormCharacterController : MonoBehaviour
     private bool isMoving = false;
 
     private CharacterAI m_playerAI;
+    private InputSystem_Actions m_inputActions;
 
     void Start()
     {
         isMoving = false;
         controller = GetComponent<CharacterController>();
         m_playerAI = GetComponent<CharacterAI>();
+        m_inputActions = new InputSystem_Actions();
+        m_inputActions.Player.Enable();
+    }
+
+    void OnDestroy()
+    {
+        m_inputActions.Player.Disable();
     }
 
     void Update()
     {
-        // Check if a gamepad is connected
-        var gamepad = Gamepad.current;
-        if (gamepad == null) return;
-
-        HandleMovement(gamepad);
-        HandleButtons(gamepad);
+        HandleMovement();
+        HandleButtons();
     }
 
-    void HandleMovement(Gamepad gamepad)
+    void HandleMovement()
     {
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0) velocity.y = -2f;
 
         // 1. Left Stick: Movement (X and Y axes)
-        Vector2 moveInput = gamepad.leftStick.ReadValue();
+        Vector2 moveInput = m_inputActions.Player.Move.ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
         
         if (move.magnitude >= 0.1f)
@@ -59,62 +69,37 @@ public class MonStormCharacterController : MonoBehaviour
         }
 
         // 2. Right Stick: Camera or Look (Custom logic can be added here)
-        Vector2 lookInput = gamepad.rightStick.ReadValue();
+        Vector2 lookInput = m_inputActions.Player.Look.ReadValue<Vector2>();
 
         // Apply Gravity
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 
-    void HandleButtons(Gamepad gamepad)
+    void HandleButtons()
     {
-        // Face Buttons
-        if (gamepad.buttonSouth.wasPressedThisFrame) { 
-            m_playerAI.HandlePreJumpState (); //jump
-            Debug.Log("Xbox A Pressed (Jump)");
+        // Face Button Bindings
+        if (m_inputActions.Player.Interact.WasPressedThisFrame())
+        {
+            Debug.Log("Pressed Interact");
         }
-        if (gamepad.buttonEast.wasPressedThisFrame) {
-            m_playerAI.HandlePreFleeState (); //evade
-            Debug.Log("Xbox B Pressed");
-        }
-        if (gamepad.buttonWest.wasPressedThisFrame) {
-            m_playerAI.HandlePreAttackState (); //attack
-            Debug.Log("Xbox X Pressed");
-        }
-        if (gamepad.buttonNorth.wasPressedThisFrame) {
-            Debug.Log("Xbox Y Pressed");
+        if (m_inputActions.Player.Dodge.WasPressedThisFrame())
+        {
+            Debug.Log("Pressed Dodge.");
         }
 
-        // Bumpers and Triggers
-        if (gamepad.leftShoulder.wasPressedThisFrame) {
-            Debug.Log("LB Pressed");
+        // Shoulder Buttons & Triggers
+        if (m_inputActions.Player.SpecialAction.WasPressedThisFrame())
+        {
+            Debug.Log("Pressed Special Action");
         }
-        if (gamepad.rightShoulder.wasPressedThisFrame) {
-            Debug.Log("RB Pressed");
+        if (m_inputActions.Player.CenterCamera.WasPressedThisFrame())
+        {
+            Debug.Log("Pressed Center Camera");
         }
-        
-        float leftTrigger = gamepad.leftTrigger.ReadValue(); // Analog 0.0 to 1.0
-        float rightTrigger = gamepad.rightTrigger.ReadValue();
-
-        // D-Pad
-        if (gamepad.dpad.up.wasPressedThisFrame) {
-            Debug.Log("D-Pad Up");
-        }
-        
-        // Stick Clicks
-        if (gamepad.leftStickButton.wasPressedThisFrame) {
-            Debug.Log("L3 Clicked");
-        }
-        if (gamepad.rightStickButton.wasPressedThisFrame) {
-            Debug.Log("R3 Clicked");
-        }
-
-        // Menu Buttons
-        if (gamepad.startButton.wasPressedThisFrame) {
-            Debug.Log("Start Pressed");
-        }
-        if (gamepad.selectButton.wasPressedThisFrame) {
-            Debug.Log("Select/Back Pressed");
+        if (m_inputActions.Player.Sprint.WasPressedThisFrame())
+        {
+            Debug.Log("Pressed Dash");
         }
     }
 }

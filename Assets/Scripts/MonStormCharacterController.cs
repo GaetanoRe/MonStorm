@@ -16,31 +16,35 @@ public class MonStormCharacterController : MonoBehaviour
     private bool isMoving = false;
 
     private CharacterAI m_playerAI;
+    private InputSystem_Actions m_inputActions;
 
     void Start()
     {
         isMoving = false;
         controller = GetComponent<CharacterController>();
         m_playerAI = GetComponent<CharacterAI>();
+        m_inputActions = new InputSystem_Actions();
+        m_inputActions.Player.Enable();
+    }
+
+    void OnDestroy()
+    {
+        m_inputActions.Player.Disable();
     }
 
     void Update()
     {
-        // Check if a gamepad is connected
-        var gamepad = Gamepad.current;
-        if (gamepad == null) return;
-
-        HandleMovement(gamepad);
-        HandleButtons(gamepad);
+        HandleMovement();
+        HandleButtons();
     }
 
-    void HandleMovement(Gamepad gamepad)
+    void HandleMovement()
     {
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0) velocity.y = -2f;
 
         // 1. Left Stick: Movement (X and Y axes)
-        Vector2 moveInput = gamepad.leftStick.ReadValue();
+        Vector2 moveInput = m_inputActions.Player.Move.ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
         
         if (move.magnitude >= 0.1f)
@@ -59,34 +63,34 @@ public class MonStormCharacterController : MonoBehaviour
         }
 
         // 2. Right Stick: Camera or Look (Custom logic can be added here)
-        Vector2 lookInput = gamepad.rightStick.ReadValue();
+        Vector2 lookInput = m_inputActions.Player.Look.ReadValue<Vector2>();
 
         // Apply Gravity
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 
-    void HandleButtons(Gamepad gamepad)
+    void HandleButtons()
     {
         // Face Buttons
-        if (gamepad.buttonSouth.wasPressedThisFrame) { 
+        if (m_inputActions.Player.Jump.WasPressedThisFrame()) { 
             m_playerAI.HandlePreJumpState (); //jump
             Debug.Log("Xbox A Pressed (Jump)");
         }
-        if (gamepad.buttonEast.wasPressedThisFrame) {
+        /**if (m_inputActions.Player.Jump.WasPressedThisFrame()) {
             m_playerAI.HandlePreFleeState (); //evade
             Debug.Log("Xbox B Pressed");
-        }
-        if (gamepad.buttonWest.wasPressedThisFrame) {
+        }**/
+        if (m_inputActions.Player.Attack.WasPressedThisFrame()) {
             m_playerAI.HandlePreAttackState (); //attack
             Debug.Log("Xbox X Pressed");
         }
-        if (gamepad.buttonNorth.wasPressedThisFrame) {
+        if (m_inputActions.Player.Interact.WasPressedThisFrame()) {
             Debug.Log("Xbox Y Pressed");
         }
 
         // Bumpers and Triggers
-        if (gamepad.leftShoulder.wasPressedThisFrame) {
+        /**if (gamepad.leftShoulder.wasPressedThisFrame) {
             Debug.Log("LB Pressed");
         }
         if (gamepad.rightShoulder.wasPressedThisFrame) {
@@ -115,6 +119,6 @@ public class MonStormCharacterController : MonoBehaviour
         }
         if (gamepad.selectButton.wasPressedThisFrame) {
             Debug.Log("Select/Back Pressed");
-        }
+        }**/
     }
 }

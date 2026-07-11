@@ -3,13 +3,8 @@ using UnityEngine.InputSystem;
 
 public class ItemDropActivatorEXAMPLE : MonoBehaviour
 {
-    ItemDropper itemDropper;
+    [SerializeField] ItemDropper itemDropper;
 
-
-    void Awake()
-    {
-        itemDropper = FindFirstObjectByType<ItemDropper>();
-    }
 
     void Update()
     {

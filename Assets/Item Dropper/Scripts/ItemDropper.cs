@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEditor;
 using System;
 using System.Collections.Generic;
 
 public class ItemDropper : MonoBehaviour
 {
+    // Class used to configure the loot table in the inspector.
     [Serializable] class InspectorItem
     {
         public InventoryItemDataEXAMPLE data;
@@ -13,31 +13,37 @@ public class ItemDropper : MonoBehaviour
         [Range(0f, 1f)] public float percentChance = 1f;
     }
 
+    // List of all items in this ItemDropper's loot table
     [SerializeField] List<InspectorItem> items;
 
-    DroppedItemEXAMPLE prefab;
+    // The game object that spawns, which holds the item data
+    // In the future it can also hold the mesh associated with the item and whatever else is necessary
+    DroppedItem prefab;
 
 
-    void Awake()
-    {
-        // This is only a temporary way to load an asset and works in the editor only
-        string path = "Assets/Item Dropper/Prefabs/Dropped Item Default Prefab.prefab";
-        prefab = AssetDatabase.LoadAssetAtPath<DroppedItemEXAMPLE>(path);
-    }
-    
+    /// <summary>Activates the ItemDropper to drop it's loot table.</summary>
     public void Activate()
     {
-        foreach (var item in items)
+        foreach (InspectorItem item in items)
         {
             if (UnityEngine.Random.Range(0f, 1f) > item.percentChance) continue;
 
-            // Max amount should never be smaller than min amount
-            item.maxAmount = Mathf.Max(item.minAmount, item.maxAmount);
-
             int amount = UnityEngine.Random.Range(item.minAmount, item.maxAmount + 1);
 
-            DroppedItemEXAMPLE droppedItem = Instantiate(prefab);
+            DroppedItem droppedItem = Instantiate(prefab, transform.position, Quaternion.identity);
             droppedItem.Initialize(new InventoryItem(item.data, amount));
+        }
+    }
+
+    void Awake()
+    {
+        string path = "Prefabs/Dropped Item Default Prefab";
+        prefab = Resources.Load<DroppedItem>(path);
+
+        foreach (InspectorItem item in items)
+        {
+            // Max amount should never be smaller than min amount, so this is only for precaution.
+            item.maxAmount = Mathf.Max(item.minAmount, item.maxAmount);
         }
     }
 }

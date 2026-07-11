@@ -75,6 +75,23 @@ public class Inventory : MonoBehaviour
     /// <returns>The InventoryItem from the provided InventorySlot (null if empty).</returns>
     public InventoryItem Add(InventoryItem item, InventorySlot slot) => slot.Replace(item);
 
+    /// <summary>
+    /// Adds the provided InventoryItem only if it can be fully added without any remainder.
+    /// First checks if it can be stacked, if not then it is added to an empty InventorySlot.
+    /// </summary>
+    /// <param name="item">The InventoryItem to add.</param>
+    /// <returns>Whether the InventoryItem has been added.</returns>
+    public bool AddFully(InventoryItem item)
+    {
+        if (TryStackItem(item)) return true;
+
+        InventorySlot slot = GetFirstEmptySlot();
+        if (slot == null) return false;
+
+        slot.Interact(item);
+        return true;
+    }
+
     /// <summary>Removes the InventoryItem from the provided InventorySlot.</summary>
     /// <param name="slot">The InventorySlot from which the InventoryItem will be removed.</param>
     /// <returns>The removed InventoryItem.</returns>

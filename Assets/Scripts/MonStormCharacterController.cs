@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem; // Requires Input System Package
 
@@ -72,53 +73,28 @@ public class MonStormCharacterController : MonoBehaviour
 
     void HandleButtons()
     {
-        // Face Buttons
-        if (m_inputActions.Player.Jump.WasPressedThisFrame()) { 
-            m_playerAI.HandlePreJumpState (); //jump
-            Debug.Log("Xbox A Pressed (Jump)");
+        // Face Button Bindings
+        if (m_inputActions.Player.Interact.WasPressedThisFrame())
+        {
+            Debug.Log("Pressed Interact");
         }
-        /**if (m_inputActions.Player.Jump.WasPressedThisFrame()) {
-            m_playerAI.HandlePreFleeState (); //evade
-            Debug.Log("Xbox B Pressed");
-        }**/
-        if (m_inputActions.Player.Attack.WasPressedThisFrame()) {
-            m_playerAI.HandlePreAttackState (); //attack
-            Debug.Log("Xbox X Pressed");
-        }
-        if (m_inputActions.Player.Interact.WasPressedThisFrame()) {
-            Debug.Log("Xbox Y Pressed");
+        if (m_inputActions.Player.Dodge.WasPressedThisFrame())
+        {
+            Debug.Log("Pressed Dodge.");
         }
 
-        // Bumpers and Triggers
-        /**if (gamepad.leftShoulder.wasPressedThisFrame) {
-            Debug.Log("LB Pressed");
+        // Shoulder Buttons & Triggers
+        if (m_inputActions.Player.SpecialAction.WasPressedThisFrame())
+        {
+            Debug.Log("Pressed Special Action");
         }
-        if (gamepad.rightShoulder.wasPressedThisFrame) {
-            Debug.Log("RB Pressed");
+        if (m_inputActions.Player.CenterCamera.WasPressedThisFrame())
+        {
+            Debug.Log("Pressed Center Camera");
         }
-        
-        float leftTrigger = gamepad.leftTrigger.ReadValue(); // Analog 0.0 to 1.0
-        float rightTrigger = gamepad.rightTrigger.ReadValue();
-
-        // D-Pad
-        if (gamepad.dpad.up.wasPressedThisFrame) {
-            Debug.Log("D-Pad Up");
+        if (m_inputActions.Player.Sprint.WasPressedThisFrame())
+        {
+            Debug.Log("Pressed Dash");
         }
-        
-        // Stick Clicks
-        if (gamepad.leftStickButton.wasPressedThisFrame) {
-            Debug.Log("L3 Clicked");
-        }
-        if (gamepad.rightStickButton.wasPressedThisFrame) {
-            Debug.Log("R3 Clicked");
-        }
-
-        // Menu Buttons
-        if (gamepad.startButton.wasPressedThisFrame) {
-            Debug.Log("Start Pressed");
-        }
-        if (gamepad.selectButton.wasPressedThisFrame) {
-            Debug.Log("Select/Back Pressed");
-        }**/
     }
 }

@@ -1,10 +1,15 @@
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem; // Requires Input System Package
 
 [RequireComponent(typeof(CharacterController))]
 public class MonStormCharacterController : MonoBehaviour
 {
+    [Header("Cinemachine Camera Settings")]
+    public CinemachineCamera playerCamera;
+
+
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float rotationSpeed = 720f;

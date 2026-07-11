@@ -64,9 +64,11 @@ public class CharacterAI : MonoBehaviour
 	public float lastPlayedDefeatedSecondAudio;
 
 
-    [Header("Script References.")]
-    public GameObject gameController;
-	//private GameController m_GC; //to be linked later
+	// Below was a part of our old input system. It is now on the new Input System
+    // [Header("Script References.")]
+    // public GameObject gameController; 
+	// private GameController m_GC;
+
     private Animator anim;
     private Rigidbody rb;
 	private AudioSource audioSource;

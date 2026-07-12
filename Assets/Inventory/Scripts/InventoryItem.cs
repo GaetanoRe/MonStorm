@@ -28,17 +28,17 @@ public class InventoryItem
     {
         if (amount < 1)
         {
-            Debug.LogWarning($"Item amount can't be less than 1!\nItem name: {data.Name}");
+            Debug.LogWarning($"Item amount can't be less than 1! Setting amount to 1.\nItem name: {data.Name}");
             amount = 1;
         }
         if (amount > data.MaxStackSize)
         {
-            Debug.LogWarning($"Item amount can't be larger than it's max stack size!\nItem name: {data.Name}");
+            Debug.LogWarning($"Item amount can't be larger than it's max stack size! Setting amount to it's max stack size.\nItem name: {data.Name}");
             amount = data.MaxStackSize;
         }
         if (!data.IsStackable && amount > 1)
         {
-            Debug.LogWarning($"Item amount can't be larger than 1 if the item is not stackable!\nItem name: {data.Name}");
+            Debug.LogWarning($"Item amount can't be larger than 1 if the item is not stackable! Setting amount to 1.\nItem name: {data.Name}");
             amount = 1;
         }
 

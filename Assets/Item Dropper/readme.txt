@@ -1,5 +1,6 @@
 Demo scene for the Item Dropper system.
 
+
 The ItemDropper script should be added to the object that drops any kind of loot whether on being hit, on death,
 or however else. Currently there is a temporary script "ItemDropActivatorEXAMPLE" that activates the ItemDropper to
 drop it's loot, however any script can call the Activate() method to trigger it's effect.

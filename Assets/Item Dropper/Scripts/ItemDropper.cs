@@ -7,7 +7,7 @@ public class ItemDropper : MonoBehaviour
     // Class used to configure the loot table in the inspector.
     [Serializable] class InspectorItem
     {
-        public InventoryItemDataEXAMPLE data;
+        public InventoryItemData data;
         public int minAmount = 1;
         public int maxAmount = 1;
         [Range(0f, 1f)] public float percentChance = 1f;

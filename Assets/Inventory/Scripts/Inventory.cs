@@ -10,9 +10,10 @@ public class Inventory : MonoBehaviour
     /// <summary>The array that holds all InventoryItems and acts as the inventory.</summary>
     public InventorySlot[] ItemSlotArray { get; private set; }
 
+    // Class used to set starting items in the inventory from the inspector
     [Serializable] class InspectorItem
     {
-        public InventoryItemDataEXAMPLE data;
+        public InventoryItemData data;
         public int amount;
     }
 
@@ -148,7 +149,8 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    // Stacks the InventoryItem and returns the remainder
+    // Stacks the provided InventoryItem to any InventorySlot that has the same InventoryItem
+    // Returns the remainder if there is any, null otherwise
     InventoryItem StackItem(InventoryItem item)
     {
         foreach (InventorySlot slot in ItemSlotArray)
@@ -162,7 +164,8 @@ public class Inventory : MonoBehaviour
         return item;
     }
 
-    // Stacks the InventoryItem only if it can be fully stacked
+    // Stacks the provided InventoryItem to any InventorySlot that has the same InventoryItem ONLY if it can be fully stacked
+    // Returns whether it has been successfully stacked
     bool TryStackItem(InventoryItem item)
     {
         int availableSlots = 0;
@@ -189,7 +192,7 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    // Returns the first InventorySlot from ItemSlotArray[] that doesn't contain an InventoryItem
+    // Returns the first InventorySlot from ItemSlotArray[] that doesn't contain an InventoryItem (is empty) if there is any, null otherwise
     InventorySlot GetFirstEmptySlot()
     {
         foreach (InventorySlot slot in ItemSlotArray)

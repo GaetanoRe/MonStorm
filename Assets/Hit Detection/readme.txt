@@ -1,5 +1,6 @@
 Demo scene for the Hit Detection system.
 
+
 Each "hittable object" (animals, player, whatever) can have multiple parts: head, body, arms, etc,
 and each part can have a different damage multiplier, for example the head takes 1.5x damage and the legs take
 0.5x damage.

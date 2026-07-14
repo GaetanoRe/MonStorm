@@ -3,9 +3,9 @@ using System;
 
 public class Health : MonoBehaviour
 {
-    public Action<float> OnCurrentHealthUpdated;
-    public Action<float> OnMaxHealthUpdated;
-    public Action OnDeath;
+    public event Action<float> OnCurrentHealthUpdated;
+    public event Action<float> OnMaxHealthUpdated;
+    public event Action OnDeath;
 
     public float MaxHealth => maxHealth;
     public float CurrentHealth => currentHealth;
@@ -28,6 +28,7 @@ public class Health : MonoBehaviour
     readonly float minMaxHealth = 1f; // The minimum amount max health can be
 
 
+    /// <summary>Damages the Health by the amount provided.</summary>
     public void Damage(float amount)
     {
         if (isDead) return;
@@ -45,6 +46,7 @@ public class Health : MonoBehaviour
             SetDeathState(true);
     }
 
+    /// <summary>Heals the Health by the amount provided.</summary>
     public void Heal(float amount)
     {
         if (isDead) return;
@@ -58,7 +60,6 @@ public class Health : MonoBehaviour
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
         OnCurrentHealthUpdated?.Invoke(currentHealth);
     }
-
 
     /// <summary>
     /// Changes the current max health BY the amount provided, example:
@@ -86,9 +87,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Sets "isDead" directly to the value provided
-    /// </summary>
+    /// <summary>Sets "isDead" directly to the value provided.</summary>
     public void SetDeathState(bool value) => IsDead = value;
 
     void Awake()

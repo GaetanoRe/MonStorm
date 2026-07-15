@@ -3,7 +3,7 @@ Demo scene for the Inventory system.
 
 How to use demo:
 
-E key - open/close inventory screen
+I key - open/close inventory screen
 Mouse left-click on the brown cubes (containers) - open the container
 
 While in the inventory screen:

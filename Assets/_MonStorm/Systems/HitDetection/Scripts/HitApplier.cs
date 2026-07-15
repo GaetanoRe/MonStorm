@@ -23,14 +23,14 @@ public class HitApplier : MonoBehaviour
         // Temporary way to activate and deactivate an attack
 
         // START ATTACK
-        if (UnityEngine.InputSystem.Keyboard.current.aKey.wasPressedThisFrame && !isActive)
+        if (UnityEngine.InputSystem.Keyboard.current.zKey.wasPressedThisFrame && !isActive)
         {
             Debug.Log("Attack started!");
             transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
             SetActive(true);
         }
         // END ATTACK
-        if (UnityEngine.InputSystem.Keyboard.current.sKey.wasPressedThisFrame && isActive)
+        if (UnityEngine.InputSystem.Keyboard.current.xKey.wasPressedThisFrame && isActive)
         {
             Debug.Log("Attack ended!");
             transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.gray;
@@ -41,7 +41,7 @@ public class HitApplier : MonoBehaviour
     void ApplyHit(HitDetector newDetector)
     {
         currentDetections.Add(newDetector);
-        newDetector.HitDetectionManager.InvokeHit(this, newDetector);
+        newDetector.HitDetectionManager.HandleHit(this, newDetector);
     }
 
     void OnTriggerEnter(Collider other)

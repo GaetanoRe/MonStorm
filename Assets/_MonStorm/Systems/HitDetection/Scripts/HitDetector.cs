@@ -10,7 +10,7 @@ public class HitDetector : MonoBehaviour
 
     void Awake()
     {
-        HitDetectionManager = GetComponentInParent<HitProcessing>();
+        HitDetectionManager = GetComponentInParent<IHitDetectionManager>();
 
         if (HitDetectionManager == null)
             Debug.LogWarning("Hit detection manager not assigned to " + gameObject.name);

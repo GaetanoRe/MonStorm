@@ -1089,6 +1089,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4453713953240124544}
   - component: {fileID: 7189046606265324820}
+  - component: {fileID: 1126768294522662887}
+  - component: {fileID: -3295946042217426979}
   - component: {fileID: 6017042310589756134}
   - component: {fileID: 6219319299882045083}
   - component: {fileID: 8918956042086733663}
@@ -1138,6 +1140,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1126768294522662887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991521497733807413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ca73147ba596843b3a469b9742bd51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropper
+  items:
+  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
+    minAmount: 1
+    maxAmount: 1
+    percentChance: 1
+--- !u!114 &-3295946042217426979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991521497733807413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99b9849c6c165046863933ed7167921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
+  isMaxHealthChangeable: 1
 --- !u!114 &6017042310589756134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1166,7 +1199,6 @@ MonoBehaviour:
   lastPlayedAttackSecondAudio: 0
   lastPlayedDefeatedAudio: 0
   lastPlayedDefeatedSecondAudio: 0
-  gameController: {fileID: 0}
   generalAudio: []
   attackAudio:
   - {fileID: 8300000, guid: b98463660aaf0a544b0996a982d59bad, type: 3}

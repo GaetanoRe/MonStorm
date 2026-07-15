@@ -8,8 +8,8 @@ and each part can have a different damage multiplier, for example the head takes
 
 How to use demo:
 
-A key - start attack
-S key - stop attack
+Z key - start attack
+X key - stop attack
 
 When the scene is started and attack is started move the "Hit Applier (Weapon)" object in the scene view and make contact
 with the Hittable Object, and you will see a message in the console depending on which part was hit.

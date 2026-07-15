@@ -12,7 +12,7 @@ public class DroppedItemPicker : MonoBehaviour
 
     void Update()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Keyboard.current.cKey.wasPressedThisFrame)
         {
             TryPickup();
         }

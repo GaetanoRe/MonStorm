@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
-public class CharacterAI : MonoBehaviour
+public class CharacterAI : MonoBehaviour, IHitDetectionManager
 {
 	public bool isHero = false; //these bools are only used to play the correct animations right now, but may be useful in other ways later
 	public bool isDragon = false;
@@ -189,6 +189,10 @@ public class CharacterAI : MonoBehaviour
 
 	private SubActionTypeDefeated eCurSubStateDefeated = SubActionTypeDefeated.StandardDefeated;
 
+
+	Health health;
+
+
     void Start()
     {
         stateChanged = false;
@@ -229,6 +233,17 @@ public class CharacterAI : MonoBehaviour
 		audioSource = GetComponent<AudioSource> ();
 
 		HandleIdleState ();
+
+		health = GetComponent<Health>();
+		if (health == null)
+			Debug.LogWarning($"Add a Health component to {gameObject.name}!");
+		else
+			health.OnDeath += HandleDefeatedState;
+    }
+
+    void OnDestroy()
+    {
+		health.OnDeath -= HandleDefeatedState;
     }
 
     void Update()
@@ -954,7 +969,7 @@ public class CharacterAI : MonoBehaviour
     //DEFEATED STATE------------------------------------------
     void HandleDefeatedState ()
 	{
-		eCurState = ActionType.Defeated;
+        eCurState = ActionType.Defeated;
 
 		if (!stateChanged) {
 			idleGO = false;
@@ -979,8 +994,15 @@ public class CharacterAI : MonoBehaviour
 		    okayToPlayAudio = false;
 		    PlayDefeatedAudio ();
             defeatedAudioPlayed = true;
+            HandleStandardDefeatedState();
+			enabled = false;
+
+            GetComponent<ItemDropper>().Activate();
+
+            if (isHero)
+				GetComponent<MonStormCharacterController>().enabled = false;
         }
-	}
+    }
 
 	void HandleStandardDefeatedState ()
 	{
@@ -1189,23 +1211,25 @@ public class CharacterAI : MonoBehaviour
 	}
 
 	// ON FUNCTIONS------------------------------------------------
-	void OnCollisionEnter(Collision col)
-	{
-		if ((col.gameObject.tag == "weapon") && (!damageTaken)) {
-			//if HP != 0
-			stateChanged = false;
-			HandleDamagedState ();
-			//else if HP <= 0
-			//HandleDefeatedState ();
-			damageTaken = true;
-		}
-	}
 
-	//void OnTriggerEnter(Collider coll) //probably need this at some point
-	//{
-		//if (coll.gameObject.tag == "fuzz") {
+    //void OnTriggerEnter(Collider coll) //probably need this at some point
+    //{
+    //if (coll.gameObject.tag == "fuzz") {
 
-		//}
+    //}
 
-	//}
+    //}
+
+    public void HandleHit(HitApplier applier, HitDetector detector)
+    {
+        float damageDealt = applier.Damage * detector.DamageMultiplier;
+        health.Damage(damageDealt);
+
+		if (health.IsDead) return;
+
+        stateChanged = false;
+        HandleDamagedState();
+
+        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.CurrentHealth}");
+    }
 }

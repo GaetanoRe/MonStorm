@@ -192,6 +192,9 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 
 	Health health;
 
+	[Header("Attack")]
+	[SerializeField] HitApplier weapon;
+
 
     void Start()
     {
@@ -1153,9 +1156,10 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 
 		attackAnimationPlayed = false;
 		attackAudioPlayed = false;
-	}
+        weapon.SetActive(false);
+    }
 
-	void ResetDragonAttack ()
+    void ResetDragonAttack ()
 	{
 		StartCoroutine (CR_ResetDragonAttack ());
 	}
@@ -1224,12 +1228,17 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
     {
         float damageDealt = applier.Damage * detector.DamageMultiplier;
         health.Damage(damageDealt);
+        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.CurrentHealth}");
 
 		if (health.IsDead) return;
 
         stateChanged = false;
         HandleDamagedState();
-
-        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.CurrentHealth}");
     }
+
+	public void AttackPressed()
+	{
+        HandlePreAttackState();
+		weapon.SetActive(true);
+	}
 }

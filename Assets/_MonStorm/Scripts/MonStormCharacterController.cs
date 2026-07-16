@@ -101,5 +101,9 @@ public class MonStormCharacterController : MonoBehaviour
         {
             Debug.Log("Pressed Dash");
         }
+        if (m_inputActions.Player.EnableAttack.WasPressedThisFrame())
+        {
+            m_playerAI.AttackPressed();
+        }
     }
 }

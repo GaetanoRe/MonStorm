@@ -16,25 +16,14 @@ public class HitApplier : MonoBehaviour
     {
         currentDetections.Clear();
         isActive = active;
-    }
 
-    void Update()
-    {
-        // Temporary way to activate and deactivate an attack
-
-        // START ATTACK
-        if (UnityEngine.InputSystem.Keyboard.current.zKey.wasPressedThisFrame && !isActive)
+        if (active)
         {
-            Debug.Log("Attack started!");
             transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
-            SetActive(true);
         }
-        // END ATTACK
-        if (UnityEngine.InputSystem.Keyboard.current.xKey.wasPressedThisFrame && isActive)
+        else
         {
-            Debug.Log("Attack ended!");
             transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.gray;
-            SetActive(false);
         }
     }
 

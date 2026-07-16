@@ -20,6 +20,8 @@ public class ItemDropper : MonoBehaviour
     // In the future it can also hold the mesh associated with the item and whatever else is necessary
     DroppedItem prefab;
 
+    readonly float yOffset = 1f;
+
 
     /// <summary>Activates the ItemDropper to drop it's loot table.</summary>
     public void Activate()
@@ -30,7 +32,7 @@ public class ItemDropper : MonoBehaviour
 
             int amount = UnityEngine.Random.Range(item.minAmount, item.maxAmount + 1);
 
-            DroppedItem droppedItem = Instantiate(prefab, transform.position, Quaternion.identity);
+            DroppedItem droppedItem = Instantiate(prefab, transform.position + new Vector3(0f, yOffset, 0f), Quaternion.identity);
             droppedItem.Initialize(new InventoryItem(item.data, amount));
         }
     }

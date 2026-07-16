@@ -3054,7 +3054,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2142387633}
-  - component: {fileID: 2142387632}
+  - component: {fileID: 2142387634}
   m_Layer: 0
   m_Name: Inventory Interaction
   m_TagString: Untagged
@@ -3062,21 +3062,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2142387632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2142387631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31149f9ec24ba5041ac5ccc142023720, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryInteractionEXAMPLE
-  inventoryScreen: {fileID: 1314037666}
-  secondaryInventory: {fileID: 1444125956}
-  inventoryManager: {fileID: 929090486}
 --- !u!4 &2142387633
 Transform:
   m_ObjectHideFlags: 0
@@ -3092,6 +3077,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2142387634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142387631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fef93c579d0d5140aef774892684762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryInteractionEXAMPLE
+  inventoryScreen: {fileID: 1314037666}
+  secondaryInventory: {fileID: 1444125956}
+  inventoryManager: {fileID: 929090486}
 --- !u!222 &2020811106278803734
 CanvasRenderer:
   m_ObjectHideFlags: 0

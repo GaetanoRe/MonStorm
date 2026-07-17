@@ -2,7 +2,7 @@ using MonStorm.Core.StateMachine;
 
 namespace MonStorm.Core.Player
 {
-    public class PlayerMoveState : IState<PlayerContext>
+    public class PlayerWalkState : IState<PlayerContext>
     {
         public void Enter(PlayerContext context)
         {

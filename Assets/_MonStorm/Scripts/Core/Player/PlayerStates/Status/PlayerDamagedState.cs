@@ -9,9 +9,10 @@ namespace MonStorm.Core.Player
             
         }
 
-        public void Tick(PlayerContext context, float deltaTime)
+        public IState<PlayerContext> Tick(PlayerContext context, float deltaTime);
         {
             
+            return this;
         }
 
         public void Exit(PlayerContext context)

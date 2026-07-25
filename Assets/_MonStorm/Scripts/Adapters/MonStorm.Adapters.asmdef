@@ -1,0 +1,16 @@
+{
+    "name": "Adapters",
+    "rootNamespace": "Monstorm.Core",
+    "references": [
+        "GUID:86cfc92dd79bc140b9f1e7fd9778ec2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

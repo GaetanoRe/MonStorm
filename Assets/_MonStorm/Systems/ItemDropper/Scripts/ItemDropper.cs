@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 public class ItemDropper : MonoBehaviour
@@ -23,18 +24,11 @@ public class ItemDropper : MonoBehaviour
     readonly float yOffset = 1f;
 
 
-    /// <summary>Activates the ItemDropper to drop it's loot table.</summary>
-    public void Activate()
+    /// <summary>Activates the ItemDropper to drop it's loot table, with it being delayed optional.</summary>
+    /// <param name="delay">The delay after which the effect will activate.</param>
+    public void Activate(float delay = 0f)
     {
-        foreach (InspectorItem item in items)
-        {
-            if (UnityEngine.Random.Range(0f, 1f) > item.percentChance) continue;
-
-            int amount = UnityEngine.Random.Range(item.minAmount, item.maxAmount + 1);
-
-            DroppedItem droppedItem = Instantiate(prefab, transform.position + new Vector3(0f, yOffset, 0f), Quaternion.identity);
-            droppedItem.Initialize(new InventoryItem(item.data, amount));
-        }
+        StartCoroutine(ActivateDelayed(delay));
     }
 
     void Awake()
@@ -46,6 +40,21 @@ public class ItemDropper : MonoBehaviour
         {
             // Max amount should never be smaller than min amount, so this is only for precaution.
             item.maxAmount = Mathf.Max(item.minAmount, item.maxAmount);
+        }
+    }
+
+    IEnumerator ActivateDelayed(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        foreach (InspectorItem item in items)
+        {
+            if (UnityEngine.Random.Range(0f, 1f) > item.percentChance) continue;
+
+            int amount = UnityEngine.Random.Range(item.minAmount, item.maxAmount + 1);
+
+            DroppedItem droppedItem = Instantiate(prefab, transform.position + new Vector3(0f, yOffset, 0f), Quaternion.identity);
+            droppedItem.Initialize(new InventoryItem(item.data, amount));
         }
     }
 }

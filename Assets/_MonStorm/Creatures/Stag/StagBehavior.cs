@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using MonStorm.Core.StateMachine;
 using MonStorm.Adapters;
-using Monstorm.Adapters;
 
 public class StagBehavior : MonoBehaviour, IHitDetectionManager
 {
@@ -21,7 +20,7 @@ public class StagBehavior : MonoBehaviour, IHitDetectionManager
     CreatureWanderState wanderState;
     CreatureWanderState runState;
     CreatureDamagedState damagedState;
-    CreatureDamagedState deadState;
+    CreatureDeadState deadState;
 
     readonly static int idleHash = Animator.StringToHash("Idle");
     readonly static int wanderHash = Animator.StringToHash("Walk");
@@ -51,10 +50,9 @@ public class StagBehavior : MonoBehaviour, IHitDetectionManager
         adapterAnimator = new(animator);
         adapterNavMeshAgent = new(navMeshAgent);
         adapterLogger = new();
-        stateMachine = new(creatureContext);
-
+        
         creatureContext = new(stateMachine, adapterAnimator, adapterNavMeshAgent, adapterLogger);
-
+        stateMachine = new(creatureContext);
         StateTransitionManager<CreatureContext> idleTransitions = new();
         StateTransitionManager<CreatureContext> wanderTransitions = new();
         StateTransitionManager<CreatureContext> runTransitions = new();

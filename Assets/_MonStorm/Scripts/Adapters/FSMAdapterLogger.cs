@@ -1,7 +1,7 @@
 using UnityEngine;
 using MonStorm.Core.StateMachine;
 
-namespace Monstorm.Adapters
+namespace MonStorm.Adapters
 {
     public class FSMAdapterLogger : IFSMAdapterLogger
     {

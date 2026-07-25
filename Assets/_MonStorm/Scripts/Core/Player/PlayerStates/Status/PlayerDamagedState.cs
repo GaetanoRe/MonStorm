@@ -1,23 +1,16 @@
-using MonStorm.Core.StateMachine; 
+using MonStorm.Core.StateMachine;
 
 namespace MonStorm.Core.Player
 {
     public class PlayerDamagedState : IState<PlayerContext>
     {
-        public void Enter(PlayerContext context)
-        {
-            
-        }
+        public void Enter(PlayerContext context) { }
 
-        public IState<PlayerContext> Tick(PlayerContext context, float deltaTime);
+        public IState<PlayerContext> Tick(PlayerContext context, float deltaTime)
         {
-            
             return this;
         }
 
-        public void Exit(PlayerContext context)
-        {
-            
-        }
+        public void Exit(PlayerContext context) { }
     }
 }

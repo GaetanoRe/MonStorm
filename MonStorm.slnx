@@ -1,6 +1,6 @@
 ﻿<Solution>
+  <Project Path="MonStorm.Core.csproj" />
   <Project Path="Polyperfect.LowPolyAnimatedFantasyCreatures.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="MonStorm.Core.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>

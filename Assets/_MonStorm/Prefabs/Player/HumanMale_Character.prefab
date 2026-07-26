@@ -3543,12 +3543,12 @@ GameObject:
   - component: {fileID: 5522115553352560050}
   - component: {fileID: 7713395418069682710}
   - component: {fileID: -8132281523312442769}
-  - component: {fileID: 1200667582690712011}
   - component: {fileID: 5535926596780791933}
   - component: {fileID: 7390463332031003472}
   - component: {fileID: 8139572176838623216}
   - component: {fileID: 6767785360361807770}
   - component: {fileID: 150602309643869015}
+  - component: {fileID: 2110972488748409070}
   m_Layer: 0
   m_Name: HumanMale_Character
   m_TagString: Untagged
@@ -3631,42 +3631,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 100
   isMaxHealthChangeable: 1
---- !u!114 &1200667582690712011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4811900067158531104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ebb2485163dc4f46bb84be963747dff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterAI
-  isHero: 1
-  isDragon: 0
-  isStag: 0
-  targetObject: {fileID: 0}
-  currentWeapon: {fileID: 0}
-  currentArmor: {fileID: 0}
-  inBattle: 0
-  targetDistance: 0
-  warningDistance: 12
-  safeDistance: 16
-  moveSpeed: 3
-  pursueSpeed: 5
-  lastPlayedAttackAudio: 0
-  lastPlayedAttackSecondAudio: 0
-  lastPlayedDefeatedAudio: 0
-  lastPlayedDefeatedSecondAudio: 0
-  generalAudio: []
-  attackAudio:
-  - {fileID: 8300000, guid: b98463660aaf0a544b0996a982d59bad, type: 3}
-  - {fileID: 8300000, guid: 9a16205fecbc32d4080ffb86b8dafc34, type: 3}
-  defeatedAudio:
-  - {fileID: 8300000, guid: a1cc14f7da234304781f7f675d2213fc, type: 3}
-  - {fileID: 8300000, guid: a1cc14f7da234304781f7f675d2213fc, type: 3}
-  weapon: {fileID: 0}
 --- !u!114 &5535926596780791933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3680,10 +3644,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonStormCharacterController
   playerCamera: {fileID: 0}
-  moveSpeed: 5
   rotationSpeed: 720
-  jumpHeight: 2
   gravity: -9.81
+  weapon: {fileID: 0}
 --- !u!95 &7390463332031003472
 Animator:
   serializedVersion: 7
@@ -3855,6 +3818,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2110972488748409070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811900067158531104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6abaecaa236d7ef969b3fd811b2951e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
 --- !u!1 &4869750892505582643
 GameObject:
   m_ObjectHideFlags: 0

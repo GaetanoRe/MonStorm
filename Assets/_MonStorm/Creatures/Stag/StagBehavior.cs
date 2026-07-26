@@ -51,8 +51,9 @@ public class StagBehavior : MonoBehaviour, IHitDetectionManager
         adapterNavMeshAgent = new(navMeshAgent);
         adapterLogger = new();
         
-        creatureContext = new(stateMachine, adapterAnimator, adapterNavMeshAgent, adapterLogger);
+        creatureContext = new(null, adapterAnimator, adapterNavMeshAgent, adapterLogger);
         stateMachine = new(creatureContext);
+        creatureContext.StateMachine = stateMachine;
         StateTransitionManager<CreatureContext> idleTransitions = new();
         StateTransitionManager<CreatureContext> wanderTransitions = new();
         StateTransitionManager<CreatureContext> runTransitions = new();

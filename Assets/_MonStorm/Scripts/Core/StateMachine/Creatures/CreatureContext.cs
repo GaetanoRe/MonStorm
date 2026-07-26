@@ -2,7 +2,7 @@ namespace MonStorm.Core.StateMachine
 {
     public class CreatureContext
     {
-        public StateMachine<CreatureContext> StateMachine { get; }
+        public StateMachine<CreatureContext> StateMachine { get; set; }
         public IFSMAdapterAnimator AdapterAnimator { get; }
         public IFSMAdapterNavMeshAgent AdapterNavMeshAgent { get; }
         public IFSMAdapterLogger AdapterLogger { get; }

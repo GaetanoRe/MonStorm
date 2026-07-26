@@ -5,7 +5,7 @@ namespace MonStorm.Core.StateMachine
     {
         public void Enter(TContext context);
 
-        public IState<TContext> Tick(TContext context, float deltaTime);
+        public void Tick(TContext context, float deltaTime);
 
         public void Exit(TContext context);
     }

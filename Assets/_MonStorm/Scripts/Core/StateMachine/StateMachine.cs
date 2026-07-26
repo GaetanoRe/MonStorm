@@ -27,12 +27,7 @@ namespace MonStorm.Core.StateMachine
 
         public void Tick(float deltaTime)
         {
-            var next = currentState?.Tick(context, deltaTime);
-
-            if (next != null && next != currentState)
-            {
-                this.TransitionTo(next);
-            }
+            currentState?.Tick(context, deltaTime);
         }
     }
 }

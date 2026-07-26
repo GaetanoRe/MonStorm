@@ -2,15 +2,32 @@ using MonStorm.Core.StateMachine;
 
 namespace MonStorm.Core.Player
 {
-    public class PlayerDamagedState : IState<PlayerContext>
+    public class PlayerDamagedState : PlayerBaseState
     {
-        public void Enter(PlayerContext context) { }
-
-        public IState<PlayerContext> Tick(PlayerContext context, float deltaTime)
+        protected override void SetupTransitions(PlayerContext context)
         {
-            return this;
+            transitionManager.Initialize(
+                new StateTransition<PlayerContext>(new PlayerIdleState(), () => context.damagedTimer <= 0),
+                new StateTransition<PlayerContext>(new PlayerDefeatedState(), () => context.isDead)
+            );
         }
 
-        public void Exit(PlayerContext context) { }
+        public override void Enter(PlayerContext context)
+        {
+            base.Enter(context);
+            context.isHit = false;
+            context.damagedTimer = 0.667f;
+            animator.Play(context.DamagedAnimHash);
+        }
+
+        public override void Tick(PlayerContext context, float deltaTime)
+        {
+            context.damagedTimer -= deltaTime;
+            base.Tick(context, deltaTime);
+        }
+
+        public override void Exit(PlayerContext context)
+        {
+        }
     }
 }

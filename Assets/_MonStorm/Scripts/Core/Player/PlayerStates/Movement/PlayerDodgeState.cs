@@ -1,16 +1,30 @@
+using System.Numerics;
 using MonStorm.Core.StateMachine;
 
 namespace MonStorm.Core.Player
 {
-    public class PlayerDodgeState : IState<PlayerContext>
+    public class PlayerDodgeState : PlayerBaseState
     {
-        public void Enter(PlayerContext context) { }
-
-        public IState<PlayerContext> Tick(PlayerContext context, float deltaTime)
+        protected override void SetupTransitions(PlayerContext context)
         {
-            return this;
+            transitionManager.Initialize(
+                new StateTransition<PlayerContext>(new PlayerIdleState(), () => context.moveInput == Vector2.Zero),
+                new StateTransition<PlayerContext>(new PlayerWalkState(), () => context.moveInput != Vector2.Zero)
+            );
         }
 
-        public void Exit(PlayerContext context) { }
+        public override void Enter(PlayerContext context)
+        {
+            base.Enter(context);
+        }
+
+        public override void Tick(PlayerContext context, float deltaTime)
+        {
+            base.Tick(context, deltaTime);
+        }
+
+        public override void Exit(PlayerContext context)
+        {
+        }
     }
 }

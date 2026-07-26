@@ -2621,6 +2621,10 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 784074542}
+    - target: {fileID: 5535926596780791933, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 251755198}
     - target: {fileID: 7506326776823430698, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.6317358
@@ -2671,7 +2675,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 944556857870056528, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
       insertIndex: -1
       addedObject: {fileID: 251755199}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4811900067158531104, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1485875131}
   m_SourcePrefab: {fileID: 100100000, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
 --- !u!4 &1485875120 stripped
 Transform:
@@ -2683,6 +2690,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4811900067158531104, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
   m_PrefabInstance: {fileID: 1485875119}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1485875131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485875121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6abaecaa236d7ef969b3fd811b2951e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
 --- !u!1 &1577756000
 GameObject:
   m_ObjectHideFlags: 0

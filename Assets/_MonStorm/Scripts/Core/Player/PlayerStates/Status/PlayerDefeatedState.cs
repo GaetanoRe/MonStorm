@@ -1,16 +1,21 @@
-using MonStorm.Core.StateMachine;
-
 namespace MonStorm.Core.Player
 {
-    public class PlayerDefeatedState : IState<PlayerContext>
+    public class PlayerDefeatedState : PlayerBaseState
     {
-        public void Enter(PlayerContext context) { }
-
-        public IState<PlayerContext> Tick(PlayerContext context, float deltaTime)
+        protected override void SetupTransitions(PlayerContext context) { }
+        public override void Enter(PlayerContext context)
         {
-            return this;
+            base.Enter(context);
+            animator.Play(context.DeathAnimHash);
         }
 
-        public void Exit(PlayerContext context) { }
+        public override void Tick(PlayerContext context, float deltaTime)
+        {
+            base.Tick(context, deltaTime);
+        }
+
+        public override void Exit(PlayerContext context)
+        {
+        }
     }
 }

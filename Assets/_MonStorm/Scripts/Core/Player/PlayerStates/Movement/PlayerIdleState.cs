@@ -1,33 +1,38 @@
-using UnityEngine;
+using System.Numerics;
 using MonStorm.Core.StateMachine;
 
 namespace MonStorm.Core.Player
 {
-    public class PlayerIdleState : IState<PlayerContext>
+    public class PlayerIdleState : PlayerBaseState
     {
-        public void Enter(PlayerContext context) { }
-
-        public IState<PlayerContext> Tick(PlayerContext context, float deltaTime)
+        protected override void SetupTransitions(PlayerContext context)
         {
-            if (context.isHit)
-                return new PlayerDamagedState();
-
-            if (context.moveInput != Vector2.zero)
-            {
-                if (context.dodgePressed && context.dodgeCoolDown <= 0)
-                    return new PlayerDodgeState();
-                if (context.isSprinting)
-                    return new PlayerRunState();
-                return new PlayerWalkState();
-            }
-            else if (context.dodgePressed)
-            {
-                return new PlayerSneakState();
-            }
-
-            return this;
+            transitionManager.Initialize(
+                new StateTransition<PlayerContext>(new PlayerDamagedState(), () => context.isHit),
+                new StateTransition<PlayerContext>(new PlayerDodgeState(), () => context.moveInput != Vector2.Zero && context.dodgePressed && context.dodgeCoolDown <= 0),
+                new StateTransition<PlayerContext>(new PlayerRunState(), () => context.moveInput != Vector2.Zero && context.isSprinting),
+                new StateTransition<PlayerContext>(new PlayerWalkState(), () => context.moveInput != Vector2.Zero),
+                new StateTransition<PlayerContext>(new PlayerSneakState(), () => context.dodgePressed),
+                new StateTransition<PlayerContext>(new PlayerAttackState(), () => context.attackPressed && context.attackCoolDown <= 0)
+            );
         }
 
-        public void Exit(PlayerContext context) { }
+        public override void Enter(PlayerContext context)
+        {
+            base.Enter(context);
+            context.velocity.X = 0;
+            context.velocity.Z = 0;
+            animator.Play(context.IdleAnimHash);
+            
+        }
+
+        public override void Tick(PlayerContext context, float deltaTime)
+        {
+            base.Tick(context, deltaTime);
+        }
+
+        public override void Exit(PlayerContext context)
+        {
+        }
     }
 }

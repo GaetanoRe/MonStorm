@@ -1,23 +1,39 @@
-using UnityEngine;
+using System.Numerics;
 using MonStorm.Core.StateMachine;
 
 namespace MonStorm.Core.Player
 {
-    public class PlayerWalkState : IState<PlayerContext>
+    public class PlayerWalkState : PlayerBaseState
     {
-        public void Enter(PlayerContext context) { }
-
-        public IState<PlayerContext> Tick(PlayerContext context, float deltaTime)
+        protected override void SetupTransitions(PlayerContext context)
         {
-            if (context.isHit)
-                return new PlayerDamagedState();
-            if (context.moveInput == Vector2.zero)
-                return new PlayerIdleState();
-            if (context.isSprinting)
-                return new PlayerRunState();
-            return this;
+            transitionManager.Initialize(
+                new StateTransition<PlayerContext>(new PlayerDamagedState(), () => context.isHit),
+                new StateTransition<PlayerContext>(new PlayerIdleState(), () => context.moveInput == Vector2.Zero),
+                new StateTransition<PlayerContext>(new PlayerRunState(), () => context.isSprinting),
+                new StateTransition<PlayerContext>(new PlayerAttackState(), () => context.attackPressed && context.attackCoolDown <= 0)
+            );
         }
 
-        public void Exit(PlayerContext context) { }
+        public override void Enter(PlayerContext context)
+        {
+            base.Enter(context);
+            context.moveSpeed = PlayerContext.walkSpeed;
+            animator.Play(context.WalkAnimHash);
+            
+        }
+
+        public override void Tick(PlayerContext context, float deltaTime)
+        {
+            context.velocity.X = context.moveInput.X * context.moveSpeed;
+            context.velocity.Z = context.moveInput.Y * context.moveSpeed;
+            base.Tick(context, deltaTime);
+        }
+
+        public override void Exit(PlayerContext context)
+        {
+        }
     }
+
+    
 }

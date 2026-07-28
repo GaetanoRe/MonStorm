@@ -6,6 +6,7 @@ namespace MonStorm.Core.StateMachine
 
 
         public bool MoveRelative(float x, float y, float z);
+        public bool FollowTarget(IFSMAdapterTransform target);
         public void CancelMove();
         public void ChangeSpeed(float newValue);
     }

@@ -21,6 +21,8 @@ namespace MonStorm.Adapters
             return navMeshAgent.SetDestination(destination);
         }
 
+        public bool FollowTarget(IFSMAdapterTransform target) => navMeshAgent.SetDestination(new(target.XPos, target.YPos, target.ZPos));
+
         public void CancelMove()
         {
             navMeshAgent.ResetPath();

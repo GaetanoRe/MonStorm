@@ -3,8 +3,11 @@ using UnityEngine.AI;
 using MonStorm.Adapters;
 using MonStorm.Core.StateMachine;
 
-public class StagBehavior : MonoBehaviour, IHitDetectionManager
+public class DragonBehavior : MonoBehaviour, IHitDetectionManager
 {
+    [Header("Stats")]
+    [SerializeField, Range(3f, 20f)] float chaseDetectionRange = 10f;
+
     [Header("Debug")]
     [SerializeField] bool logStateTransitions;
     [SerializeField] bool logDamageTaken;
@@ -17,32 +20,29 @@ public class StagBehavior : MonoBehaviour, IHitDetectionManager
     FSMAdapterAnimator adapterAnimator;
     FSMAdapterNavMeshAgent adapterNavMeshAgent;
     FSMAdapterLogger adapterLogger;
+    FSMAdapterTransform adapterTarget;
     StateMachine<CreatureContext> stateMachine;
     CreatureContext creatureContext;
 
     CreatureIdleState idleState;
-    CreatureWanderState wanderState;
-    CreatureWanderState runState;
+    CreatureChaseState chaseState;
+    CreatureAttackState attackState;
     CreatureDamagedState damagedState;
     CreatureDeadState deadState;
 
     readonly static int idleHash = Animator.StringToHash("Idle");
-    readonly static int wanderHash = Animator.StringToHash("Walk");
-    readonly static int runHash = Animator.StringToHash("Run");
+    readonly static int chaseHash = Animator.StringToHash("Walk");
+    readonly static int attackHash = Animator.StringToHash("Attack");
     readonly static int damagedHash = Animator.StringToHash("Damaged");
     readonly static int deadHash = Animator.StringToHash("Dead");
 
-    readonly float idleWaitTime = 5f;
-    float idleTimer;
-
     bool gotDamaged;
 
-    readonly float wanderRadiusMin = 3f;
-    readonly float wanderRadiusMax = 6f;
+    readonly float attackRange = 6f;
+    Transform target;
 
-    readonly float runRadiusMin = 10f;
-    readonly float runRadiusMax = 12f;
-    readonly float runSpeedMultiplier = 2f;
+    float attackRechargeTime = 5f;
+    float attackTimer;
 
 
     void Awake()
@@ -54,33 +54,36 @@ public class StagBehavior : MonoBehaviour, IHitDetectionManager
         adapterAnimator = new(animator);
         adapterNavMeshAgent = new(navMeshAgent);
         adapterLogger = new(logStateTransitions);
-        
+
+        target = FindFirstObjectByType<MonStormCharacterController>().transform;
+        adapterTarget = new(target);
+
         creatureContext = new(null, adapterAnimator, adapterNavMeshAgent, adapterLogger);
         stateMachine = new(creatureContext);
         creatureContext.StateMachine = stateMachine;
         StateTransitionManager<CreatureContext> idleTransitions = new();
-        StateTransitionManager<CreatureContext> wanderTransitions = new();
-        StateTransitionManager<CreatureContext> runTransitions = new();
+        StateTransitionManager<CreatureContext> chaseTransitions = new();
+        StateTransitionManager<CreatureContext> attackTransitions = new();
         StateTransitionManager<CreatureContext> damagedTransitions = new();
         StateTransitionManager<CreatureContext> deadTransitions = new();
 
         idleState = new(creatureContext, idleTransitions, idleHash);
-        wanderState = new(creatureContext, wanderTransitions, wanderHash, wanderRadiusMin, wanderRadiusMax, 1f);
-        runState = new(creatureContext, runTransitions, runHash, runRadiusMin, runRadiusMax, runSpeedMultiplier);
+        chaseState = new(creatureContext, chaseTransitions, chaseHash, adapterTarget);
+        attackState = new(creatureContext, attackTransitions, attackHash);
         damagedState = new(creatureContext, damagedTransitions, damagedHash);
         deadState = new(creatureContext, deadTransitions, deadHash);
 
-        StateTransition<CreatureContext> wanderToIdleTransition = new(idleState, ConditionHasReachedDestination);
-        StateTransition<CreatureContext> runToIdleTransition = new(idleState, ConditionHasReachedDestination);
-        StateTransition<CreatureContext> toWanderTransition = new(wanderState, ConditionIdleWait);
-        StateTransition<CreatureContext> damagedToRunTransition = new(runState, ConditionAnimationFinished);
+        StateTransition<CreatureContext> idleToChaseTransition = new(chaseState, ConditionTargetInChaseRange);
+        StateTransition<CreatureContext> idleToAttackTransition = new(attackState, ConditionAttackPossible);
+        StateTransition<CreatureContext> chaseToIdleTransition = new(idleState, ConditionTargetNotInChaseRange);
+        StateTransition<CreatureContext> toIdleTransition = new(idleState, ConditionAnimationFinished);
         StateTransition<CreatureContext> toDamagedTransition = new(damagedState, ConditionGotHit);
         StateTransition<CreatureContext> toDeadTransition = new(deadState, ConditionDead);
 
-        idleTransitions.Initialize(toDamagedTransition, toDeadTransition, toWanderTransition);
-        wanderTransitions.Initialize(toDamagedTransition, toDeadTransition, wanderToIdleTransition);
-        runTransitions.Initialize(toDamagedTransition, toDeadTransition, runToIdleTransition);
-        damagedTransitions.Initialize(toDamagedTransition, toDeadTransition, damagedToRunTransition);
+        idleTransitions.Initialize(toDamagedTransition, toDeadTransition, idleToChaseTransition, idleToAttackTransition);
+        chaseTransitions.Initialize(toDamagedTransition, toDeadTransition, chaseToIdleTransition);
+        attackTransitions.Initialize(toDamagedTransition, toDeadTransition, toIdleTransition);
+        damagedTransitions.Initialize(toDamagedTransition, toDeadTransition, toIdleTransition);
 
         stateMachine.TransitionTo(idleState);
     }
@@ -88,6 +91,8 @@ public class StagBehavior : MonoBehaviour, IHitDetectionManager
     void Update()
     {
         stateMachine.Tick(Time.deltaTime);
+
+        attackTimer += Time.deltaTime;
     }
 
     void OnEnable()
@@ -116,19 +121,7 @@ public class StagBehavior : MonoBehaviour, IHitDetectionManager
 
     void DropItems()
     {
-        itemDropper.Activate(1f);
-    }
-
-    bool ConditionIdleWait()
-    {
-        if (idleTimer < idleWaitTime)
-        {
-            idleTimer += Time.deltaTime;
-            return false;
-        }
-
-        idleTimer = 0f;
-        return true;
+        itemDropper.Activate(2f);
     }
 
     bool ConditionGotHit()
@@ -143,18 +136,25 @@ public class StagBehavior : MonoBehaviour, IHitDetectionManager
 
     bool ConditionAnimationFinished() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !animator.IsInTransition(0);
 
-    bool ConditionHasReachedDestination()
+    bool ConditionTargetInChaseRange()
     {
-        if (!navMeshAgent.pathPending)
+        if (adapterTarget == null) return false;
+
+        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+        return distanceToTarget <= chaseDetectionRange && distanceToTarget >= attackRange;
+    }
+
+    bool ConditionTargetNotInChaseRange() => !ConditionTargetInChaseRange();
+
+    bool ConditionAttackPossible()
+    {
+        if (adapterTarget == null) return false;
+
+        if (attackTimer >= attackRechargeTime && Vector3.Distance(transform.position, target.position) <= attackRange)
         {
-            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
-            {
-                if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
-                {
-                    idleTimer = 0f;
-                    return true;
-                }
-            }
+            attackTimer = 0f;
+            return true;
         }
 
         return false;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class HitApplier : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class HitApplier : MonoBehaviour
     readonly HashSet<HitDetector> currentDetections = new();
     bool isActive;
 
+    public event Action<bool> OnActiveChanged;
+
 
     /// <summary>Activates the HitApplier so it can detect collisions.</summary>
     /// <param name="active">Whether to activate or deactivate the HitApplier.</param>
@@ -16,15 +19,7 @@ public class HitApplier : MonoBehaviour
     {
         currentDetections.Clear();
         isActive = active;
-
-        if (active)
-        {
-            transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
-        }
-        else
-        {
-            transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.gray;
-        }
+        OnActiveChanged?.Invoke(active);
     }
 
     void ApplyHit(HitDetector newDetector)

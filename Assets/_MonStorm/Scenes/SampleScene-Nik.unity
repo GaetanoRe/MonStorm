@@ -3619,30 +3619,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &478913278 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2826122472266735184, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
-  m_PrefabInstance: {fileID: 2048078129}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &478913280 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5289719348649077989, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
-  m_PrefabInstance: {fileID: 2048078129}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &478913282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 478913278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ded0b13a703d8209882a1a3a9d4e0fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitApplierVisual
-  hitApplier: {fileID: 251755198}
-  meshRenderer: {fileID: 478913280}
 --- !u!1 &584593896
 GameObject:
   m_ObjectHideFlags: 0
@@ -5845,10 +5821,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2826122472266735184, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 478913282}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
 --- !u!4 &4060834701295982961 stripped
 Transform:

@@ -29,7 +29,7 @@ namespace MonStorm.Core.StateMachine
 
             for (int i = 0; i <= 10; i++)
             {
-                if (navMeshAgent.MoveRelative(x, 0f, z)) break;
+                if (navMeshAgent.MoveRelative(new(x, 0f, z))) break;
 
                 x = GetRandomFloat(wanderRadiusMin, wanderRadiusMax);
                 z = GetRandomFloat(wanderRadiusMin, wanderRadiusMax);

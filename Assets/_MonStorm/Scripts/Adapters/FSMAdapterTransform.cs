@@ -1,13 +1,12 @@
 using UnityEngine;
 using MonStorm.Core.StateMachine;
+using static MonStorm.Adapters.AdaptersUtils;
 
 namespace MonStorm.Adapters
 {
     public class FSMAdapterTransform : IFSMAdapterTransform
     {
-        public float XPos => t.position.x;
-        public float YPos => t.position.y;
-        public float ZPos => t.position.z;
+        public System.Numerics.Vector3 Position => UnityToNumericsVector3(t.position);
 
         readonly Transform t;
 

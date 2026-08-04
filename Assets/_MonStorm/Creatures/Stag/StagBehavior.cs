@@ -145,18 +145,9 @@ public class StagBehavior : MonoBehaviour, IHitDetectionManager
 
     bool ConditionHasReachedDestination()
     {
-        if (!navMeshAgent.pathPending)
-        {
-            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
-            {
-                if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
-                {
-                    idleTimer = 0f;
-                    return true;
-                }
-            }
-        }
+        if (adapterNavMeshAgent.HasActivePath()) return false;
 
-        return false;
+        idleTimer = 0f;
+        return true;
     }
 }

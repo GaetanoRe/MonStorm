@@ -3,6 +3,7 @@ using MonStorm.Core.StateMachine;
 
 namespace MonStorm.Adapters
 {
+    /// <inheritdoc/>
     public class FSMAdapterLogger : IFSMAdapterLogger
     {
         bool isEnabled;

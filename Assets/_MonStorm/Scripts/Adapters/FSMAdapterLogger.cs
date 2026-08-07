@@ -6,10 +6,8 @@ namespace MonStorm.Adapters
     /// <inheritdoc/>
     public class FSMAdapterLogger : IFSMAdapterLogger
     {
-        bool isEnabled;
+        bool isEnabled = true;
 
-
-        public FSMAdapterLogger(bool isEnabled) => ToggleEnabled(isEnabled);
 
         public void ToggleEnabled(bool isEnabled) => this.isEnabled = isEnabled;
 

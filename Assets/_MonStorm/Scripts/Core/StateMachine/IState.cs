@@ -1,4 +1,3 @@
-
 namespace MonStorm.Core.StateMachine
 {
     public interface IState<TContext> where TContext : class

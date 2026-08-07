@@ -25,7 +25,7 @@ public class HitApplier : MonoBehaviour
     void ApplyHit(HitDetector newDetector)
     {
         currentDetections.Add(newDetector);
-        newDetector.HitDetectionManager.HandleHit(this, newDetector);
+        newDetector.HitReceiver.HandleHit(this, newDetector);
     }
 
     void OnTriggerEnter(Collider other)
@@ -39,7 +39,7 @@ public class HitApplier : MonoBehaviour
         // Here we check if the same object has already been hit in the current attack, and if so we return.
         foreach (HitDetector detector in currentDetections)
         {
-            if (detector.HitDetectionManager == hitDetector.HitDetectionManager) return;
+            if (detector.HitReceiver == hitDetector.HitReceiver) return;
         }
 
         ApplyHit(hitDetector);

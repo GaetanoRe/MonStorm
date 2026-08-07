@@ -5,6 +5,8 @@ namespace MonStorm.Adapters
 {
     public class FSMAdapterAnimator : IFSMAdapterAnimator
     {
+        public bool IsAnimationFinished => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !animator.IsInTransition(0);
+
         readonly Animator animator;
         readonly float transitionDuration = 0.2f;
 

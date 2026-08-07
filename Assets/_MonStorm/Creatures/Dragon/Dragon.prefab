@@ -476,7 +476,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 30349176309253852}
-  - component: {fileID: 4664736712273686787}
   - component: {fileID: 3376203042943474043}
   - component: {fileID: 4280863083044455717}
   - component: {fileID: 567852775131639206}
@@ -507,18 +506,6 @@ Transform:
   - {fileID: 7697587331504454473}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4664736712273686787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 801643786782628966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7be37da74bfaa6d48a6d22a1bebb146b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DragonBehavior
 --- !u!114 &3376203042943474043
 MonoBehaviour:
   m_ObjectHideFlags: 0

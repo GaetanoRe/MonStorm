@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HitProcessing : MonoBehaviour, IHitDetectionManager
+public class HitProcessingEXAMPLE : MonoBehaviour, IHitReceiver
 {
     Health health;
 

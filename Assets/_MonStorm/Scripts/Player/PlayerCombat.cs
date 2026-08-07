@@ -4,7 +4,7 @@ using System;
 using MonStorm.Core.StateMachine;
 using MonStorm.Core.Player;
 
-public class PlayerCombat : MonoBehaviour, IHitDetectionManager
+public class PlayerCombat : MonoBehaviour, IHitReceiver
 {
     public PlayerContext context;
 

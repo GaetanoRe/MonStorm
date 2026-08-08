@@ -40,6 +40,7 @@ namespace MonStorm.Adapters
         public void CancelMove()
         {
             navMeshAgent.ResetPath();
+            navMeshAgent.velocity = UnityEngine.Vector3.zero;
         }
 
         public void ChangeSpeed(float newValue)

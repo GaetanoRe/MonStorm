@@ -30,7 +30,7 @@ public class CreatureBehavior : MonoBehaviour
     public bool ConditionGotHitThisFrame() => gotHitThisFrame;
     public bool ConditionIsDead() => health != null && health.IsDead;
     public bool ConditionIsAnimationFinished() => adapterAnimator.IsAnimationFinished;
-    public bool ConditionHasReachedDestionation() => adapterNavMeshAgent.HasActivePath;
+    public bool ConditionHasReachedDestination() => adapterNavMeshAgent.HasActivePath;
 
     void Awake()
     {
@@ -101,9 +101,9 @@ public class CreatureBehavior : MonoBehaviour
     {
         if (itemDropper != null)
         {
-            itemDropper.Activate(1f);
+            itemDropper.Activate(1.5f);
         }
 
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 5f);
     }
 }

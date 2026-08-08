@@ -5,15 +5,18 @@ namespace MonStorm.Core.StateMachine
 {
     public class CreatureWanderState : CreatureBaseState
     {
-        readonly Vector2 wanderCenter;
         readonly float maxWanderRange;
+        Vector2 wanderCenter;
 
 
-        public CreatureWanderState(CreatureContext creatureContext, StateTransitionManager<CreatureContext> transitionManager, int animationHash, Vector2 wanderCenter, float maxWanderRange)
+        public CreatureWanderState(CreatureContext creatureContext, StateTransitionManager<CreatureContext> transitionManager, int animationHash,
+            Vector2 wanderCenter, float maxWanderRange, float walkSpeed)
             : base(creatureContext, transitionManager, animationHash)
         {
-            this.wanderCenter = wanderCenter;
             this.maxWanderRange = maxWanderRange;
+            this.wanderCenter = wanderCenter;
+
+            navMeshAgent.ChangeSpeed(walkSpeed);
         }
 
         public override void Enter(CreatureContext context)
@@ -29,6 +32,8 @@ namespace MonStorm.Core.StateMachine
 
             navMeshAgent.CancelMove();
         }
+
+        public void ChangeWanderCenter(Vector2 wanderCenter) => this.wanderCenter = wanderCenter;
 
         void Wander()
         {

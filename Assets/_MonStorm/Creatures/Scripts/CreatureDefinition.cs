@@ -6,8 +6,8 @@ using MonStorm.Core.StateMachine;
 public abstract class CreatureDefinition : ScriptableObject
 {
     [SerializeField] string creatureName;
-    [SerializeField] GameObject prefab;
-    [SerializeField] List<InspectorItem> lootDropTableItems;
+    //[SerializeField] GameObject prefab;
+    //[SerializeField] List<InspectorItem> lootDropTableItems;
 
     // Class used to configure the loot drop table in the inspector.
     [Serializable] class InspectorItem

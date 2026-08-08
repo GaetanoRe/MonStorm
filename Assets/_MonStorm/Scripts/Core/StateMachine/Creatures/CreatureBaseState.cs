@@ -38,7 +38,7 @@ namespace MonStorm.Core.StateMachine
 
         public virtual void Exit(CreatureContext context)
         {
-            
+
         }
 
         public virtual void Tick(CreatureContext context, float deltaTime)

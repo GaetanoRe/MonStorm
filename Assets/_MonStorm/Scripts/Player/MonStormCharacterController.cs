@@ -43,7 +43,7 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.IdleAnimHash = Animator.StringToHash("Idle");
         m_playerContext.DamagedAnimHash = Animator.StringToHash("GetHit");
         m_playerContext.DeathAnimHash = Animator.StringToHash("Death");
-        m_playerContext.AttackAnimHash = Animator.StringToHash("PunchRight");
+        m_playerContext.AttackAnimHash = Animator.StringToHash("MeleeAttack_TwoHanded");
         
 
         m_stateMachine.TransitionTo(new PlayerIdleState());

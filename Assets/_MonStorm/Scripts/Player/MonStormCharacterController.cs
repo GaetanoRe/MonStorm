@@ -20,6 +20,12 @@ public class MonStormCharacterController : MonoBehaviour
     private CharacterController controller;
     private Vector3 velocity;
 
+    private Transform _lockOnTarget;
+    private Transform _defaultLookAt;
+
+    [SerializeField] private float _lockOnRadius;
+    [SerializeField] private LayerMask _enemyLayer;
+
     private InputSystem_Actions m_inputActions;
     private StateMachine<PlayerContext> m_stateMachine;
     private PlayerContext m_playerContext;
@@ -47,6 +53,8 @@ public class MonStormCharacterController : MonoBehaviour
         
 
         m_stateMachine.TransitionTo(new PlayerIdleState());
+
+        _defaultLookAt = playerCamera.LookAt;
        
     }
 
@@ -60,6 +68,7 @@ public class MonStormCharacterController : MonoBehaviour
         UpdateContext();
         m_stateMachine.Tick(Time.deltaTime);
         HandleMovement();
+        UpdateLockOn();
         HandleButtons();
     }
 
@@ -101,8 +110,60 @@ public class MonStormCharacterController : MonoBehaviour
         if (m_inputActions.Player.SpecialAction.WasPressedThisFrame())
             Debug.Log("Pressed Special Action");
         if (m_inputActions.Player.CenterCamera.WasPressedThisFrame())
-            Debug.Log("Pressed Center Camera");
+            ToggleLockOn();
         if (m_inputActions.Player.EnableAttack.WasPressedThisFrame())
             Debug.Log("Pressed Attack");
+    }
+
+    void ToggleLockOn()
+    {
+        m_playerContext.isTargeting = ! m_playerContext.isTargeting;
+        if (m_playerContext.isTargeting)
+        {
+            Collider [] hits = Physics.OverlapSphere(transform.position, _lockOnRadius, _enemyLayer);
+            if(hits.Length == 0) {
+                m_playerContext.isTargeting = false; 
+                return;
+            }
+            Transform nearest = null;
+            float nearestDist = float.MaxValue;
+
+            foreach(Collider hit in hits)
+            {
+                float dist = Vector3.Distance(transform.position, hit.transform.position);
+                if(dist < nearestDist)
+                {
+                    nearestDist = dist;
+                    nearest = hit.transform;
+                }
+            }
+            _lockOnTarget = nearest;
+            playerCamera.LookAt = _lockOnTarget;
+        }
+        else
+        {
+            ReleaseLock();
+        }
+        
+    }
+
+    void UpdateLockOn()
+    {
+        if(m_playerContext.isTargeting == false) return;
+        else if(m_playerContext.isTargeting && _lockOnTarget == null)
+        {
+            ReleaseLock();
+        }
+        else if(m_playerContext.isTargeting && _lockOnTarget != null)
+        {
+            m_playerContext.targetDistance = Vector3.Distance(transform.position, _lockOnTarget.position);
+        }
+    }
+
+    void ReleaseLock()
+    {
+        _lockOnTarget = null;
+        m_playerContext.isTargeting = false; 
+        playerCamera.LookAt = _defaultLookAt;
     }
 }

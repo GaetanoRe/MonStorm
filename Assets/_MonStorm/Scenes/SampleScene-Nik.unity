@@ -2996,6 +2996,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8357376212771060938, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
   m_PrefabInstance: {fileID: 220898779}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &220898783 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6684465143610207852, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
+  m_PrefabInstance: {fileID: 220898779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
 --- !u!114 &251755198 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2356083552880123081, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
@@ -5818,6 +5829,18 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 251755198}
+    - target: {fileID: 5535926596780791933, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 220898783}
+    - target: {fileID: 5535926596780791933, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: _lockOnRadius
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535926596780791933, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: _enemyLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

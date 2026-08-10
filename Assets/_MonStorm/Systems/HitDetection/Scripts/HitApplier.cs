@@ -28,7 +28,7 @@ public class HitApplier : MonoBehaviour
         newDetector.HitReceiver.HandleHit(this, newDetector);
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (!isActive) return;
 

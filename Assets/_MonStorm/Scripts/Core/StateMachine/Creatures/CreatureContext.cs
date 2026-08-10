@@ -12,6 +12,8 @@ namespace MonStorm.Core.StateMachine
         public IFSMAdapterLogger AdapterLogger { get; }
         public IFSMAdapterTransform PlayerTransform { get; }
 
+        public Action OnAttackAnimationEnd;
+
         public float DistanceToPlayer => Vector2.Distance(AdapterTransform.PositionV2, PlayerTransform.PositionV2);
         public bool IsFacingPlayer
         {

@@ -46,29 +46,30 @@ public class TerritorialCreatureDefinition : CreatureDefinition
         CreatureDamagedState damagedState = new(creatureContext, damagedTransitions, DAMAGED_ANIM_HASH);
         CreatureDeadState deadState = new(creatureContext, deadTransitions, DEAD_ANIM_HASH);
 
+        bool IsInAttackRange() => creatureContext.DistanceToPlayer <= AttackRange;
         bool CanStartChase() => creatureContext.DistanceToPlayer <= DetectionRange && IsWithinReEngageBuffer(homeCenter, creatureContext);
-        bool ShouldCancelChase() => creatureContext.DistanceToPlayer > DetectionRange || IsOutsideMaxTether(homeCenter, creatureContext);
 
         idleTransitions.Initialize(
             new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
             new(deadState, creatureBehavior.ConditionIsDead),
             new(wanderState, () => idleState.StateTimer >= IdleDuration && !CanStartChase()),
-            new(chaseState, CanStartChase)
+            new(chaseState, CanStartChase),
+            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingPlayer)
         );
 
         wanderTransitions.Initialize(
             new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
             new(deadState, creatureBehavior.ConditionIsDead),
             new(idleState, creatureBehavior.ConditionHasReachedDestination),
-            new(chaseState, () => CanStartChase() && creatureContext.DistanceToPlayer > AttackRange)
+            new(chaseState, CanStartChase)
         );
 
         chaseTransitions.Initialize(
             new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
             new(deadState, creatureBehavior.ConditionIsDead),
-            new(wanderState, ShouldCancelChase),
-            new(idleState, () => creatureContext.DistanceToPlayer <= AttackRange && !attackTimer.IsReady && creatureContext.IsFacingPlayer),
-            new(attackState, () => creatureContext.DistanceToPlayer <= AttackRange && attackTimer.IsReady)
+            new(wanderState, () => creatureContext.DistanceToPlayer > DetectionRange || IsOutsideMaxTether(homeCenter, creatureContext)),
+            new(idleState, () => IsInAttackRange() && !attackTimer.IsReady && creatureContext.IsFacingPlayer),
+            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingPlayer)
         );
 
         attackTransitions.Initialize(

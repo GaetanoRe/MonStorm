@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using System;
 using MonStorm.Adapters;
 using MonStorm.Core.StateMachine;
+using MonStorm.Core.Combat;
 
 public class CreatureBehavior : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class CreatureBehavior : MonoBehaviour
     public event Action<Health, float> OnDamaged;
 
     public StateMachine<CreatureContext> StateMachine => stateMachine;
+    public CreatureContext CreatureContext => creatureContext;
 
     [SerializeField] CreatureDefinition creatureDefinition;
 
@@ -92,7 +94,7 @@ public class CreatureBehavior : MonoBehaviour
 
         if (health.IsDead) return; // Hit can still occur after the Health has died and the gameobject hasn't been destroyed, hence this guard
 
-        float damageDealt = applier.Damage * detector.DamageMultiplier;
+        float damageDealt = DamageCalculator.Resolve(applier.Damage, detector.DamageMultiplier);
         health.Damage(damageDealt);
         OnDamaged?.Invoke(health, damageDealt);
     }

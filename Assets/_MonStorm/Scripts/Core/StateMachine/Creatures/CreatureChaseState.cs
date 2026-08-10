@@ -8,7 +8,7 @@ namespace MonStorm.Core.StateMachine
         readonly IFSMAdapterTransform targetTransform;
         readonly Action<Vector2> onExitChase;
 
-        readonly static float recalculatePathTime = 0.5f;
+        readonly static float recalculatePathTime = 0.1f;
         float pathTimer;
 
         readonly float chaseSpeed;

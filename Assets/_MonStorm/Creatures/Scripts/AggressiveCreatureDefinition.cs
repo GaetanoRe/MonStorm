@@ -19,6 +19,7 @@ public class AggressiveCreatureDefinition : CreatureDefinition
     [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public float AttackCooldownTime { get; private set; }
 
+
     public override StateMachine<CreatureContext> BuildStateMachine(CreatureContext creatureContext, CreatureBehavior creatureBehavior)
     {
         System.Numerics.Vector2 wanderCenter = new(creatureBehavior.transform.position.x, creatureBehavior.transform.position.z);
@@ -43,12 +44,14 @@ public class AggressiveCreatureDefinition : CreatureDefinition
         CreatureDamagedState damagedState = new(creatureContext, damagedTransitions, DAMAGED_ANIM_HASH);
         CreatureDeadState deadState = new(creatureContext, deadTransitions, DEAD_ANIM_HASH);
 
+        bool IsInAttackRange() => creatureContext.DistanceToPlayer <= AttackRange;
+
         idleTransitions.Initialize(
             new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
             new(deadState, creatureBehavior.ConditionIsDead),
-            new(attackState, () => creatureContext.DistanceToPlayer <= AttackRange && attackTimer.IsReady && creatureContext.IsFacingPlayer),
             new(wanderState, () => idleState.StateTimer >= IdleDuration && creatureContext.DistanceToPlayer > DetectionRange),
-            new(chaseState, () => creatureContext.DistanceToPlayer <= DetectionRange && (creatureContext.DistanceToPlayer > AttackRange || !creatureContext.IsFacingPlayer))
+            new(chaseState, () => creatureContext.DistanceToPlayer <= DetectionRange && (creatureContext.DistanceToPlayer > AttackRange || !creatureContext.IsFacingPlayer)),
+            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingPlayer)
         );
 
         wanderTransitions.Initialize(
@@ -61,8 +64,8 @@ public class AggressiveCreatureDefinition : CreatureDefinition
         chaseTransitions.Initialize(
             new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
             new(deadState, creatureBehavior.ConditionIsDead),
-            new(idleState, () => creatureContext.DistanceToPlayer <= AttackRange && !attackTimer.IsReady && creatureContext.IsFacingPlayer),
-            new(attackState, () => creatureContext.DistanceToPlayer <= AttackRange && attackTimer.IsReady && creatureContext.IsFacingPlayer)
+            new(idleState, () => IsInAttackRange() && !attackTimer.IsReady && creatureContext.IsFacingPlayer),
+            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingPlayer)
         );
 
         attackTransitions.Initialize(

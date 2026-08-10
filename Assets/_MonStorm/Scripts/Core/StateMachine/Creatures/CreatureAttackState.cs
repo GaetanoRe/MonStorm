@@ -18,5 +18,12 @@ namespace MonStorm.Core.StateMachine
 
             attackTimer.StartCooldown();
         }
+
+        public override void Exit(CreatureContext context)
+        {
+            base.Exit(context);
+
+            context.OnAttackAnimationEnd?.Invoke();
+        }
     }
 }

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AggressiveCreatureDefinition
   creatureName: Dragon
   <WalkSpeed>k__BackingField: 2.5
-  <ChaseSpeed>k__BackingField: 8
+  <ChaseSpeed>k__BackingField: 7
   <IdleDuration>k__BackingField: 10
   <MaxWanderRange>k__BackingField: 6
-  <DetectionRange>k__BackingField: 14
+  <DetectionRange>k__BackingField: 12
   <AttackRange>k__BackingField: 4
-  <AttackCooldownTime>k__BackingField: 8
+  <AttackCooldownTime>k__BackingField: 4

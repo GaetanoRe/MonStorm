@@ -44,16 +44,7 @@ namespace MonStorm.Core.Player
         public bool isGrounded;
         public bool dodgePressed;
         public float targetDistance;
-        public enum ActionInput
-        {
-            None,
-            Action1,
-            Action2,
-            Action3,
-            Action4,
-            Action5,
-            SpecialAction
-        }
+        
 
         public ActionInput weaponAction;
 

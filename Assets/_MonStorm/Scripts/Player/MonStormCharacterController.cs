@@ -19,12 +19,8 @@ public class MonStormCharacterController : MonoBehaviour
 
     private CharacterController controller;
     private Vector3 velocity;
-
-    private Transform _lockOnTarget;
-
     [SerializeField] private float _lockOnRadius;
     [SerializeField] private LayerMask _enemyLayer;
-    [SerializeField] private CinemachineTargetGroup targetGroup;
 
     private InputSystem_Actions m_inputActions;
     private StateMachine<PlayerContext> m_stateMachine;
@@ -67,7 +63,6 @@ public class MonStormCharacterController : MonoBehaviour
         UpdateContext();
         m_stateMachine.Tick(Time.deltaTime);
         HandleMovement();
-        UpdateLockOn();
         HandleButtons();
     }
 
@@ -109,27 +104,9 @@ public class MonStormCharacterController : MonoBehaviour
         if (m_inputActions.Player.SpecialAction.WasPressedThisFrame())
             Debug.Log("Pressed Special Action");
         if (m_inputActions.Player.CenterCamera.WasPressedThisFrame())
-            ToggleLockOn();
+            SnapCamera();
         if (m_inputActions.Player.EnableAttack.WasPressedThisFrame())
             Debug.Log("Pressed Attack");
-    }
-
-    void ToggleLockOn()
-    {
-        m_playerContext.isTargeting = ! m_playerContext.isTargeting;
-        if (m_playerContext.isTargeting)
-        {
-            
-            _lockOnTarget = nearest;
-            targetGroup.AddMember(_lockOnTarget, 1f, 1f);
-
-
-        }
-        else
-        {
-            ReleaseLock();
-        }
-        
     }
 
     void SnapCamera(){
@@ -160,24 +137,8 @@ public class MonStormCharacterController : MonoBehaviour
             targetAngle = 0;
         }
         else{
-            targetAngle = Vector3.SignedAngle(transform.forward, , Vector3.up);
+            targetAngle = Vector3.SignedAngle(transform.forward,nearest.transform.position , Vector3.up);
 
         }
-    }
-
-    void UpdateLockOn()
-    {
-        if(m_playerContext.isTargeting == false) return;
-        else if(m_playerContext.isTargeting && _lockOnTarget == null)
-            ReleaseLock();
-        else if(m_playerContext.isTargeting && _lockOnTarget != null)
-            m_playerContext.targetDistance = Vector3.Distance(transform.position, _lockOnTarget.position);
-    }
-
-    void ReleaseLock()
-    {
-        _lockOnTarget = null;
-        m_playerContext.isTargeting = false; 
-        targetGroup.RemoveMember(_lockOnTarget);
     }
 }

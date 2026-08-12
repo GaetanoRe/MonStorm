@@ -21,10 +21,10 @@ public class MonStormCharacterController : MonoBehaviour
     private Vector3 velocity;
 
     private Transform _lockOnTarget;
-    private Transform _defaultLookAt;
 
     [SerializeField] private float _lockOnRadius;
     [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private CinemachineTargetGroup targetGroup;
 
     private InputSystem_Actions m_inputActions;
     private StateMachine<PlayerContext> m_stateMachine;
@@ -54,7 +54,6 @@ public class MonStormCharacterController : MonoBehaviour
 
         m_stateMachine.TransitionTo(new PlayerIdleState());
 
-        _defaultLookAt = playerCamera.LookAt;
        
     }
 
@@ -120,25 +119,11 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.isTargeting = ! m_playerContext.isTargeting;
         if (m_playerContext.isTargeting)
         {
-            Collider [] hits = Physics.OverlapSphere(transform.position, _lockOnRadius, _enemyLayer);
-            if(hits.Length == 0) {
-                m_playerContext.isTargeting = false; 
-                return;
-            }
-            Transform nearest = null;
-            float nearestDist = float.MaxValue;
-
-            foreach(Collider hit in hits)
-            {
-                float dist = Vector3.Distance(transform.position, hit.transform.position);
-                if(dist < nearestDist)
-                {
-                    nearestDist = dist;
-                    nearest = hit.transform;
-                }
-            }
+            
             _lockOnTarget = nearest;
-            playerCamera.LookAt = _lockOnTarget;
+            targetGroup.AddMember(_lockOnTarget, 1f, 1f);
+
+
         }
         else
         {
@@ -147,23 +132,52 @@ public class MonStormCharacterController : MonoBehaviour
         
     }
 
+    void SnapCamera(){
+        Collider [] hits = Physics.OverlapSphere(transform.position, _lockOnRadius, _enemyLayer);
+        if(hits.Length == 0) {
+            m_playerContext.isTargeting = false; 
+            return;
+        }
+        Transform nearest = null;
+        float nearestDist = float.MaxValue;
+        float targetAngle = 0;
+
+        foreach(Collider hit in hits)
+        {
+            Health enemyHealth = hit.GetComponentInParent<Health>();
+            if (enemyHealth == null) continue;
+            Transform root = enemyHealth.transform;
+            float dist = Vector3.Distance(transform.position, root.position);
+            if(dist < nearestDist)
+            {
+                nearestDist = dist;
+                nearest = root;
+            }
+
+        }
+
+        if(hits.Length == 0 || nearest == null) {
+            targetAngle = 0;
+        }
+        else{
+            targetAngle = Vector3.SignedAngle(transform.forward, , Vector3.up);
+
+        }
+    }
+
     void UpdateLockOn()
     {
         if(m_playerContext.isTargeting == false) return;
         else if(m_playerContext.isTargeting && _lockOnTarget == null)
-        {
             ReleaseLock();
-        }
         else if(m_playerContext.isTargeting && _lockOnTarget != null)
-        {
             m_playerContext.targetDistance = Vector3.Distance(transform.position, _lockOnTarget.position);
-        }
     }
 
     void ReleaseLock()
     {
         _lockOnTarget = null;
         m_playerContext.isTargeting = false; 
-        playerCamera.LookAt = _defaultLookAt;
+        targetGroup.RemoveMember(_lockOnTarget);
     }
 }

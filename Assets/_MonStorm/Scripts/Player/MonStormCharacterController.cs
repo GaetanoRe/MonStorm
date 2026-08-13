@@ -4,7 +4,6 @@ using Unity.Cinemachine;
 using MonStorm.Core.Player;
 using MonStorm.Core.StateMachine;
 using MonStorm.Adapters;
-using Unity.VisualScripting.Antlr3.Runtime;
 
 [RequireComponent(typeof(CharacterController))]
 public class MonStormCharacterController : MonoBehaviour
@@ -71,8 +70,19 @@ public class MonStormCharacterController : MonoBehaviour
 
     void UpdateContext()
     {
-        m_playerContext.moveInput.X = m_inputActions.Player.Move.ReadValue<Vector2>().x;
-        m_playerContext.moveInput.Y = m_inputActions.Player.Move.ReadValue<Vector2>().y;
+        Vector2 raw = m_inputActions.Player.Move.ReadValue<Vector2>();
+
+        Vector3 camForward = Camera.main.transform.forward;
+        camForward.y = 0;
+        camForward.Normalize();
+
+        Vector3 camRight = Camera.main.transform.right;
+        camRight.y = 0;
+        camRight.Normalize();
+        Vector3 worldMove = camForward * raw.y + camRight * raw.x;
+
+        m_playerContext.moveInput.X = worldMove.x;
+        m_playerContext.moveInput.Y = worldMove.z;
         m_playerContext.isGrounded = controller.isGrounded;
         m_playerContext.isSprinting = m_inputActions.Player.Sprint.IsPressed();
         m_playerContext.dodgePressed = m_inputActions.Player.Dodge.WasPressedThisFrame();

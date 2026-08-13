@@ -1,4 +1,3 @@
-
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +11,7 @@ public class MonStormPlayerCameraController : MonoBehaviour
     [SerializeField] float snapDurationSec = 0.15f;
     [SerializeField] float pitchSmoothTime = 0.2f;
     [SerializeField] float mousePitchSensitivity = 0.1f;
+    [SerializeField] float controllerPitchSensitivity = 0.5f;
     [SerializeField] bool classicCam;
 
     private bool _snapping;
@@ -65,26 +65,29 @@ public class MonStormPlayerCameraController : MonoBehaviour
         if(mouseY != 0f)
         {
             // Camera vertically works regular
+            float mouseMoveY = mouseY * mousePitchSensitivity * Time.deltaTime;
+            orbitalCamera.VerticalAxis.Value = Mathf.Clamp(orbitalCamera.VerticalAxis.Value + mouseMoveY, pitchPresets[0], pitchPresets[pitchPresets.Length - 1]);
         }
         else if (!classicCam)
         {
-            
+            float analogueY = lookInput.y * controllerPitchSensitivity * Time.deltaTime;
+            orbitalCamera.VerticalAxis.Value = Mathf.Clamp(orbitalCamera.VerticalAxis.Value + analogueY, pitchPresets[0], pitchPresets[pitchPresets.Length - 1]);
         }
         else
         {
-            // MH4 Style Cam (Classic Cam)
+
+            // Classic MH Style Cam (Classic Cam)
             if (lookInput.y > 0.5f && _prevLookY <= 0.5f)
                 pitchIndex = Mathf.Clamp(pitchIndex + 1, 0, pitchPresets.Length - 1);
-            else if (lookInput.y < -0.5f && _prevLookY >= -0.5f){
-                pitchIndex = Mathf.Clamp(pitchIndex - 1, 0, pitchPresets.Length - 1);
-                    _prevLookY = lookInput.y;
-                    orbitalCamera.VerticalAxis.Value = Mathf.SmoothDamp(
-                    orbitalCamera.VerticalAxis.Value,
-                    pitchPresets[pitchIndex],
-                    ref _pitchCurrentVel,
-                    pitchSmoothTime
-                );
-            }
+            else if (lookInput.y < -0.5f && _prevLookY >= -0.5f)
+                pitchIndex = Mathf.Clamp(pitchIndex - 1, 0, pitchPresets.Length - 1);                
+            _prevLookY = lookInput.y;
+            orbitalCamera.VerticalAxis.Value = Mathf.SmoothDamp(
+                orbitalCamera.VerticalAxis.Value,
+                pitchPresets[pitchIndex],
+                ref _pitchCurrentVel,
+                pitchSmoothTime
+            );
         }
 
         

@@ -4,12 +4,14 @@ using Unity.Cinemachine;
 using MonStorm.Core.Player;
 using MonStorm.Core.StateMachine;
 using MonStorm.Adapters;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 [RequireComponent(typeof(CharacterController))]
 public class MonStormCharacterController : MonoBehaviour
 {
     [Header("Cinemachine Camera Settings")]
     public CinemachineCamera playerCamera;
+    [SerializeField] private MonStormPlayerCameraController _cameraController;
 
     [Header("Movement Settings")]
     public float rotationSpeed = 720f;
@@ -21,6 +23,7 @@ public class MonStormCharacterController : MonoBehaviour
     private Vector3 velocity;
     [SerializeField] private float _lockOnRadius;
     [SerializeField] private LayerMask _enemyLayer;
+    
 
     private InputSystem_Actions m_inputActions;
     private StateMachine<PlayerContext> m_stateMachine;
@@ -104,21 +107,20 @@ public class MonStormCharacterController : MonoBehaviour
         if (m_inputActions.Player.SpecialAction.WasPressedThisFrame())
             Debug.Log("Pressed Special Action");
         if (m_inputActions.Player.CenterCamera.WasPressedThisFrame())
-            SnapCamera();
+        {
+            Transform target = FindNearestTarget();
+            m_playerContext.isTargeting = target != null;
+            _cameraController.SnapTo(target, transform);
+        }
+           
         if (m_inputActions.Player.EnableAttack.WasPressedThisFrame())
             Debug.Log("Pressed Attack");
     }
 
-    void SnapCamera(){
+    Transform FindNearestTarget(){
         Collider [] hits = Physics.OverlapSphere(transform.position, _lockOnRadius, _enemyLayer);
-        if(hits.Length == 0) {
-            m_playerContext.isTargeting = false; 
-            return;
-        }
         Transform nearest = null;
         float nearestDist = float.MaxValue;
-        float targetAngle = 0;
-
         foreach(Collider hit in hits)
         {
             Health enemyHealth = hit.GetComponentInParent<Health>();
@@ -133,12 +135,6 @@ public class MonStormCharacterController : MonoBehaviour
 
         }
 
-        if(hits.Length == 0 || nearest == null) {
-            targetAngle = 0;
-        }
-        else{
-            targetAngle = Vector3.SignedAngle(transform.forward,nearest.transform.position , Vector3.up);
-
-        }
+        return nearest;
     }
 }

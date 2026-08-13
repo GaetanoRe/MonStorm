@@ -1,3 +1,4 @@
+
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,12 +10,16 @@ public class MonStormPlayerCameraController : MonoBehaviour
     [SerializeField] float [] pitchPresets = {-5, 17.5f, 40};
     [SerializeField] int pitchIndex = 1;
     [SerializeField] float snapDurationSec = 0.15f;
+    [SerializeField] float pitchSmoothTime = 0.2f;
+    [SerializeField] float mousePitchSensitivity = 0.1f;
+    [SerializeField] bool classicCam;
 
     private bool _snapping;
     private float _snapStartYaw;
     private float _snapTargetYaw;
     private float _snapTimer;
     private float _prevLookY;
+    private float _pitchCurrentVel;
     InputSystem_Actions inputActions; 
 
     void Awake()
@@ -56,6 +61,34 @@ public class MonStormPlayerCameraController : MonoBehaviour
             if (t >= 1f) _snapping = false;
         }
 
+        float mouseY = Mouse.current?.delta.y.ReadValue() ?? 0f;
+        if(mouseY != 0f)
+        {
+            // Camera vertically works regular
+        }
+        else if (!classicCam)
+        {
+            
+        }
+        else
+        {
+            // MH4 Style Cam (Classic Cam)
+            if (lookInput.y > 0.5f && _prevLookY <= 0.5f)
+                pitchIndex = Mathf.Clamp(pitchIndex + 1, 0, pitchPresets.Length - 1);
+            else if (lookInput.y < -0.5f && _prevLookY >= -0.5f){
+                pitchIndex = Mathf.Clamp(pitchIndex - 1, 0, pitchPresets.Length - 1);
+                    _prevLookY = lookInput.y;
+                    orbitalCamera.VerticalAxis.Value = Mathf.SmoothDamp(
+                    orbitalCamera.VerticalAxis.Value,
+                    pitchPresets[pitchIndex],
+                    ref _pitchCurrentVel,
+                    pitchSmoothTime
+                );
+            }
+        }
+
+        
+
     }
 
     void OnDisable()
@@ -65,6 +98,21 @@ public class MonStormPlayerCameraController : MonoBehaviour
 
     public void SnapTo(Transform target, Transform player)
     {
-        
+        float desiredYaw = 0;
+        if(target != null)
+        {
+            Vector3 camPos = target.position - player.position;
+            camPos.y = 0;
+            desiredYaw = Mathf.Atan2(camPos.x, camPos.z) * Mathf.Rad2Deg;
+        }
+        else
+        {
+            desiredYaw = player.eulerAngles.y;
+        }
+
+        _snapStartYaw = orbitalCamera.HorizontalAxis.Value;
+        _snapTargetYaw = desiredYaw;
+        _snapTimer = 0f;
+        _snapping = true;
     }
 }

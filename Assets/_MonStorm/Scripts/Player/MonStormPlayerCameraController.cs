@@ -65,7 +65,7 @@ public class MonStormPlayerCameraController : MonoBehaviour
         if(mouseY != 0f)
         {
             // Camera vertically works regular
-            float mouseMoveY = mouseY * mousePitchSensitivity * Time.deltaTime;
+            float mouseMoveY = mouseY * mousePitchSensitivity;
             orbitalCamera.VerticalAxis.Value = Mathf.Clamp(orbitalCamera.VerticalAxis.Value + mouseMoveY, pitchPresets[0], pitchPresets[pitchPresets.Length - 1]);
         }
         else if (!classicCam)

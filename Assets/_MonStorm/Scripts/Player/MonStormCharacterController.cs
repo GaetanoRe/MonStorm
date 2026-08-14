@@ -10,6 +10,7 @@ public class MonStormCharacterController : MonoBehaviour
 {
     [Header("Cinemachine Camera Settings")]
     public CinemachineCamera playerCamera;
+    [SerializeField] private MonStormPlayerCameraController _cameraController;
 
     [Header("Movement Settings")]
     public float rotationSpeed = 720f;
@@ -19,6 +20,9 @@ public class MonStormCharacterController : MonoBehaviour
 
     private CharacterController controller;
     private Vector3 velocity;
+    [SerializeField] private float _lockOnRadius;
+    [SerializeField] private LayerMask _enemyLayer;
+    
 
     private InputSystem_Actions m_inputActions;
     private StateMachine<PlayerContext> m_stateMachine;
@@ -43,10 +47,11 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.IdleAnimHash = Animator.StringToHash("Idle");
         m_playerContext.DamagedAnimHash = Animator.StringToHash("GetHit");
         m_playerContext.DeathAnimHash = Animator.StringToHash("Death");
-        m_playerContext.AttackAnimHash = Animator.StringToHash("MeleeAttack_OneHanded");
+        m_playerContext.AttackAnimHash = Animator.StringToHash("MeleeAttack_TwoHanded");
         
 
         m_stateMachine.TransitionTo(new PlayerIdleState());
+
        
     }
 
@@ -65,8 +70,19 @@ public class MonStormCharacterController : MonoBehaviour
 
     void UpdateContext()
     {
-        m_playerContext.moveInput.X = m_inputActions.Player.Move.ReadValue<Vector2>().x;
-        m_playerContext.moveInput.Y = m_inputActions.Player.Move.ReadValue<Vector2>().y;
+        Vector2 raw = m_inputActions.Player.Move.ReadValue<Vector2>();
+
+        Vector3 camForward = Camera.main.transform.forward;
+        camForward.y = 0;
+        camForward.Normalize();
+
+        Vector3 camRight = Camera.main.transform.right;
+        camRight.y = 0;
+        camRight.Normalize();
+        Vector3 worldMove = camForward * raw.y + camRight * raw.x;
+
+        m_playerContext.moveInput.X = worldMove.x;
+        m_playerContext.moveInput.Y = worldMove.z;
         m_playerContext.isGrounded = controller.isGrounded;
         m_playerContext.isSprinting = m_inputActions.Player.Sprint.IsPressed();
         m_playerContext.dodgePressed = m_inputActions.Player.Dodge.WasPressedThisFrame();
@@ -101,8 +117,34 @@ public class MonStormCharacterController : MonoBehaviour
         if (m_inputActions.Player.SpecialAction.WasPressedThisFrame())
             Debug.Log("Pressed Special Action");
         if (m_inputActions.Player.CenterCamera.WasPressedThisFrame())
-            Debug.Log("Pressed Center Camera");
+        {
+            Transform target = FindNearestTarget();
+            m_playerContext.isTargeting = target != null;
+            _cameraController.SnapTo(target, transform);
+        }
+           
         if (m_inputActions.Player.EnableAttack.WasPressedThisFrame())
             Debug.Log("Pressed Attack");
+    }
+
+    Transform FindNearestTarget(){
+        Collider [] hits = Physics.OverlapSphere(transform.position, _lockOnRadius, _enemyLayer);
+        Transform nearest = null;
+        float nearestDist = float.MaxValue;
+        foreach(Collider hit in hits)
+        {
+            Health enemyHealth = hit.GetComponentInParent<Health>();
+            if (enemyHealth == null) continue;
+            Transform root = enemyHealth.transform;
+            float dist = Vector3.Distance(transform.position, root.position);
+            if(dist < nearestDist)
+            {
+                nearestDist = dist;
+                nearest = root;
+            }
+
+        }
+
+        return nearest;
     }
 }

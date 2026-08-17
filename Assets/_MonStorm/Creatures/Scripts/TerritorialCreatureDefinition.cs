@@ -2,6 +2,7 @@ using UnityEngine;
 using MonStorm.Core.StateMachine;
 
 [CreateAssetMenu(fileName = "TerritorialCreatureDefinition", menuName = "SO/CreatureDefinitions/Territorial")]
+/// <inheritdoc/>
 public class TerritorialCreatureDefinition : CreatureDefinition
 {
     readonly int IDLE_ANIM_HASH = Animator.StringToHash("Idle");
@@ -40,7 +41,7 @@ public class TerritorialCreatureDefinition : CreatureDefinition
 
         CreatureIdleState idleState = new(creatureContext, idleTransitions, IDLE_ANIM_HASH);
         CreatureWanderState wanderState = new(creatureContext, wanderTransitions, WALK_ANIM_HASH, homeCenter, MaxWanderRange, WalkSpeed);
-
+        // Territorial creatures don't update their wander center, they always return to their starting location
         CreatureChaseState chaseState = new(creatureContext, chaseTransitions, RUN_ANIM_HASH, creatureContext.PlayerTransform, ChaseSpeed, null);
         CreatureAttackState attackState = new(creatureContext, attackTransitions, ATTACK_ANIM_HASH, attackTimer);
         CreatureDamagedState damagedState = new(creatureContext, damagedTransitions, DAMAGED_ANIM_HASH);
@@ -88,13 +89,15 @@ public class TerritorialCreatureDefinition : CreatureDefinition
         return stateMachine;
     }
 
-    private bool IsWithinReEngageBuffer(System.Numerics.Vector2 homeCenter, CreatureContext context)
+    // Whether the creature is in range to re-engage the target again
+    bool IsWithinReEngageBuffer(System.Numerics.Vector2 homeCenter, CreatureContext context)
     {
         System.Numerics.Vector2 currentPos = new(context.AdapterTransform.Position.X, context.AdapterTransform.Position.Z);
         return System.Numerics.Vector2.Distance(currentPos, homeCenter) <= ReEngageTetherRange;
     }
 
-    private bool IsOutsideMaxTether(System.Numerics.Vector2 homeCenter, CreatureContext context)
+    // Whether the creature is outside of it's guarding range
+    bool IsOutsideMaxTether(System.Numerics.Vector2 homeCenter, CreatureContext context)
     {
         System.Numerics.Vector2 currentPos = new(context.AdapterTransform.Position.X, context.AdapterTransform.Position.Z);
         return System.Numerics.Vector2.Distance(currentPos, homeCenter) > MaxTetherRange;

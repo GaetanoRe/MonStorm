@@ -7,7 +7,11 @@ using MonStorm.Core.Combat;
 
 public class CreatureBehavior : MonoBehaviour
 {
+    /// <summary>Invoked when the creature registers a hit, different from OnDamaged because the creature could get hit while immune, or some other restriction.</summary>
+    /// <remarks>Always called first, before OnDamaged.</remarks>
     public event Action<HitApplier, HitDetector> OnHit;
+
+    /// <summary>Invoked when the creature's Health component takes damage.</summary>
     public event Action<Health, float> OnDamaged;
 
     public StateMachine<CreatureContext> StateMachine => stateMachine;
@@ -56,26 +60,16 @@ public class CreatureBehavior : MonoBehaviour
 
     void OnEnable()
     {
-        if (hitReceiver != null)
-        {
-            hitReceiver.OnHit += HandleHit;
-        }
-        if (health != null)
-        {
-            health.OnDeath += HandleDeath;
-        }
+        if (hitReceiver != null) hitReceiver.OnHit += HandleHit;
+
+        if (health != null) health.OnDeath += HandleDeath;
     }
 
     void OnDisable()
     {
-        if (hitReceiver != null)
-        {
-            hitReceiver.OnHit -= HandleHit;
-        }
-        if (health != null)
-        {
-            health.OnDeath -= HandleDeath;
-        }
+        if (hitReceiver != null) hitReceiver.OnHit -= HandleHit;
+
+        if (health != null) health.OnDeath -= HandleDeath;
     }
 
     void Update()

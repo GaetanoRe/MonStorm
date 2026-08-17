@@ -17,22 +17,30 @@ public class CreatureCombat : MonoBehaviour
 
     void Start()
     {
-        if (creatureBehavior != null) creatureBehavior.CreatureContext.OnAttackAnimationEnd += DeactivateAttack;
+        if (creatureBehavior != null) creatureBehavior.CreatureContext.OnAttackAnimationEnd += CloseHitWindow;
     }
 
     void OnDestroy()
     {
-        if (creatureBehavior != null) creatureBehavior.CreatureContext.OnAttackAnimationEnd -= DeactivateAttack;
+        if (creatureBehavior != null) creatureBehavior.CreatureContext.OnAttackAnimationEnd -= CloseHitWindow;
     }
 
-    public void ActivateAttack()
+    /// <summary>
+    /// Activates the associated weapon to register hits.
+    /// The same hitbox can only be hit once even if the weapon makes multiple contacts during a single attack,
+    /// when the attack ends (DeactivateAttack is called) this resets.
+    /// </summary>
+    /// <remarks>Also called from Unity via events.</remarks>
+    public void OpenHitWindow()
     {
         if (creatureBehavior == null || hitApplier == null) return;
 
         hitApplier.SetActive(true);
     }
 
-    public void DeactivateAttack()
+    /// <summary>Deactivates the associated weapon to no longer register hits.</summary>
+    /// <remarks>Also called from Unity via events.</remarks>
+    public void CloseHitWindow()
     {
         if (creatureBehavior == null || hitApplier == null) return;
 

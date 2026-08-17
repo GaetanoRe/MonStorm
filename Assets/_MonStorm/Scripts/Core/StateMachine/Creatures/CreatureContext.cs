@@ -15,6 +15,11 @@ namespace MonStorm.Core.StateMachine
         public Action OnAttackAnimationEnd;
 
         public float DistanceToPlayer => Vector2.Distance(AdapterTransform.PositionV2, PlayerTransform.PositionV2);
+
+        /// <summary>
+        /// Whether the creature is rotated towards the player, within a margin of error (facingAngleThreshold)
+        /// Also returns true if the distance to the player is within closeFacingDistanceSq.
+        /// </summary>
         public bool IsFacingPlayer
         {
             get

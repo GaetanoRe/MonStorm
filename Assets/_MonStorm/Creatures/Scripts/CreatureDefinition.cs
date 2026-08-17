@@ -1,22 +1,14 @@
 using UnityEngine;
-using System;
-using System.Collections.Generic;
 using MonStorm.Core.StateMachine;
 
 public abstract class CreatureDefinition : ScriptableObject
 {
     [SerializeField] string creatureName;
-    //[SerializeField] GameObject prefab;
-    //[SerializeField] List<InspectorItem> lootDropTableItems;
 
-    // Class used to configure the loot drop table in the inspector.
-    [Serializable] class InspectorItem
-    {
-        public InventoryItemData data;
-        public int minAmount = 1;
-        public int maxAmount = 1;
-        [Range(0f, 1f)] public float percentChance = 1f;
-    }
 
+    /// <summary>Create the specific creature state machine with all of it's states, values and transitions.</summary>
+    /// <param name="creatureContext">The CreatureContext associated with the state machine.</param>
+    /// <param name="creatureBehavior">The CreatureBehavior associated with the state machine.</param>
+    /// <returns>The built state machine.</returns>
     public abstract StateMachine<CreatureContext> BuildStateMachine(CreatureContext creatureContext, CreatureBehavior creatureBehavior);
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using MonStorm.Core.StateMachine;
 
 [CreateAssetMenu(fileName = "AggressiveCreatureDefinition", menuName = "SO/CreatureDefinitions/Aggressive")]
+/// <inheritdoc/>
 public class AggressiveCreatureDefinition : CreatureDefinition
 {
     readonly int IDLE_ANIM_HASH = Animator.StringToHash("Idle");
@@ -37,7 +38,6 @@ public class AggressiveCreatureDefinition : CreatureDefinition
 
         CreatureIdleState idleState = new(creatureContext, idleTransitions, IDLE_ANIM_HASH);
         CreatureWanderState wanderState = new(creatureContext, wanderTransitions, WALK_ANIM_HASH, wanderCenter, MaxWanderRange, WalkSpeed);
-
         // Aggressive creatures update their wander center to wherever the chase ended
         CreatureChaseState chaseState = new(creatureContext, chaseTransitions, RUN_ANIM_HASH, creatureContext.PlayerTransform, ChaseSpeed, wanderState.ChangeWanderCenter);
         CreatureAttackState attackState = new(creatureContext, attackTransitions, ATTACK_ANIM_HASH, attackTimer);

@@ -18,7 +18,6 @@ namespace MonStorm.Core.Player
             context.velocity.X = 0;
             context.velocity.Z = 0;
             context.attackTimer = 1.0f;
-            context.AdapterHitApplier.SetActive(true);
             animator.Play(context.AttackAnimHash);
         }
 

@@ -32,6 +32,16 @@ public class PlayerCombat : MonoBehaviour, IHitDetectionManager
 		
     }
 
+    public void OnHitWindowOpen()
+    {
+        context.AdapterHitApplier.SetActive(true);
+    }
+
+    public void OnHitWindowClose()
+    {
+        context.AdapterHitApplier.SetActive(false);
+    }
+
     void OnDestroy()
     {
       health.OnDeath -= OnPlayerDeath;

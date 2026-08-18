@@ -24,7 +24,7 @@ public class ItemDropper : MonoBehaviour
     readonly float yOffset = 1f;
 
 
-    /// <summary>Activates the ItemDropper to drop it's loot table, with it being delayed optional.</summary>
+    /// <summary>Activates the ItemDropper to drop it's loot table, with an optional delay.</summary>
     /// <param name="delay">The delay after which the effect will activate.</param>
     public void Activate(float delay = 0f)
     {

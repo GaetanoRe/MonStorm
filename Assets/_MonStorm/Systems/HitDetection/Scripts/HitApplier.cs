@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class HitApplier : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class HitApplier : MonoBehaviour
     readonly HashSet<HitDetector> currentDetections = new();
     bool isActive;
 
+    public event Action<bool> OnActiveChanged;
+
 
     /// <summary>Activates the HitApplier so it can detect collisions.</summary>
     /// <param name="active">Whether to activate or deactivate the HitApplier.</param>
@@ -16,24 +19,16 @@ public class HitApplier : MonoBehaviour
     {
         currentDetections.Clear();
         isActive = active;
-
-        if (active)
-        {
-            transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
-        }
-        else
-        {
-            transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.gray;
-        }
+        OnActiveChanged?.Invoke(active);
     }
 
     void ApplyHit(HitDetector newDetector)
     {
         currentDetections.Add(newDetector);
-        newDetector.HitDetectionManager.HandleHit(this, newDetector);
+        newDetector.HitReceiver.HandleHit(this, newDetector);
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (!isActive) return;
 
@@ -44,7 +39,7 @@ public class HitApplier : MonoBehaviour
         // Here we check if the same object has already been hit in the current attack, and if so we return.
         foreach (HitDetector detector in currentDetections)
         {
-            if (detector.HitDetectionManager == hitDetector.HitDetectionManager) return;
+            if (detector.HitReceiver == hitDetector.HitReceiver) return;
         }
 
         ApplyHit(hitDetector);

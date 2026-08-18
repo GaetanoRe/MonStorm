@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
-public class CharacterAI : MonoBehaviour, IHitDetectionManager
+public class CharacterAI : MonoBehaviour, IHitReceiver
 {
 	public bool isHero = false; //these bools are only used to play the correct animations right now, but may be useful in other ways later
 	public bool isDragon = false;
@@ -30,20 +30,20 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 
     [Header("Other Bools")]
     public bool inBattle = false;
-	private bool damageTaken = false;
+	//private bool damageTaken = false;
 	private bool idleAnimationPlayed = false;
 	private bool walkAnimationPlayed = false;
 	private bool runAnimationPlayed = false;
-	private bool sneakAnimationPlayed = false;
+	//private bool sneakAnimationPlayed = false;
 	private bool attackAnimationPlayed = false;
 	private bool jumpAnimationPlayed = false;
-	private bool defendAnimationPlayed = false;
+	//private bool defendAnimationPlayed = false;
 	private bool damagedAnimationPlayed = false;
 	private bool fleeAnimationPlayed = false;
 	private bool defeatedAnimationPlayed = false;
     private bool attackAudioPlayed = false;
     private bool defeatedAudioPlayed = false;
-    private bool okayToPlayAudio = false;
+    //private bool okayToPlayAudio = false;
     private bool attackAudioFirstPlayed = false;
     private bool attackAudioSecondPlayed = false;
     private bool defeatedAudioFirstPlayed = false;
@@ -210,20 +210,20 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
         fleeGO = false;
         defeatedGO = false;
         inBattle = false;
-		damageTaken = false;
+		//damageTaken = false;
 		idleAnimationPlayed = false;
 		walkAnimationPlayed = false;
 		runAnimationPlayed = false;
-		sneakAnimationPlayed = false;
+		//sneakAnimationPlayed = false;
 		attackAnimationPlayed = false;
 		jumpAnimationPlayed = false;
-		defendAnimationPlayed = false;
+		//defendAnimationPlayed = false;
 		damagedAnimationPlayed = false;
 		fleeAnimationPlayed = false;
 		defeatedAnimationPlayed = false;
         attackAudioPlayed = false;
         defeatedAudioPlayed = false;
-        okayToPlayAudio = false;
+        //okayToPlayAudio = false;
         attackAudioFirstPlayed = false;
         attackAudioSecondPlayed = false;
         defeatedAudioFirstPlayed = false;
@@ -474,10 +474,10 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 			//idleAnimationPlayed = false;
 			walkAnimationPlayed = false;
 			runAnimationPlayed = false;
-			sneakAnimationPlayed = false;
+			//sneakAnimationPlayed = false;
 			attackAnimationPlayed = false;
 			jumpAnimationPlayed = false;
-			defendAnimationPlayed = false;
+			//defendAnimationPlayed = false;
 			damagedAnimationPlayed = false;
 			fleeAnimationPlayed = false;
 			defeatedAnimationPlayed = false;
@@ -704,7 +704,7 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 		}
 
 		if (!attackAudioPlayed) {
-		   	okayToPlayAudio = false;
+		   	//okayToPlayAudio = false;
 		   	PlayAttackAudio ();
             attackAudioPlayed = true;
         }
@@ -726,7 +726,7 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 		}
 
 		if (!attackAudioPlayed) {
-		   	okayToPlayAudio = false;
+		   	//okayToPlayAudio = false;
 		   	PlayAttackAudio ();
             attackAudioPlayed = true;
         }
@@ -994,7 +994,7 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 		}
 
 		if (!defeatedAudioPlayed) {
-		    okayToPlayAudio = false;
+		    //okayToPlayAudio = false;
 		    PlayDefeatedAudio ();
             defeatedAudioPlayed = true;
             HandleStandardDefeatedState();
@@ -1049,27 +1049,27 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 			if ((audioSource.clip.length == lastPlayedAttackAudio) || (audioSource.clip.length == lastPlayedAttackSecondAudio)) {
 				
 				PlayAttackAudio ();
-				okayToPlayAudio = false;
+				//okayToPlayAudio = false;
 			} else if ((audioSource.clip.length != lastPlayedAttackAudio) && (audioSource.clip.length != lastPlayedAttackSecondAudio)) {
 				
 				audioSource.Play ();
 				lastPlayedAttackSecondAudio = lastPlayedAttackAudio;
 				lastPlayedAttackAudio = audioSource.clip.length;
-				okayToPlayAudio = true;
+				//okayToPlayAudio = true;
 			}
 		}
 		else if ((attackAudioFirstPlayed) && (!attackAudioSecondPlayed)) {
 			if (audioSource.clip.length == lastPlayedAttackAudio) {
 				
 				PlayAttackAudio ();
-				okayToPlayAudio = false;
+				//okayToPlayAudio = false;
 			} else if (audioSource.clip.length != lastPlayedAttackAudio) {
 				
 				audioSource.Play ();
 				lastPlayedAttackSecondAudio = lastPlayedAttackAudio;
 				lastPlayedAttackAudio = audioSource.clip.length;
 				attackAudioSecondPlayed = true;
-				okayToPlayAudio = true;
+				//okayToPlayAudio = true;
 			}
 		}
 		else if ((!attackAudioFirstPlayed) && (!attackAudioSecondPlayed)) {
@@ -1077,7 +1077,7 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 			audioSource.Play ();
 			lastPlayedAttackAudio = audioSource.clip.length;
 			attackAudioFirstPlayed = true;
-			okayToPlayAudio = true;
+			//okayToPlayAudio = true;
 		}
 	}
 
@@ -1098,27 +1098,27 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 			if ((audioSource.clip.length == lastPlayedDefeatedAudio) || (audioSource.clip.length == lastPlayedDefeatedSecondAudio)) {
 				
 				PlayDefeatedAudio ();
-				okayToPlayAudio = false;
+				//okayToPlayAudio = false;
 			} else if ((audioSource.clip.length != lastPlayedDefeatedAudio) && (audioSource.clip.length != lastPlayedDefeatedSecondAudio)) {
 				
 				audioSource.Play ();
 				lastPlayedDefeatedSecondAudio = lastPlayedDefeatedAudio;
 				lastPlayedDefeatedAudio = audioSource.clip.length;
-				okayToPlayAudio = true;
+				//okayToPlayAudio = true;
 			}
 		}
 		else if ((defeatedAudioFirstPlayed) && (!defeatedAudioSecondPlayed)) {
 			if (audioSource.clip.length == lastPlayedDefeatedAudio) {
 				
 				PlayDefeatedAudio ();
-				okayToPlayAudio = false;
+				//okayToPlayAudio = false;
 			} else if (audioSource.clip.length != lastPlayedDefeatedAudio) {
 				
 				audioSource.Play ();
 				lastPlayedDefeatedSecondAudio = lastPlayedDefeatedAudio;
 				lastPlayedDefeatedAudio = audioSource.clip.length;
 				defeatedAudioSecondPlayed = true;
-				okayToPlayAudio = true;
+				//okayToPlayAudio = true;
 			}
 		}
 		else if ((!defeatedAudioFirstPlayed) && (!defeatedAudioSecondPlayed)) {
@@ -1126,7 +1126,7 @@ public class CharacterAI : MonoBehaviour, IHitDetectionManager
 			audioSource.Play ();
 			lastPlayedDefeatedAudio = audioSource.clip.length;
 			defeatedAudioFirstPlayed = true;
-			okayToPlayAudio = true;
+			//okayToPlayAudio = true;
 		}
 	}
 

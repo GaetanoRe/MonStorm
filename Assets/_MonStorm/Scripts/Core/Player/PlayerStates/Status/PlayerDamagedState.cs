@@ -17,6 +17,7 @@ namespace MonStorm.Core.Player
             base.Enter(context);
             context.isHit = false;
             context.damagedTimer = 0.667f;
+            context.velocity = System.Numerics.Vector3.Zero;
             animator.Play(context.DamagedAnimHash);
         }
 

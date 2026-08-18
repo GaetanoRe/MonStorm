@@ -13,7 +13,7 @@ namespace MonStorm.Core.Player
                 new StateTransition<PlayerContext>(new PlayerRunState(), () => context.moveInput != Vector2.Zero && context.isSprinting),
                 new StateTransition<PlayerContext>(new PlayerWalkState(), () => context.moveInput != Vector2.Zero),
                 new StateTransition<PlayerContext>(new PlayerSneakState(), () => context.dodgePressed),
-                new StateTransition<PlayerContext>(new PlayerAttackState(), () => context.attackPressed && context.attackCoolDown <= 0)
+                new StateTransition<PlayerContext>(new PlayerAttackState(), () => (context.weaponAction != ActionInput.None || context.attackPressed) && context.attackCoolDown <= 0)
             );
         }
 

@@ -10,8 +10,6 @@ namespace MonStorm.Core.Player
         float deadzone; 
         float rearmThreshold;
 
-        Vector2 input;
-
         bool armed;
 
         public ActionResolver(float rearmThreshold, float deadzone)
@@ -20,8 +18,9 @@ namespace MonStorm.Core.Player
             this.deadzone = deadzone;
         }
 
-        public ActionInput actionResolve(Vector2 input, bool stickClicked, bool specialPressed)
+        public ActionInput actionResolve(float x, float y, bool stickClicked, bool specialPressed)
         {
+            Vector2 input = new Vector2(x, y);
             float magnitude = input.Length();
             if (specialPressed)
             {
@@ -38,6 +37,7 @@ namespace MonStorm.Core.Player
             }
             else if(magnitude >= deadzone && armed)
             {
+                armed = false;
                 if(input.X > 0)
                 {
                     return ActionInput.Action3;
@@ -54,8 +54,13 @@ namespace MonStorm.Core.Player
                 {
                     return ActionInput.Action2;
                 }
+                
             }
+
+            return ActionInput.None;
         }
+
+        
 
 
     }

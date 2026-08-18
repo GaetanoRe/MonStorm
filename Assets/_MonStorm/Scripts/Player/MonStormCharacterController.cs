@@ -16,6 +16,9 @@ public class MonStormCharacterController : MonoBehaviour
     public float rotationSpeed = 720f;
     public float gravity = -9.81f;
 
+    [SerializeField] public float rearmThreshold = 0.2f;
+    [SerializeField] public float deadzone = 0.5f;
+
     public HitApplier weapon;
 
     private CharacterController controller;
@@ -27,6 +30,8 @@ public class MonStormCharacterController : MonoBehaviour
     private InputSystem_Actions m_inputActions;
     private StateMachine<PlayerContext> m_stateMachine;
     private PlayerContext m_playerContext;
+
+    private ActionResolver actionResolver;
 
     void Start()
     {
@@ -48,6 +53,7 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.DamagedAnimHash = Animator.StringToHash("GetHit");
         m_playerContext.DeathAnimHash = Animator.StringToHash("Death");
         m_playerContext.AttackAnimHash = Animator.StringToHash("MeleeAttack_TwoHanded");
+        actionResolver = new ActionResolver(rearmThreshold, deadzone);
         
 
         m_stateMachine.TransitionTo(new PlayerIdleState());
@@ -72,6 +78,10 @@ public class MonStormCharacterController : MonoBehaviour
     {
         Vector2 raw = m_inputActions.Player.Move.ReadValue<Vector2>();
 
+        Vector2 rightStickGestures = m_inputActions.Player.AttackActions.ReadValue<Vector2>();
+        bool rightStickPressed = m_inputActions.Player.Action5.WasPerformedThisFrame();
+        bool specialAttackPressed = m_inputActions.Player.SpecialAction.WasPerformedThisFrame();
+
         Vector3 camForward = Camera.main.transform.forward;
         camForward.y = 0;
         camForward.Normalize();
@@ -87,6 +97,7 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.isSprinting = m_inputActions.Player.Sprint.IsPressed();
         m_playerContext.dodgePressed = m_inputActions.Player.Dodge.WasPressedThisFrame();
         m_playerContext.attackPressed = m_inputActions.Player.EnableAttack.WasPressedThisFrame();
+        m_playerContext.weaponAction = actionResolver.actionResolve(rightStickGestures.x, rightStickGestures.y, rightStickPressed, specialAttackPressed);
         
     }
 

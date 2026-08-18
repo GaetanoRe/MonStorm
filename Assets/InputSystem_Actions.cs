@@ -165,6 +165,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Action5"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8c5c64c-ae65-4926-ac95-232fde3a18ac"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""351f2ccd-1f9f-44bf-9bec-d62ac5c5f408"",
@@ -522,6 +531,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb2212da-c4aa-495f-b209-1d3f25b86835"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Action5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1117,6 +1137,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_SpecialAction = m_Player.FindAction("SpecialAction", throwIfNotFound: true);
         m_Player_AttackActions = m_Player.FindAction("AttackActions", throwIfNotFound: true);
+        m_Player_Action5 = m_Player.FindAction("Action5", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         // UI
@@ -1220,6 +1241,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_SpecialAction;
     private readonly InputAction m_Player_AttackActions;
+    private readonly InputAction m_Player_Action5;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     /// <summary>
@@ -1265,6 +1287,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/AttackActions".
         /// </summary>
         public InputAction @AttackActions => m_Wrapper.m_Player_AttackActions;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Action5".
+        /// </summary>
+        public InputAction @Action5 => m_Wrapper.m_Player_Action5;
         /// <summary>
         /// Provides access to the underlying input action "Player/Move".
         /// </summary>
@@ -1323,6 +1349,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @AttackActions.started += instance.OnAttackActions;
             @AttackActions.performed += instance.OnAttackActions;
             @AttackActions.canceled += instance.OnAttackActions;
+            @Action5.started += instance.OnAction5;
+            @Action5.performed += instance.OnAction5;
+            @Action5.canceled += instance.OnAction5;
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -1364,6 +1393,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @AttackActions.started -= instance.OnAttackActions;
             @AttackActions.performed -= instance.OnAttackActions;
             @AttackActions.canceled -= instance.OnAttackActions;
+            @Action5.started -= instance.OnAction5;
+            @Action5.performed -= instance.OnAction5;
+            @Action5.canceled -= instance.OnAction5;
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
@@ -1726,6 +1758,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttackActions(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Action5" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAction5(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

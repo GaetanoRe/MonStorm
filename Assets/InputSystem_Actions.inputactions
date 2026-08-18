@@ -79,6 +79,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Action5",
+                    "type": "Button",
+                    "id": "b8c5c64c-ae65-4926-ac95-232fde3a18ac",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Move",
                     "type": "Value",
                     "id": "351f2ccd-1f9f-44bf-9bec-d62ac5c5f408",
@@ -436,6 +445,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb2212da-c4aa-495f-b209-1d3f25b86835",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Action5",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

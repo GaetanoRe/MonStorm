@@ -2941,7 +2941,7 @@ PrefabInstance:
     - target: {fileID: 6684465143610207852, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
-      objectReference: {fileID: 4060834701295982961}
+      objectReference: {fileID: 1553636163}
     - target: {fileID: 8217325897539820737, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
       propertyPath: m_Name
       value: PlayerCamera
@@ -2952,27 +2952,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8357376212771060938, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 2.580882
       objectReference: {fileID: 0}
     - target: {fileID: 8357376212771060938, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.9350834
+      value: -5.1805267
       objectReference: {fileID: 0}
     - target: {fileID: 8357376212771060938, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9972844
+      value: 0.9993457
       objectReference: {fileID: 0}
     - target: {fileID: 8357376212771060938, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.07364742
+      value: 0.036169384
       objectReference: {fileID: 0}
     - target: {fileID: 8357376212771060938, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000007679793
+      value: 1.5392908e-15
       objectReference: {fileID: 0}
     - target: {fileID: 8357376212771060938, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 5.671374e-10
+      value: -1.0152649e-16
       objectReference: {fileID: 0}
     - target: {fileID: 8357376212771060938, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2986,7 +2986,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8639215290263218258, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3377,8 +3378,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.07364742, y: -0.000000007679793, z: 5.671374e-10, w: 0.9972844}
-  m_LocalPosition: {x: -0.26383495, y: 2, z: -4.9350834}
+  m_LocalRotation: {x: 0.03616939, y: 1.5376308e-15, z: -5.5651573e-17, w: 0.9993457}
+  m_LocalPosition: {x: -0.26383495, y: 2.580882, z: -5.1805267}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3760,6 +3761,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1732895083}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &793879445 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1207448530966310490, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
+  m_PrefabInstance: {fileID: 220898779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineOrbitalFollow
+--- !u!114 &793879447 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6684465143610207852, guid: 53ef3f4c0d315ecbe98b4d2b1be37e9c, type: 3}
+  m_PrefabInstance: {fileID: 220898779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
 --- !u!1 &807634415
 GameObject:
   m_ObjectHideFlags: 0
@@ -4853,6 +4876,11 @@ MonoBehaviour:
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 1
   m_ConstraintCount: 7
+--- !u!4 &1553636163 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6266845615959660761, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+  m_PrefabInstance: {fileID: 2048078129}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1577756000
 GameObject:
   m_ObjectHideFlags: 0
@@ -5842,6 +5870,22 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 251755198}
+    - target: {fileID: 5535926596780791933, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 793879447}
+    - target: {fileID: 5535926596780791933, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: _cameraController
+      value: 
+      objectReference: {fileID: 4060834701295982962}
+    - target: {fileID: 8477860770400140179, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: classicCam
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8477860770400140179, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: orbitalCamera
+      value: 
+      objectReference: {fileID: 793879445}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5850,11 +5894,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 478913282}
   m_SourcePrefab: {fileID: 100100000, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
---- !u!4 &4060834701295982961 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4060834700632211166, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+--- !u!114 &4060834701295982962 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8477860770400140179, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
   m_PrefabInstance: {fileID: 2048078129}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e7d1c67b559798a69a882e59c78fb87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonStormPlayerCameraController
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

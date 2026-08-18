@@ -2,6 +2,7 @@ using UnityEngine;
 using MonStorm.Core.StateMachine;
 
 [CreateAssetMenu(fileName = "SkittishCreatureDefinition", menuName = "SO/CreatureDefinitions/Skittish")]
+/// <inheritdoc/>
 public class SkittishCreatureDefinition : CreatureDefinition
 {
     readonly int IDLE_ANIM_HASH = Animator.StringToHash("Idle");

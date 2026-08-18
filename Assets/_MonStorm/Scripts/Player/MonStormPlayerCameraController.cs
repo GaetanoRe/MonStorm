@@ -25,6 +25,7 @@ public class MonStormPlayerCameraController : MonoBehaviour
     void Awake()
     {
         inputActions = new InputSystem_Actions();
+        Cursor.visible = false;
     }
     void OnEnable()
     {

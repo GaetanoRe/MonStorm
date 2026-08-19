@@ -1,4 +1,5 @@
 using System.Numerics;
+using MonStorm.Core.Combat;
 using MonStorm.Core.StateMachine;
 
 namespace MonStorm.Core.Player
@@ -12,6 +13,7 @@ namespace MonStorm.Core.Player
         public IFSMAdapterAnimator AdapterAnimator { get; set; }
         public IFSMAdapterHitApplier AdapterHitApplier { get; set; }
 
+        
         // Animation Hashes
         public int IdleAnimHash;
         public int WalkAnimHash;
@@ -45,7 +47,8 @@ namespace MonStorm.Core.Player
         public bool dodgePressed;
         public float targetDistance;
         
-
+        // Combat-Oriented Fields
+        public WeaponDefinition equippedWeapon;
         public ActionInput weaponAction;
 
         // State

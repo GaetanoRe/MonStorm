@@ -13,8 +13,11 @@ namespace MonStorm.Core.Player
         public IFSMAdapterAnimator AdapterAnimator { get; set; }
         public IFSMAdapterHitApplier AdapterHitApplier { get; set; }
 
+
+
         
         // Animation Hashes
+        public int AnimationIntent;
         public int IdleAnimHash;
         public int WalkAnimHash;
         public int RunAnimHash;

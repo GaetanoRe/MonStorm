@@ -3709,6 +3709,7 @@ GameObject:
   - component: {fileID: 150602309643869015}
   - component: {fileID: 2110972488748409070}
   - component: {fileID: 8477860770400140179}
+  - component: {fileID: 6075346789437306493}
   m_Layer: 0
   m_Name: HumanMale_Character
   m_TagString: Untagged
@@ -3808,6 +3809,9 @@ MonoBehaviour:
   _cameraController: {fileID: 0}
   rotationSpeed: 720
   gravity: -9.81
+  rearmThreshold: 0.2
+  deadzone: 0.5
+  _equippedWeapon: {fileID: 0}
   weapon: {fileID: 0}
   _lockOnRadius: 0
   _enemyLayer:
@@ -4020,6 +4024,19 @@ MonoBehaviour:
   mousePitchSensitivity: 0.1
   controllerPitchSensitivity: 5
   classicCam: 0
+--- !u!114 &6075346789437306493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811900067158531104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaba45fedacc3771cada22eaf4ad768c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationDriver
+  animator: {fileID: 0}
 --- !u!1 &4869750892505582643
 GameObject:
   m_ObjectHideFlags: 0

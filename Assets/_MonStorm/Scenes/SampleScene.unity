@@ -6606,6 +6606,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 532392637781836340, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868123606300250695, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4060834700632211166, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.26383495
@@ -6666,6 +6674,10 @@ PrefabInstance:
       propertyPath: _cameraController
       value: 
       objectReference: {fileID: 4060834701295982962}
+    - target: {fileID: 6075346789437306493, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 2048078130}
     - target: {fileID: 8477860770400140179, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
       propertyPath: classicCam
       value: 1
@@ -6674,6 +6686,10 @@ PrefabInstance:
       propertyPath: orbitalCamera
       value: 
       objectReference: {fileID: 793879445}
+    - target: {fileID: 8902189014948455888, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6682,6 +6698,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 478913282}
   m_SourcePrefab: {fileID: 100100000, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+--- !u!95 &2048078130 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7390463332031003472, guid: 24d5508550c1dd441819b116bfe03186, type: 3}
+  m_PrefabInstance: {fileID: 2048078129}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4060834701295982962 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8477860770400140179, guid: 24d5508550c1dd441819b116bfe03186, type: 3}

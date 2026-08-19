@@ -19,6 +19,7 @@ public class MonStormCharacterController : MonoBehaviour
     [SerializeField] public float rearmThreshold = 0.2f;
     [SerializeField] public float deadzone = 0.5f;
 
+    [SerializeField] public WeaponAsset _equippedWeapon;
     public HitApplier weapon;
 
     private CharacterController controller;
@@ -42,10 +43,12 @@ public class MonStormCharacterController : MonoBehaviour
 
         m_playerContext = new PlayerContext();
         GetComponent<PlayerCombat>().context = m_playerContext;
+        GetComponent<PlayerAnimationDriver>().context = m_playerContext;
 
         m_stateMachine = new StateMachine<PlayerContext>(m_playerContext);
         m_playerContext.StateMachine = m_stateMachine;
         m_playerContext.AdapterAnimator = new FSMAdapterAnimator(GetComponent<Animator>());
+        m_playerContext.equippedWeapon = _equippedWeapon.Build();
         m_playerContext.AdapterHitApplier = new FSMAdapterHitApplier(weapon);
         m_playerContext.WalkAnimHash = Animator.StringToHash("RunForward");
         m_playerContext.RunAnimHash = Animator.StringToHash("Sprint");

@@ -19,7 +19,7 @@ namespace MonStorm.Core.Player
         {
             base.Enter(context);
             context.moveSpeed = PlayerContext.walkSpeed;
-            animator.Play(context.WalkAnimHash);
+            context.AnimationIntent = context.MovementTreeHash;
             
         }
 

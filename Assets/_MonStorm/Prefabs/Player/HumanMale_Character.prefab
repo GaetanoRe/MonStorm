@@ -3806,13 +3806,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonStormCharacterController
   playerCamera: {fileID: 0}
-  _cameraController: {fileID: 0}
+  _cameraController: {fileID: 8477860770400140179}
   rotationSpeed: 720
   gravity: -9.81
   rearmThreshold: 0.2
   deadzone: 0.5
-  _equippedWeapon: {fileID: 0}
-  weapon: {fileID: 0}
+  _equippedWeapon: {fileID: 11400000, guid: 35a4ff18ec7540f73a527e7f7ee4f1cb, type: 2}
+  weapon: {fileID: 2356083552880123081}
   _lockOnRadius: 0
   _enemyLayer:
     serializedVersion: 2
@@ -4036,7 +4036,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaba45fedacc3771cada22eaf4ad768c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationDriver
-  animator: {fileID: 0}
+  animator: {fileID: 7390463332031003472}
+  crossfadeTime: 0.2
+  dampTime: 0.15
 --- !u!1 &4869750892505582643
 GameObject:
   m_ObjectHideFlags: 0

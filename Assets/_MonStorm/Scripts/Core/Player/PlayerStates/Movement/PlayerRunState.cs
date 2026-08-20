@@ -18,7 +18,7 @@ namespace MonStorm.Core.Player
         {
             base.Enter(context);
             context.moveSpeed = PlayerContext.walkSpeed * 2;
-            animator.Play(context.RunAnimHash);
+            context.AnimationIntent = context.MovementTreeHash;
         }
 
         public override void Tick(PlayerContext context, float deltaTime)

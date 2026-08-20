@@ -50,9 +50,7 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.AdapterAnimator = new FSMAdapterAnimator(GetComponent<Animator>());
         m_playerContext.equippedWeapon = _equippedWeapon.Build();
         m_playerContext.AdapterHitApplier = new FSMAdapterHitApplier(weapon);
-        m_playerContext.WalkAnimHash = Animator.StringToHash("RunForward");
-        m_playerContext.RunAnimHash = Animator.StringToHash("Sprint");
-        m_playerContext.IdleAnimHash = Animator.StringToHash("Idle");
+        m_playerContext.MovementTreeHash = Animator.StringToHash("MovementTree");
         m_playerContext.DamagedAnimHash = Animator.StringToHash("GetHit");
         m_playerContext.DeathAnimHash = Animator.StringToHash("Death");
         m_playerContext.AttackAnimHash = Animator.StringToHash("MeleeAttack_TwoHanded");

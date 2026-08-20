@@ -22,7 +22,7 @@ namespace MonStorm.Core.Player
             base.Enter(context);
             context.velocity.X = 0;
             context.velocity.Z = 0;
-            animator.Play(context.IdleAnimHash);
+            context.AnimationIntent = context.MovementTreeHash;
             
         }
 

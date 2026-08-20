@@ -7,12 +7,9 @@ namespace MonStorm.Core.Player
         protected StateTransitionManager<PlayerContext> transitionManager;
         protected StateMachine<PlayerContext> stateMachine;
 
-        protected IFSMAdapterAnimator animator;
-
         public virtual void Enter(PlayerContext context)
         {
             stateMachine = context.StateMachine;
-            animator = context.AdapterAnimator;
             transitionManager = new StateTransitionManager<PlayerContext>();
             SetupTransitions(context);
         }

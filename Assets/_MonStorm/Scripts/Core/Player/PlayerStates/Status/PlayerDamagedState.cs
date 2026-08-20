@@ -18,7 +18,7 @@ namespace MonStorm.Core.Player
             context.isHit = false;
             context.damagedTimer = 0.667f;
             context.velocity = System.Numerics.Vector3.Zero;
-            animator.Play(context.DamagedAnimHash);
+            context.AnimationIntent = context.DamagedAnimHash;
         }
 
         public override void Tick(PlayerContext context, float deltaTime)

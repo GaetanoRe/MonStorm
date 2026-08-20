@@ -18,9 +18,7 @@ namespace MonStorm.Core.Player
         
         // Animation Hashes
         public int AnimationIntent;
-        public int IdleAnimHash;
-        public int WalkAnimHash;
-        public int RunAnimHash;
+        public int MovementTreeHash;
 
         public int DamagedAnimHash;
         public int DeathAnimHash;

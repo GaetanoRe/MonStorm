@@ -6,7 +6,7 @@ namespace MonStorm.Core.Player
         public override void Enter(PlayerContext context)
         {
             base.Enter(context);
-            animator.Play(context.DeathAnimHash);
+            context.AnimationIntent = context.DeathAnimHash;
         }
 
         public override void Tick(PlayerContext context, float deltaTime)

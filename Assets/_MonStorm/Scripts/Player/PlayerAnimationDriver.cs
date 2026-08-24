@@ -19,6 +19,11 @@ public class PlayerAnimationDriver : MonoBehaviour
     public void LateUpdate()
     {
         if(context == null) return;
+        if (context.forceAnimationRestart)
+        {
+            lastPlayed = 0;
+            context.forceAnimationRestart = false;
+        }
         
         if(context.velocity.X == 0 && context.velocity.Z == 0)
         {
@@ -30,13 +35,15 @@ public class PlayerAnimationDriver : MonoBehaviour
             animator.SetFloat("Speed", xzMagnitude, dampTime, Time.deltaTime);
         }
         
-        
-
         if(context.AnimationIntent != lastPlayed && context.AnimationIntent != 0)
         {
             
-            animator.CrossFadeInFixedTime(context.AnimationIntent, crossfadeTime);
+            float time = context.crossFadeOverride >= 0f ? context.crossFadeOverride : crossfadeTime;
+           
+            animator.CrossFadeInFixedTime(context.AnimationIntent, time);
+
             lastPlayed = context.AnimationIntent;
         }
+         context.crossFadeOverride = -1f;
     }
 }

@@ -8,13 +8,20 @@ namespace MonStorm.Core.Combat
 
         public string AnimationKey;
 
+        public int AnimHash;
+        public float Duration;
+        public float Cooldown;
+
         public string[] ChainLinks;
 
-        public AttackMove(string Id, float MotionValue, string AnimationKey, string[] ChainLinks)
+        public AttackMove(string Id, float MotionValue, string AnimationKey,int AnimHash, float Duration, float Cooldown, string[] ChainLinks)
         {
             this.Id = Id;
             this.MotionValue = MotionValue;
             this.AnimationKey = AnimationKey;
+            this.AnimHash = AnimHash;
+            this.Duration = Duration;
+            this.Cooldown = Cooldown;
             this.ChainLinks = ChainLinks;
         }
     }

@@ -18,8 +18,18 @@ MonoBehaviour:
   - id: Swipe
     motionValue: 1
     animationKey: MeleeAttack_TwoHanded
-    chainLinks: []
+    chainLinks:
+    - Wack
+    - Swipe
+    cooldown: 0.5
     clip: {fileID: 7400000, guid: fc57d3850dc56847ca0b0f63df706c95, type: 2}
+  - id: Wack
+    motionValue: 1
+    animationKey: MeleeAttack_OneHanded
+    chainLinks:
+    - Swipe
+    cooldown: 0.5
+    clip: {fileID: 7400000, guid: 600a68a42442a580fb72cd69e41dd257, type: 2}
   directionalOpenerMap:
   - input: 1
     moveId: Swipe
@@ -32,5 +42,6 @@ MonoBehaviour:
   - input: 5
     moveId: Swipe
   - input: 6
-    moveId: Swipe
+    moveId: Wack
   hitApplier: {fileID: 0}
+  cooldown: 0.5

@@ -1,3 +1,6 @@
+using System.ComponentModel.Design;
+using System.Numerics;
+
 namespace MonStorm.Core.Player
 {
     public class PlayerDefeatedState : PlayerBaseState
@@ -7,6 +10,7 @@ namespace MonStorm.Core.Player
         {
             base.Enter(context);
             context.AnimationIntent = context.DeathAnimHash;
+            context.velocity = Vector3.Zero;
         }
 
         public override void Tick(PlayerContext context, float deltaTime)

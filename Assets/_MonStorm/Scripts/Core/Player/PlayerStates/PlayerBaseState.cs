@@ -30,6 +30,7 @@ namespace MonStorm.Core.Player
         private void HandleCoolDowns(PlayerContext context, float deltaTime)
         {
             if(context.attackCoolDown > 0) context.attackCoolDown -= deltaTime;
+            if(context.dodgeCoolDown > 0) context.dodgeCoolDown -= deltaTime;
         }
     }
 }

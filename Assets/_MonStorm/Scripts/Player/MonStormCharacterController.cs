@@ -54,6 +54,7 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.DamagedAnimHash = Animator.StringToHash("GetHit");
         m_playerContext.DeathAnimHash = Animator.StringToHash("Death");
         m_playerContext.AttackAnimHash = Animator.StringToHash("MeleeAttack_TwoHanded");
+        m_playerContext.DodgeAnimHash = Animator.StringToHash("RollForward");
         actionResolver = new ActionResolver(rearmThreshold, deadzone);
         
 
@@ -99,6 +100,10 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.dodgePressed = m_inputActions.Player.Dodge.WasPressedThisFrame();
         m_playerContext.attackPressed = m_inputActions.Player.EnableAttack.WasPressedThisFrame();
         m_playerContext.weaponAction = actionResolver.actionResolve(rightStickGestures.x, rightStickGestures.y, rightStickPressed, specialAttackPressed);
+        if((m_playerContext.weaponAction != ActionInput.None || m_playerContext.attackPressed) && m_playerContext.attackTimer > 0)
+        {
+            m_playerContext.chainInput = m_playerContext.weaponAction;
+        }
         
     }
 

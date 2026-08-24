@@ -16,13 +16,15 @@ namespace MonStorm.Core.Player
         {
             base.Enter(context);
             context.isHit = false;
-            context.damagedTimer = 0.667f;
-            context.velocity = System.Numerics.Vector3.Zero;
+            context.damagedTimer = context.damagedDuration;
+            context.velocity = context.knockbackDirection * context.knockbackForce;
             context.AnimationIntent = context.DamagedAnimHash;
         }
 
         public override void Tick(PlayerContext context, float deltaTime)
         {
+            context.velocity.X *= 1f - (context.knockbackDeceleration * deltaTime);
+            context.velocity.Z *= 1f - (context.knockbackDeceleration * deltaTime);
             context.damagedTimer -= deltaTime;
             base.Tick(context, deltaTime);
         }

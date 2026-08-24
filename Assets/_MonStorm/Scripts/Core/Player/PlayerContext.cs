@@ -16,14 +16,17 @@ namespace MonStorm.Core.Player
 
 
         
-        // Animation Hashes
+        // Animation Stuff
         public int AnimationIntent;
         public int MovementTreeHash;
 
+        public int DodgeAnimHash;
         public int DamagedAnimHash;
         public int DeathAnimHash;
 
         public int AttackAnimHash;
+
+        public bool forceAnimationRestart;
 
 
         // Player Stats
@@ -51,6 +54,27 @@ namespace MonStorm.Core.Player
         // Combat-Oriented Fields
         public WeaponDefinition equippedWeapon;
         public ActionInput weaponAction;
+
+        public ActionInput chainInput;
+
+
+        public float dodgeDuration = 0.5f;
+        public float dodgeTimer;
+        public bool iFrameActive;
+
+        public Vector3 dodgeDirection;
+        public float dodgeSpeed = 12.5f;
+
+        public float crossFadeOverride = -1f;
+
+        // Damaged-Oriented fields
+        public Vector3 knockbackDirection;
+
+        public float knockbackDeceleration = 5f;
+
+        public float knockbackForce = 5f;
+
+        public float damagedDuration = 0.667f;
 
         // State
         public bool inBattle;

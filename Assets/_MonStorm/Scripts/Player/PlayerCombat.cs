@@ -23,7 +23,12 @@ public class PlayerCombat : MonoBehaviour, IHitReceiver
     
     public void HandleHit(HitApplier applier, HitDetector detector)
     {
+        
         if (health.IsDead) return;
+        Vector3 hitDir = transform.position - applier.transform.position;
+        hitDir.y = 0;
+        hitDir.Normalize();
+        context.knockbackDirection = new System.Numerics.Vector3(hitDir.x, hitDir.y, hitDir.z);
         float damageDealt = DamageCalculator.Resolve(applier.Damage, detector.DamageMultiplier);
         context.isHit = true;
         health.Damage(damageDealt);

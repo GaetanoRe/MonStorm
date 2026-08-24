@@ -13,13 +13,21 @@ public class WeaponAsset : ScriptableObject
     [SerializeField] public AttackMoveData[] moves;
     [SerializeField] public List<DirectionalEntry> directionalOpenerMap;
     [SerializeField] public HitApplier hitApplier;
+    [SerializeField] public float cooldown;
 
     public WeaponDefinition Build()
     {
         AttackMove [] attackMoves = new AttackMove[moves.Length];
         for(int i = 0; i < attackMoves.Length; i++)
         {
-            attackMoves[i] = new AttackMove(moves[i].id, moves[i].motionValue, moves[i].animationKey, moves[i].chainLinks);
+            attackMoves[i] = new AttackMove(moves[i].id, 
+                moves[i].motionValue, 
+                moves[i].animationKey, 
+                Animator.StringToHash(moves[i].animationKey),
+                GetClip(moves[i].animationKey).length,
+                moves[i].cooldown,
+                moves[i].chainLinks
+            );
         }
 
         Dictionary<ActionInput, string> actionDictionary = new Dictionary<ActionInput, string>();
@@ -30,6 +38,16 @@ public class WeaponAsset : ScriptableObject
 
         return new WeaponDefinition(rawDamage, attackMoves, actionDictionary);
     }
+
+    public AnimationClip GetClip(string animationKey)
+    {
+        foreach(AttackMoveData move in moves)
+        {
+            if(move.animationKey.Equals(animationKey)) return move.clip;
+        }
+
+        return null;
+    }
 }
 
 [Serializable]
@@ -39,6 +57,7 @@ public class AttackMoveData
     public float motionValue;
     public string animationKey;
     public string [] chainLinks;
+    public float cooldown;
     public AnimationClip clip;
 
 }

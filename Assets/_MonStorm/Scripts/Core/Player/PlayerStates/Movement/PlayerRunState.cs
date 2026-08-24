@@ -10,6 +10,7 @@ namespace MonStorm.Core.Player
             transitionManager.Initialize(
                 new StateTransition<PlayerContext>(new PlayerDamagedState(), () => context.isHit),
                 new StateTransition<PlayerContext>(new PlayerIdleState(), () => context.moveInput == Vector2.Zero),
+                new StateTransition<PlayerContext>(new PlayerDodgeState(), () => context.dodgePressed && context.dodgeCoolDown <= 0 && context.moveInput != Vector2.Zero),
                 new StateTransition<PlayerContext>(new PlayerWalkState(), () => !context.isSprinting)
             );
         }

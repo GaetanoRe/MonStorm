@@ -175,38 +175,38 @@ Assets/_Placeholders/** linguist-vendored
 
 
 # ==============================================================================
-# 6. Git LFS — DISABLED. Read before enabling.
+# 6. Git LFS — ENABLED 2026-08-27
 # ==============================================================================
-# This repo is ~1.3 GB with 571 PNGs, 255 FBXs and single files up to 59 MB, all
-# stored as ordinary git objects. LFS is the right long-term answer, but turning
-# it on is a TEAM decision, not a file edit. Before uncommenting:
+# Heavy binary art is routed through Git LFS. Operational facts that stay true
+# now that this is on:
 #
-#   1. Every contributor runs `git lfs install` once. If someone commits a
-#      matching file without it, they push the raw blob while this file claims
-#      it is a pointer — a confusing mixed state.
-#   2. Understand that this only affects files committed FROM THAT POINT ON.
-#      The existing 1.3 GB stays in history. Shrinking that needs
-#      `git lfs migrate import`, which REWRITES HISTORY — every branch, every
-#      teammate re-clones. Do not attempt that with branches in flight.
-#   3. With no [lfs "<url>"] section in .git/config, LFS resolves its endpoint
+#   1. EVERY CONTRIBUTOR NEEDS `git lfs install` ONCE. GitHub Desktop bundles
+#      LFS and handles this on its own; plain-CLI users do not. Someone who
+#      commits a matching file without it pushes a raw blob while this file
+#      claims it is a pointer — and nothing errors. It just quietly doesn't work.
+#   2. These patterns apply at `git add` time only. Files already checked out
+#      stay raw blobs until they are re-added — see `git add --renormalize .`
+#      to convert everything currently tracked in one pass.
+#   3. Converting does NOT shrink existing history. The old blobs remain in past
+#      commits. Reclaiming that space needs `git lfs migrate import`, which
+#      REWRITES HISTORY — every branch, every teammate re-clones. Do not attempt
+#      that with branches in flight.
+#   4. With no [lfs "<url>"] section in .git/config, LFS resolves its endpoint
 #      from `origin` automatically. That is what you want — don't pin one by
 #      hand unless you deliberately move hosts.
-#
-# Suggested timing: after the M0 demo ships, before the artists' real assets
-# start landing. Placeholder art is already committed; production art is not.
-#
-# *.fbx  filter=lfs diff=lfs merge=lfs -text
-# *.png  filter=lfs diff=lfs merge=lfs -text
-# *.tga  filter=lfs diff=lfs merge=lfs -text
-# *.psd  filter=lfs diff=lfs merge=lfs -text
-# *.tif  filter=lfs diff=lfs merge=lfs -text
-# *.exr  filter=lfs diff=lfs merge=lfs -text
-# *.hdr  filter=lfs diff=lfs merge=lfs -text
-# *.wav  filter=lfs diff=lfs merge=lfs -text
-# *.mp3  filter=lfs diff=lfs merge=lfs -text
-# *.ogg  filter=lfs diff=lfs merge=lfs -text
-# *.mp4  filter=lfs diff=lfs merge=lfs -text
-# *.mov  filter=lfs diff=lfs merge=lfs -text
+
+*.fbx  filter=lfs diff=lfs merge=lfs -text
+*.png  filter=lfs diff=lfs merge=lfs -text
+*.tga  filter=lfs diff=lfs merge=lfs -text
+*.psd  filter=lfs diff=lfs merge=lfs -text
+*.tif  filter=lfs diff=lfs merge=lfs -text
+*.exr  filter=lfs diff=lfs merge=lfs -text
+*.hdr  filter=lfs diff=lfs merge=lfs -text
+*.wav  filter=lfs diff=lfs merge=lfs -text
+*.mp3  filter=lfs diff=lfs merge=lfs -text
+*.ogg  filter=lfs diff=lfs merge=lfs -text
+*.mp4  filter=lfs diff=lfs merge=lfs -text
+*.mov  filter=lfs diff=lfs merge=lfs -text
 
 
 # ==============================================================================

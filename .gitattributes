@@ -1,0 +1,228 @@
+# ==============================================================================
+# MonStorm — .gitattributes
+# Unity 6 (6000.3.12f1), URP. Asset Serialization = Force Text.
+#
+# Purpose:
+#   1. Normalise line endings across a mixed Linux/Windows team.
+#   2. Mark Unity's YAML assets as text so they diff and merge.
+#   3. Mark real binaries as binary so git stops trying to diff them.
+#   4. (Optional, off by default) route heavy art through Git LFS.
+# ==============================================================================
+
+
+# ------------------------------------------------------------------------------
+# 1. Default handling
+# ------------------------------------------------------------------------------
+# Detect text automatically; store LF in the repo, check out native on Windows.
+# The repo is already almost entirely LF, so this is close to a no-op.
+* text=auto eol=lf
+
+
+# ------------------------------------------------------------------------------
+# 2. Unity YAML assets
+# ------------------------------------------------------------------------------
+# These are text ONLY because Asset Serialization is set to Force Text in
+# ProjectSettings/EditorSettings.asset (m_SerializationMode: 2). If that ever
+# gets switched back to Mixed/Binary, these rules become actively harmful.
+#
+# merge=unityyamlmerge routes conflicts through Unity's SmartMerge tool. It is
+# opt-in per developer — see the note at the bottom of this file. If a developer
+# has not configured it, git silently falls back to its normal text merge, so
+# leaving these here is safe for everyone.
+
+*.unity              text eol=lf merge=unityyamlmerge
+*.prefab             text eol=lf merge=unityyamlmerge
+*.asset              text eol=lf merge=unityyamlmerge
+*.mat                text eol=lf merge=unityyamlmerge
+*.anim               text eol=lf merge=unityyamlmerge
+*.controller         text eol=lf merge=unityyamlmerge
+*.overrideController text eol=lf merge=unityyamlmerge
+*.physicMaterial     text eol=lf merge=unityyamlmerge
+*.physicsMaterial2D  text eol=lf merge=unityyamlmerge
+*.playable           text eol=lf merge=unityyamlmerge
+*.mask               text eol=lf merge=unityyamlmerge
+*.brush              text eol=lf merge=unityyamlmerge
+*.flare              text eol=lf merge=unityyamlmerge
+*.fontsettings       text eol=lf merge=unityyamlmerge
+*.guiskin            text eol=lf merge=unityyamlmerge
+*.giparams           text eol=lf merge=unityyamlmerge
+*.renderTexture      text eol=lf merge=unityyamlmerge
+*.lighting           text eol=lf merge=unityyamlmerge
+*.signal             text eol=lf merge=unityyamlmerge
+*.spriteatlas        text eol=lf merge=unityyamlmerge
+*.spriteatlasv2      text eol=lf merge=unityyamlmerge
+*.terrainlayer       text eol=lf merge=unityyamlmerge
+*.mixer              text eol=lf merge=unityyamlmerge
+*.shadervariants     text eol=lf merge=unityyamlmerge
+
+# .meta files must never be lost or mangled — every asset needs its pair.
+*.meta               text eol=lf merge=unityyamlmerge
+
+
+# ------------------------------------------------------------------------------
+# 3. Source and config
+# ------------------------------------------------------------------------------
+*.cs                 text eol=lf diff=csharp
+*.asmdef             text eol=lf
+*.asmref             text eol=lf
+*.inputactions       text eol=lf
+*.json               text eol=lf
+*.md                 text eol=lf
+*.txt                text eol=lf
+*.xml                text eol=lf
+*.yml                text eol=lf
+*.yaml               text eol=lf
+*.uss                text eol=lf
+*.uxml               text eol=lf
+
+# Shaders
+*.shader             text eol=lf
+*.shadergraph        text eol=lf
+*.shadersubgraph     text eol=lf
+*.compute            text eol=lf
+*.cginc              text eol=lf
+*.hlsl               text eol=lf
+*.glslinc            text eol=lf
+*.raytrace           text eol=lf
+
+# Windows-only files that genuinely want CRLF.
+*.bat                text eol=crlf
+*.cmd                text eol=crlf
+*.ps1                text eol=crlf
+*.sln                text eol=crlf
+*.csproj             text eol=crlf
+
+
+# ------------------------------------------------------------------------------
+# 4. Binaries — never diff, never line-ending-convert
+# ------------------------------------------------------------------------------
+# 3D
+*.fbx                binary
+*.obj                binary
+*.blend              binary
+*.blend1             binary
+*.dae                binary
+*.3ds                binary
+*.max                binary
+*.ma                 binary
+*.mb                 binary
+*.c4d                binary
+*.abc                binary
+
+# Images
+*.png                binary
+*.jpg                binary
+*.jpeg               binary
+*.tga                binary
+*.tif                binary
+*.tiff               binary
+*.psd                binary
+*.exr                binary
+*.hdr                binary
+*.bmp                binary
+*.gif                binary
+*.iff                binary
+*.pict               binary
+*.dds                binary
+*.cubemap            binary
+
+# Audio / video
+*.mp3                binary
+*.ogg                binary
+*.wav                binary
+*.aif                binary
+*.aiff               binary
+*.mod                binary
+*.it                 binary
+*.s3m                binary
+*.xm                 binary
+*.mp4                binary
+*.mov                binary
+*.webm               binary
+
+# Fonts
+*.ttf                binary
+*.otf                binary
+
+# Unity build/package artifacts
+*.unitypackage       binary
+*.aar                binary
+*.dll                binary
+*.so                 binary
+*.dylib              binary
+*.pdb                binary
+*.a                  binary
+*.bundle             binary
+*.apk                binary
+*.exe                binary
+
+# Documents / archives
+*.pdf                binary
+*.odt                binary
+*.docx               binary
+*.zip                binary
+*.7z                 binary
+*.rar                binary
+
+
+# ------------------------------------------------------------------------------
+# 5. GitHub cosmetics
+# ------------------------------------------------------------------------------
+# Keep vendored placeholder art out of the language statistics and out of
+# "Files changed" by default. Cosmetic only — has no effect on git itself.
+Assets/_Placeholders/** linguist-vendored
+*.meta                 linguist-generated
+
+
+# ==============================================================================
+# 6. Git LFS — DISABLED. Read before enabling.
+# ==============================================================================
+# This repo is ~1.3 GB with 571 PNGs, 255 FBXs and single files up to 59 MB, all
+# stored as ordinary git objects. LFS is the right long-term answer, but turning
+# it on is a TEAM decision, not a file edit. Before uncommenting:
+#
+#   1. Every contributor runs `git lfs install` once. If someone commits a
+#      matching file without it, they push the raw blob while this file claims
+#      it is a pointer — a confusing mixed state.
+#   2. Understand that this only affects files committed FROM THAT POINT ON.
+#      The existing 1.3 GB stays in history. Shrinking that needs
+#      `git lfs migrate import`, which REWRITES HISTORY — every branch, every
+#      teammate re-clones. Do not attempt that with branches in flight.
+#   3. With no [lfs "<url>"] section in .git/config, LFS resolves its endpoint
+#      from `origin` automatically. That is what you want — don't pin one by
+#      hand unless you deliberately move hosts.
+#
+# Suggested timing: after the M0 demo ships, before the artists' real assets
+# start landing. Placeholder art is already committed; production art is not.
+#
+# *.fbx  filter=lfs diff=lfs merge=lfs -text
+# *.png  filter=lfs diff=lfs merge=lfs -text
+# *.tga  filter=lfs diff=lfs merge=lfs -text
+# *.psd  filter=lfs diff=lfs merge=lfs -text
+# *.tif  filter=lfs diff=lfs merge=lfs -text
+# *.exr  filter=lfs diff=lfs merge=lfs -text
+# *.hdr  filter=lfs diff=lfs merge=lfs -text
+# *.wav  filter=lfs diff=lfs merge=lfs -text
+# *.mp3  filter=lfs diff=lfs merge=lfs -text
+# *.ogg  filter=lfs diff=lfs merge=lfs -text
+# *.mp4  filter=lfs diff=lfs merge=lfs -text
+# *.mov  filter=lfs diff=lfs merge=lfs -text
+
+
+# ==============================================================================
+# 7. UnityYAMLMerge setup (each developer, once)
+# ==============================================================================
+# The merge=unityyamlmerge rules above do nothing until this is configured
+# locally. Run once per machine, adjusting the path to your Unity install:
+#
+#   git config --global merge.unityyamlmerge.name "Unity SmartMerge"
+#   git config --global merge.unityyamlmerge.driver \
+#     '/path/to/Unity/Editor/Data/Tools/UnityYAMLMerge merge -p %O %A %B %A'
+#   git config --global merge.unityyamlmerge.recursive binary
+#
+# Linux default:   ~/Unity/Hub/Editor/6000.3.12f1/Editor/Data/Tools/UnityYAMLMerge
+# Windows default: C:\Program Files\Unity\Hub\Editor\6000.3.12f1\Editor\Data\Tools\UnityYAMLMerge.exe
+#
+# Without it, git falls back to its normal text merge. Nothing breaks; scene and
+# prefab conflicts are just uglier to resolve by hand.
+# ==============================================================================

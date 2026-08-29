@@ -107,7 +107,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold,Press"",
+                    ""interactions"": ""Press,Hold"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -126,15 +126,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""EnableAttack"",
-                    ""type"": ""Button"",
-                    ""id"": ""d4272cee-b3fd-476c-871c-f838c47d56a0"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -190,6 +181,42 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LookStick"",
+                    ""type"": ""Value"",
+                    ""id"": ""c3fa1793-5aef-4f86-9463-c028153a8741"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""AttackNorth"",
+                    ""type"": ""Button"",
+                    ""id"": ""05720ae5-6374-47d6-bd9a-02cbf15fe101"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AttackEast"",
+                    ""type"": ""Button"",
+                    ""id"": ""f7c80745-cc6f-4427-95f7-1b9ea4eec010"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ModifierLB"",
+                    ""type"": ""Button"",
+                    ""id"": ""41176fe7-0d63-4280-8d59-1ebdafa89cac"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -339,7 +366,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b3f66d0b-7751-423f-908b-a11c5bd95930"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -377,28 +404,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""AttackActions"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fbafdc56-93c7-4110-9e29-106fb77dd1d5"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""AttackActions"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""01ea82a5-4b56-4085-94bc-d8ab041242f9"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""EnableAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -471,10 +476,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f3852c7e-4d5b-421f-bbb4-520835fe5e6c"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""CenterCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -504,7 +509,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6b68a504-3800-4079-b593-90326f255d46"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -518,7 +523,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -542,6 +547,83 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Action5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2cb00e1d-1ac4-40eb-8b2a-720be23b4ed0"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""AttackNorth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de447db1-2694-4f30-a9dd-4451dc3ee2a7"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""AttackNorth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""814bf1ef-0882-4cda-8cd7-71ead66f26d1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""AttackEast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75e2a3c2-24ef-49fb-97c6-d3f7231f7cc3"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""AttackEast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83f87e64-347f-4450-b8e0-e1ba767d0ec1"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ModifierLB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7ddeffa-32c9-4131-a10f-8f6261efb47d"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ModifierLB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ef80af6-47b0-4386-9bee-07f3eb3edfe4"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LookStick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1133,13 +1215,16 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_CenterCamera = m_Player.FindAction("CenterCamera", throwIfNotFound: true);
-        m_Player_EnableAttack = m_Player.FindAction("EnableAttack", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_SpecialAction = m_Player.FindAction("SpecialAction", throwIfNotFound: true);
         m_Player_AttackActions = m_Player.FindAction("AttackActions", throwIfNotFound: true);
         m_Player_Action5 = m_Player.FindAction("Action5", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+        m_Player_LookStick = m_Player.FindAction("LookStick", throwIfNotFound: true);
+        m_Player_AttackNorth = m_Player.FindAction("AttackNorth", throwIfNotFound: true);
+        m_Player_AttackEast = m_Player.FindAction("AttackEast", throwIfNotFound: true);
+        m_Player_ModifierLB = m_Player.FindAction("ModifierLB", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1237,13 +1322,16 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_CenterCamera;
-    private readonly InputAction m_Player_EnableAttack;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_SpecialAction;
     private readonly InputAction m_Player_AttackActions;
     private readonly InputAction m_Player_Action5;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
+    private readonly InputAction m_Player_LookStick;
+    private readonly InputAction m_Player_AttackNorth;
+    private readonly InputAction m_Player_AttackEast;
+    private readonly InputAction m_Player_ModifierLB;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1272,10 +1360,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @CenterCamera => m_Wrapper.m_Player_CenterCamera;
         /// <summary>
-        /// Provides access to the underlying input action "Player/EnableAttack".
-        /// </summary>
-        public InputAction @EnableAttack => m_Wrapper.m_Player_EnableAttack;
-        /// <summary>
         /// Provides access to the underlying input action "Player/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
@@ -1299,6 +1383,22 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Look".
         /// </summary>
         public InputAction @Look => m_Wrapper.m_Player_Look;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/LookStick".
+        /// </summary>
+        public InputAction @LookStick => m_Wrapper.m_Player_LookStick;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/AttackNorth".
+        /// </summary>
+        public InputAction @AttackNorth => m_Wrapper.m_Player_AttackNorth;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/AttackEast".
+        /// </summary>
+        public InputAction @AttackEast => m_Wrapper.m_Player_AttackEast;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ModifierLB".
+        /// </summary>
+        public InputAction @ModifierLB => m_Wrapper.m_Player_ModifierLB;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1337,9 +1437,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @CenterCamera.started += instance.OnCenterCamera;
             @CenterCamera.performed += instance.OnCenterCamera;
             @CenterCamera.canceled += instance.OnCenterCamera;
-            @EnableAttack.started += instance.OnEnableAttack;
-            @EnableAttack.performed += instance.OnEnableAttack;
-            @EnableAttack.canceled += instance.OnEnableAttack;
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
@@ -1358,6 +1455,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @LookStick.started += instance.OnLookStick;
+            @LookStick.performed += instance.OnLookStick;
+            @LookStick.canceled += instance.OnLookStick;
+            @AttackNorth.started += instance.OnAttackNorth;
+            @AttackNorth.performed += instance.OnAttackNorth;
+            @AttackNorth.canceled += instance.OnAttackNorth;
+            @AttackEast.started += instance.OnAttackEast;
+            @AttackEast.performed += instance.OnAttackEast;
+            @AttackEast.canceled += instance.OnAttackEast;
+            @ModifierLB.started += instance.OnModifierLB;
+            @ModifierLB.performed += instance.OnModifierLB;
+            @ModifierLB.canceled += instance.OnModifierLB;
         }
 
         /// <summary>
@@ -1381,9 +1490,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @CenterCamera.started -= instance.OnCenterCamera;
             @CenterCamera.performed -= instance.OnCenterCamera;
             @CenterCamera.canceled -= instance.OnCenterCamera;
-            @EnableAttack.started -= instance.OnEnableAttack;
-            @EnableAttack.performed -= instance.OnEnableAttack;
-            @EnableAttack.canceled -= instance.OnEnableAttack;
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
@@ -1402,6 +1508,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @LookStick.started -= instance.OnLookStick;
+            @LookStick.performed -= instance.OnLookStick;
+            @LookStick.canceled -= instance.OnLookStick;
+            @AttackNorth.started -= instance.OnAttackNorth;
+            @AttackNorth.performed -= instance.OnAttackNorth;
+            @AttackNorth.canceled -= instance.OnAttackNorth;
+            @AttackEast.started -= instance.OnAttackEast;
+            @AttackEast.performed -= instance.OnAttackEast;
+            @AttackEast.canceled -= instance.OnAttackEast;
+            @ModifierLB.started -= instance.OnModifierLB;
+            @ModifierLB.performed -= instance.OnModifierLB;
+            @ModifierLB.canceled -= instance.OnModifierLB;
         }
 
         /// <summary>
@@ -1731,13 +1849,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCenterCamera(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "EnableAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnEnableAttack(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -1779,6 +1890,34 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLook(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LookStick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLookStick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "AttackNorth" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttackNorth(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "AttackEast" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttackEast(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ModifierLB" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnModifierLB(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

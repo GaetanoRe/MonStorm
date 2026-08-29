@@ -12,7 +12,9 @@ public class MonStormPlayerCameraController : MonoBehaviour
     [SerializeField] float pitchSmoothTime = 0.2f;
     [SerializeField] float mousePitchSensitivity = 0.1f;
     [SerializeField] float controllerPitchSensitivity = 0.5f;
+    [SerializeField] float lookDeadzone = 0.15f;
     [SerializeField] bool classicCam;
+    [SerializeField] private ControlSchemeSettings _controlScheme;
 
     private bool _snapping;
     private float _snapStartYaw;
@@ -45,9 +47,19 @@ public class MonStormPlayerCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 lookInput = inputActions.Player.Look.ReadValue<Vector2>();
+        Vector2 lookInput;
+        if(_controlScheme.gamepadScheme == MonStorm.Core.Player.ControlScheme.Button)
+        {
+            classicCam = false;
+            lookInput = inputActions.Player.LookStick.ReadValue<Vector2>();
+            
+        }
+        else
+        {
+            lookInput = inputActions.Player.Look.ReadValue<Vector2>();
+        }
         
-        if(lookInput.x != 0)
+        if(Mathf.Abs(lookInput.x) > lookDeadzone)
         {
             orbitalCamera.HorizontalAxis.Value += lookInput.x * yawSpeedDegPerSec * Time.deltaTime;
             _snapping = false;
@@ -69,7 +81,7 @@ public class MonStormPlayerCameraController : MonoBehaviour
             float mouseMoveY = mouseY * mousePitchSensitivity;
             orbitalCamera.VerticalAxis.Value = Mathf.Clamp(orbitalCamera.VerticalAxis.Value + mouseMoveY, pitchPresets[0], pitchPresets[pitchPresets.Length - 1]);
         }
-        else if (!classicCam)
+        else if (!classicCam && Mathf.Abs(lookInput.y) > lookDeadzone)
         {
             float analogueY = lookInput.y * controllerPitchSensitivity * Time.deltaTime;
             orbitalCamera.VerticalAxis.Value = Mathf.Clamp(orbitalCamera.VerticalAxis.Value + analogueY, pitchPresets[0], pitchPresets[pitchPresets.Length - 1]);

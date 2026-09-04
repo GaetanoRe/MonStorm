@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37aa625488dccc45a3fd3812e5208d3, type: 3}
   m_Name: Bull Definition
   m_EditorClassIdentifier: Assembly-CSharp::TerritorialCreatureDefinition
-  creatureName: Bull
+  <CreatureName>k__BackingField: Bull
+  <VisionRadius>k__BackingField: 11
+  <VisionMaxAngle>k__BackingField: 130
   <WalkSpeed>k__BackingField: 2
   <ChaseSpeed>k__BackingField: 6
   <IdleDuration>k__BackingField: 5
   <MaxWanderRange>k__BackingField: 5
-  <DetectionRange>k__BackingField: 8
   <AttackRange>k__BackingField: 2
   <AttackCooldownTime>k__BackingField: 1.5
   <MaxTetherRange>k__BackingField: 20

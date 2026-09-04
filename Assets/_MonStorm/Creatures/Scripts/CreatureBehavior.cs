@@ -29,14 +29,12 @@ public class CreatureBehavior : MonoBehaviour
     IFSMAdapterAnimator adapterAnimator;
     IFSMAdapterNavMeshAgent adapterNavMeshAgent;
     IFSMAdapterLogger adapterLogger;
+    IFSMAdapterTransform adapterTransform;
+    IFSMAdapterTransform adapterTransformTarget;
+    IFSMAdapterSensorVision adapterSensorVision;
 
     bool gotHitThisFrame;
 
-
-    public bool ConditionGotHitThisFrame() => gotHitThisFrame;
-    public bool ConditionIsDead() => health != null && health.IsDead;
-    public bool ConditionIsAnimationFinished() => adapterAnimator.IsAnimationFinished;
-    public bool ConditionHasReachedDestination() => adapterNavMeshAgent.HasActivePath;
 
     void Awake()
     {
@@ -46,6 +44,8 @@ public class CreatureBehavior : MonoBehaviour
             return;
         }
 
+        Transform target = FindAnyObjectByType<MonStormCharacterController>().transform;
+
         TryGetComponent(out hitReceiver);
         TryGetComponent(out health);
         TryGetComponent(out itemDropper);
@@ -53,8 +53,11 @@ public class CreatureBehavior : MonoBehaviour
         adapterAnimator = TryGetComponent(out Animator animator) ? new FSMAdapterAnimator(animator) : new FSMAdapterAnimatorNull();
         adapterNavMeshAgent = TryGetComponent(out NavMeshAgent navMeshAgent) ? new FSMAdapterNavMeshAgent(navMeshAgent) : new FSMAdapterNavMeshAgentNull();
         adapterLogger = new FSMAdapterLogger();
+        adapterTransform = new FSMAdapterTransform(transform);
+        adapterTransformTarget = target != null ? new FSMAdapterTransform(target) : new FSMAdapterTransformNull();
+        adapterSensorVision = new FSMAdapterSensorVision(adapterTransform, adapterTransformTarget, creatureDefinition.VisionRadius, creatureDefinition.VisionMaxAngle);
 
-        creatureContext = new(null, adapterAnimator, adapterNavMeshAgent, new FSMAdapterTransform(transform), adapterLogger, new FSMAdapterTransform(FindAnyObjectByType<MonStormCharacterController>().transform));
+        creatureContext = new(null, adapterAnimator, adapterNavMeshAgent, new FSMAdapterTransform(transform), adapterLogger, adapterTransformTarget, adapterSensorVision);
         stateMachine = creatureDefinition.BuildStateMachine(creatureContext, this);
     }
 
@@ -74,6 +77,7 @@ public class CreatureBehavior : MonoBehaviour
 
     void Update()
     {
+        creatureContext.UpdateContextValues(gotHitThisFrame, health != null && health.IsDead);
         stateMachine.Tick(Time.deltaTime);
 
         gotHitThisFrame = false;

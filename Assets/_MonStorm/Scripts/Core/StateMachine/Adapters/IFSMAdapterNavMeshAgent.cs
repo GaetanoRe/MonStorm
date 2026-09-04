@@ -34,6 +34,10 @@ namespace MonStorm.Core.StateMachine
         /// <returns>Whether the position of the target is valid, and subsequently whether the move command was issued.</returns>
         public bool FollowTarget(IFSMAdapterTransform target);
 
+        /// <summary>Manually rotate the agent to look towards the provided target position.</summary>
+        /// <param name="targetPosition">The position the agent will look towards.</param>
+        public void RotateTowardsPosition(Vector3 targetPosition);
+
         /// <summary>Cancels the current movement command of the agent if it has any.</summary>
         public void CancelMove();
 

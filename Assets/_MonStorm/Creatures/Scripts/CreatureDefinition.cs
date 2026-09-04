@@ -3,7 +3,9 @@ using MonStorm.Core.StateMachine;
 
 public abstract class CreatureDefinition : ScriptableObject
 {
-    [SerializeField] string creatureName;
+    [field: SerializeField] public string CreatureName { get; private set; }
+    [field: SerializeField] public float VisionRadius { get; private set; }
+    [field: SerializeField, Range(0f, 180f)] public float VisionMaxAngle { get; private set; }
 
 
     /// <summary>Create the specific creature state machine with all of it's states, values and transitions.</summary>

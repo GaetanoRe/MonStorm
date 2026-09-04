@@ -16,7 +16,6 @@ public class TerritorialCreatureDefinition : CreatureDefinition
     [field: SerializeField] public float ChaseSpeed { get; private set; }
     [field: SerializeField] public float IdleDuration { get; private set; }
     [field: SerializeField] public float MaxWanderRange { get; private set; }
-    [field: SerializeField] public float DetectionRange { get; private set; }
     [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public float AttackCooldownTime { get; private set; }
 
@@ -42,47 +41,48 @@ public class TerritorialCreatureDefinition : CreatureDefinition
         CreatureIdleState idleState = new(creatureContext, idleTransitions, IDLE_ANIM_HASH);
         CreatureWanderState wanderState = new(creatureContext, wanderTransitions, WALK_ANIM_HASH, homeCenter, MaxWanderRange, WalkSpeed);
         // Territorial creatures don't update their wander center, they always return to their starting location
-        CreatureChaseState chaseState = new(creatureContext, chaseTransitions, RUN_ANIM_HASH, creatureContext.PlayerTransform, ChaseSpeed, null);
+        CreatureChaseState chaseState = new(creatureContext, chaseTransitions, RUN_ANIM_HASH, ChaseSpeed, null);
         CreatureAttackState attackState = new(creatureContext, attackTransitions, ATTACK_ANIM_HASH, attackTimer);
         CreatureDamagedState damagedState = new(creatureContext, damagedTransitions, DAMAGED_ANIM_HASH);
         CreatureDeadState deadState = new(creatureContext, deadTransitions, DEAD_ANIM_HASH);
 
-        bool IsInAttackRange() => creatureContext.DistanceToPlayer <= AttackRange;
-        bool CanStartChase() => creatureContext.DistanceToPlayer <= DetectionRange && IsWithinReEngageBuffer(homeCenter, creatureContext);
+        bool IsInAttackRange() => creatureContext.DistanceToTarget <= AttackRange;
+        bool CanStartChase() => creatureContext.IsTargetInVision && IsWithinReEngageBuffer(homeCenter, creatureContext);
 
         idleTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
             new(wanderState, () => idleState.StateTimer >= IdleDuration && !CanStartChase()),
             new(chaseState, CanStartChase),
-            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingPlayer)
+            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingTarget)
         );
 
         wanderTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(idleState, creatureBehavior.ConditionHasReachedDestination),
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(idleState, () => creatureContext.HasReachedDestination),
             new(chaseState, CanStartChase)
         );
 
         chaseTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(wanderState, () => creatureContext.DistanceToPlayer > DetectionRange || IsOutsideMaxTether(homeCenter, creatureContext)),
-            new(idleState, () => IsInAttackRange() && !attackTimer.IsReady && creatureContext.IsFacingPlayer),
-            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingPlayer)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(wanderState, () => !creatureContext.IsTargetInVision || IsOutsideMaxTether(homeCenter, creatureContext)),
+            new(idleState, () => IsInAttackRange() && !attackTimer.IsReady && creatureContext.IsFacingTarget),
+            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingTarget)
         );
 
         attackTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(idleState, creatureBehavior.ConditionIsAnimationFinished)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(wanderState, () => creatureContext.IsAnimationFinished && IsTargetOutsideMaxTether(homeCenter, creatureContext)),
+            new(chaseState, () => creatureContext.IsAnimationFinished)
         );
 
         damagedTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(chaseState, creatureBehavior.ConditionIsAnimationFinished)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(chaseState, () => creatureContext.IsAnimationFinished)
         );
 
         stateMachine.TransitionTo(idleState);
@@ -101,5 +101,12 @@ public class TerritorialCreatureDefinition : CreatureDefinition
     {
         System.Numerics.Vector2 currentPos = new(context.AdapterTransform.Position.X, context.AdapterTransform.Position.Z);
         return System.Numerics.Vector2.Distance(currentPos, homeCenter) > MaxTetherRange;
+    }
+
+    // Whether the target has run outside the creature's guarding range
+    bool IsTargetOutsideMaxTether(System.Numerics.Vector2 homeCenter, CreatureContext context)
+    {
+        System.Numerics.Vector2 targetPos = new(context.TargetAdapterTransform.Position.X, context.TargetAdapterTransform.Position.Z);
+        return System.Numerics.Vector2.Distance(targetPos, homeCenter) > MaxTetherRange;
     }
 }

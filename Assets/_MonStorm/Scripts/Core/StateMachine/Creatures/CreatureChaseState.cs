@@ -5,7 +5,6 @@ namespace MonStorm.Core.StateMachine
 {
     public class CreatureChaseState : CreatureBaseState
     {
-        readonly IFSMAdapterTransform targetTransform;
         readonly Action<Vector2> onExitChase;
 
         readonly static float recalculatePathTime = 0.1f;
@@ -15,11 +14,10 @@ namespace MonStorm.Core.StateMachine
         float speedChange;
 
 
-        public CreatureChaseState(CreatureContext creatureContext, StateTransitionManager<CreatureContext> transitionManager, int animationHash,
-            IFSMAdapterTransform targetTransform, float chaseSpeed, Action<Vector2> onExitChase)
+        public CreatureChaseState(CreatureContext creatureContext, StateTransitionManager<CreatureContext> transitionManager, int animationHash, float chaseSpeed,
+            Action<Vector2> onExitChase)
             : base(creatureContext, transitionManager, animationHash)
         {
-            this.targetTransform = targetTransform;
             this.chaseSpeed = chaseSpeed;
             this.onExitChase = onExitChase;
         }

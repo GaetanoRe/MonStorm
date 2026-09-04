@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6fd6ba1fad55634e957bf104c281599, type: 3}
   m_Name: Dragon Definition
   m_EditorClassIdentifier: Assembly-CSharp::AggressiveCreatureDefinition
-  creatureName: Dragon
+  <CreatureName>k__BackingField: Dragon
+  <VisionRadius>k__BackingField: 12
+  <VisionMaxAngle>k__BackingField: 180
   <WalkSpeed>k__BackingField: 2.5
   <ChaseSpeed>k__BackingField: 7
   <IdleDuration>k__BackingField: 10

@@ -19,6 +19,8 @@ namespace MonStorm.Adapters
 
         public bool FollowTarget(IFSMAdapterTransform target) => true;
 
+        public void RotateTowardsPosition(Vector3 targetPosition) { } // noop
+
         public void CancelMove() { } // noop
 
         public void ChangeSpeed(float newValue) { } // noop

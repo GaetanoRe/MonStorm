@@ -16,7 +16,6 @@ public class AggressiveCreatureDefinition : CreatureDefinition
     [field: SerializeField] public float ChaseSpeed { get; private set; }
     [field: SerializeField] public float IdleDuration { get; private set; }
     [field: SerializeField] public float MaxWanderRange { get; private set; }
-    [field: SerializeField] public float DetectionRange { get; private set; }
     [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public float AttackCooldownTime { get; private set; }
 
@@ -39,45 +38,45 @@ public class AggressiveCreatureDefinition : CreatureDefinition
         CreatureIdleState idleState = new(creatureContext, idleTransitions, IDLE_ANIM_HASH);
         CreatureWanderState wanderState = new(creatureContext, wanderTransitions, WALK_ANIM_HASH, wanderCenter, MaxWanderRange, WalkSpeed);
         // Aggressive creatures update their wander center to wherever the chase ended
-        CreatureChaseState chaseState = new(creatureContext, chaseTransitions, RUN_ANIM_HASH, creatureContext.PlayerTransform, ChaseSpeed, wanderState.ChangeWanderCenter);
+        CreatureChaseState chaseState = new(creatureContext, chaseTransitions, RUN_ANIM_HASH, ChaseSpeed, wanderState.ChangeWanderCenter);
         CreatureAttackState attackState = new(creatureContext, attackTransitions, ATTACK_ANIM_HASH, attackTimer);
         CreatureDamagedState damagedState = new(creatureContext, damagedTransitions, DAMAGED_ANIM_HASH);
         CreatureDeadState deadState = new(creatureContext, deadTransitions, DEAD_ANIM_HASH);
 
-        bool IsInAttackRange() => creatureContext.DistanceToPlayer <= AttackRange;
+        bool IsInAttackRange() => creatureContext.DistanceToTarget <= AttackRange;
 
         idleTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(wanderState, () => idleState.StateTimer >= IdleDuration && creatureContext.DistanceToPlayer > DetectionRange),
-            new(chaseState, () => creatureContext.DistanceToPlayer <= DetectionRange && (creatureContext.DistanceToPlayer > AttackRange || !creatureContext.IsFacingPlayer)),
-            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingPlayer)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(wanderState, () => idleState.StateTimer >= IdleDuration && !creatureContext.IsTargetInVision),
+            new(chaseState, () => creatureContext.IsTargetInVision && (creatureContext.DistanceToTarget > AttackRange || !creatureContext.IsFacingTarget)),
+            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingTarget)
         );
 
         wanderTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(idleState, creatureBehavior.ConditionHasReachedDestination),
-            new(chaseState, () => creatureContext.DistanceToPlayer <= DetectionRange && creatureContext.DistanceToPlayer > AttackRange)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(idleState, () => creatureContext.HasReachedDestination),
+            new(chaseState, () => creatureContext.IsTargetInVision && creatureContext.DistanceToTarget > AttackRange)
         );
 
         chaseTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(idleState, () => IsInAttackRange() && !attackTimer.IsReady && creatureContext.IsFacingPlayer),
-            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingPlayer)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(idleState, () => IsInAttackRange() && !attackTimer.IsReady && creatureContext.IsFacingTarget),
+            new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingTarget)
         );
 
         attackTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(idleState, creatureBehavior.ConditionIsAnimationFinished)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(idleState, () => creatureContext.IsAnimationFinished)
         );
 
         damagedTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(chaseState, creatureBehavior.ConditionIsAnimationFinished)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(chaseState, () => creatureContext.IsAnimationFinished)
         );
 
         stateMachine.TransitionTo(idleState);

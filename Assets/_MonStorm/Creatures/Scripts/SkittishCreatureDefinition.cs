@@ -38,27 +38,29 @@ public class SkittishCreatureDefinition : CreatureDefinition
         CreatureDeadState deadState = new(creatureContext, deadTransitions, DEAD_ANIM_HASH);
 
         idleTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(wanderState, () => idleState.StateTimer >= IdleDuration)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(wanderState, () => idleState.StateTimer >= IdleDuration),
+            new(runAwayState, () => creatureContext.IsTargetInVision)
             );
 
         wanderTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(idleState, creatureBehavior.ConditionHasReachedDestination)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(idleState, () => creatureContext.HasReachedDestination),
+            new(runAwayState, () => creatureContext.IsTargetInVision)
             );
 
         runAwayTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(idleState, creatureBehavior.ConditionHasReachedDestination)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(idleState, () => creatureContext.HasReachedDestination)
             );
 
         damagedTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(runAwayState, creatureBehavior.ConditionIsAnimationFinished)
+            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(runAwayState, () => creatureContext.IsAnimationFinished)
             );
 
         stateMachine.TransitionTo(idleState);

@@ -11,7 +11,7 @@ namespace MonStorm.Core.StateMachine
         protected readonly IFSMAdapterNavMeshAgent navMeshAgent;
         protected readonly IFSMAdapterTransform transform;
         protected readonly IFSMAdapterLogger logger;
-        protected readonly IFSMAdapterTransform playerTransform;
+        protected readonly IFSMAdapterTransform targetTransform;
         protected readonly StateTransitionManager<CreatureContext> transitionManager;
         protected readonly int animationHash;
 
@@ -25,7 +25,7 @@ namespace MonStorm.Core.StateMachine
             navMeshAgent = creatureContext.AdapterNavMeshAgent;
             transform = creatureContext.AdapterTransform;
             logger = creatureContext.AdapterLogger;
-            playerTransform = creatureContext.PlayerTransform;
+            targetTransform = creatureContext.TargetAdapterTransform;
             this.transitionManager = transitionManager;
             this.animationHash = animationHash;
         }

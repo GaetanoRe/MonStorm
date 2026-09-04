@@ -4,6 +4,7 @@ using MonStorm.Core.StateMachine;
 public abstract class CreatureDefinition : ScriptableObject
 {
     [field: SerializeField] public string CreatureName { get; private set; }
+    [field: SerializeField] public float StaggerDamageThreshold { get; private set; }
     [field: SerializeField] public float VisionRadius { get; private set; }
     [field: SerializeField, Range(0f, 180f)] public float VisionMaxAngle { get; private set; }
 

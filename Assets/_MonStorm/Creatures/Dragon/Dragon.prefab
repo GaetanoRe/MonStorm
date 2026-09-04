@@ -480,8 +480,8 @@ GameObject:
   - component: {fileID: 8531057590399945795}
   - component: {fileID: 2454293050148647651}
   - component: {fileID: 1495479772709386219}
-  - component: {fileID: 3376203042943474043}
   - component: {fileID: 4280863083044455717}
+  - component: {fileID: 3376203042943474043}
   - component: {fileID: 567852775131639206}
   - component: {fileID: 9162010397704964020}
   m_Layer: 0
@@ -563,6 +563,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47deccd3dcd15049a2efffd920fbb3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitReceiver
+--- !u!114 &4280863083044455717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801643786782628966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99b9849c6c165046863933ed7167921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 200
+  isMaxHealthChangeable: 1
 --- !u!114 &3376203042943474043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,20 +590,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDropper
   items: []
---- !u!114 &4280863083044455717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 801643786782628966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e99b9849c6c165046863933ed7167921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 100
-  isMaxHealthChangeable: 1
 --- !u!95 &567852775131639206
 Animator:
   serializedVersion: 7

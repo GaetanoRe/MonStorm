@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Stag Common Definition
   m_EditorClassIdentifier: Assembly-CSharp::SkittishCreatureDefinition
   <CreatureName>k__BackingField: Stag Common
+  <StaggerDamageThreshold>k__BackingField: 50
   <VisionRadius>k__BackingField: 10
   <VisionMaxAngle>k__BackingField: 100
   <WalkSpeed>k__BackingField: 3.5

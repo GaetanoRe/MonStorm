@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Dragon Definition
   m_EditorClassIdentifier: Assembly-CSharp::AggressiveCreatureDefinition
   <CreatureName>k__BackingField: Dragon
+  <StaggerDamageThreshold>k__BackingField: 150
   <VisionRadius>k__BackingField: 12
   <VisionMaxAngle>k__BackingField: 180
   <WalkSpeed>k__BackingField: 2.5
   <ChaseSpeed>k__BackingField: 7
   <IdleDuration>k__BackingField: 10
   <MaxWanderRange>k__BackingField: 6
-  <DetectionRange>k__BackingField: 12
   <AttackRange>k__BackingField: 4
   <AttackCooldownTime>k__BackingField: 4

@@ -46,7 +46,7 @@ public class AggressiveCreatureDefinition : CreatureDefinition
         bool IsInAttackRange() => creatureContext.DistanceToTarget <= AttackRange;
 
         idleTransitions.Initialize(
-            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(damagedState, () => creatureContext.GotStaggeredThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(wanderState, () => idleState.StateTimer >= IdleDuration && !creatureContext.IsTargetInVision),
             new(chaseState, () => creatureContext.IsTargetInVision && (creatureContext.DistanceToTarget > AttackRange || !creatureContext.IsFacingTarget)),
@@ -54,27 +54,27 @@ public class AggressiveCreatureDefinition : CreatureDefinition
         );
 
         wanderTransitions.Initialize(
-            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(damagedState, () => creatureContext.GotStaggeredThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(idleState, () => creatureContext.HasReachedDestination),
             new(chaseState, () => creatureContext.IsTargetInVision && creatureContext.DistanceToTarget > AttackRange)
         );
 
         chaseTransitions.Initialize(
-            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(damagedState, () => creatureContext.GotStaggeredThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(idleState, () => IsInAttackRange() && !attackTimer.IsReady && creatureContext.IsFacingTarget),
             new(attackState, () => IsInAttackRange() && attackTimer.IsReady && creatureContext.IsFacingTarget)
         );
 
         attackTransitions.Initialize(
-            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(damagedState, () => creatureContext.GotStaggeredThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(idleState, () => creatureContext.IsAnimationFinished)
         );
 
         damagedTransitions.Initialize(
-            new(damagedState, () => creatureContext.GotHitThisFrame),
+            new(damagedState, () => creatureContext.GotStaggeredThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(chaseState, () => creatureContext.IsAnimationFinished)
         );

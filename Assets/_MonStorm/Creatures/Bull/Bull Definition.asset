@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Bull Definition
   m_EditorClassIdentifier: Assembly-CSharp::TerritorialCreatureDefinition
   <CreatureName>k__BackingField: Bull
+  <StaggerDamageThreshold>k__BackingField: 100
   <VisionRadius>k__BackingField: 11
   <VisionMaxAngle>k__BackingField: 130
   <WalkSpeed>k__BackingField: 2

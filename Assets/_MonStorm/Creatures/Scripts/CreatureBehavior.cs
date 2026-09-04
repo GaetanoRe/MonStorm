@@ -33,7 +33,8 @@ public class CreatureBehavior : MonoBehaviour
     IFSMAdapterTransform adapterTransformTarget;
     IFSMAdapterSensorVision adapterSensorVision;
 
-    bool gotHitThisFrame;
+    bool gotStaggeredThisFrame;
+    float staggerDamageStored;
 
 
     void Awake()
@@ -77,15 +78,14 @@ public class CreatureBehavior : MonoBehaviour
 
     void Update()
     {
-        creatureContext.UpdateContextValues(gotHitThisFrame, health != null && health.IsDead);
+        creatureContext.UpdateContextValues(gotStaggeredThisFrame, health != null && health.IsDead);
         stateMachine.Tick(Time.deltaTime);
 
-        gotHitThisFrame = false;
+        gotStaggeredThisFrame = false;
     }
 
     void HandleHit(HitApplier applier, HitDetector detector)
     {
-        gotHitThisFrame = true;
         OnHit?.Invoke(applier, detector);
 
         if (health == null) return;
@@ -93,6 +93,14 @@ public class CreatureBehavior : MonoBehaviour
         if (health.IsDead) return; // Hit can still occur after the Health has died and the gameobject hasn't been destroyed, hence this guard
 
         float damageDealt = DamageCalculator.Resolve(applier.Damage, detector.DamageMultiplier);
+
+        staggerDamageStored += damageDealt;
+        if (staggerDamageStored >= creatureDefinition.StaggerDamageThreshold)
+        {
+            staggerDamageStored = 0f;
+            gotStaggeredThisFrame = true;
+        }
+
         health.Damage(damageDealt);
         OnDamaged?.Invoke(health, damageDealt);
     }

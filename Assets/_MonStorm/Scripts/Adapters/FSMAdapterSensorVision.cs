@@ -4,12 +4,9 @@ using MonStorm.Core.StateMachine;
 
 namespace MonStorm.Adapters
 {
+    /// <inheritdoc/>
     public class FSMAdapterSensorVision : IFSMAdapterSensorVision
     {
-        /// <summary>
-        /// Whether the creature is rotated towards the target, within a margin of error (facingAngleThreshold)
-        /// Also returns true if the distance to the target is within closeFacingDistanceSq.
-        /// </summary>
         public bool IsFacingTarget
         {
             get
@@ -30,10 +27,6 @@ namespace MonStorm.Adapters
             }
         }
 
-        /// <summary>
-        /// Whether the target is in vision, within range and within the max angle
-        /// Currently does not take LOS (line of sight) into account
-        /// </summary>
         public bool IsTargetInVision
         {
             get

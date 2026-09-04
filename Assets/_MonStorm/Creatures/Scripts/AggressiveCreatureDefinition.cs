@@ -12,11 +12,17 @@ public class AggressiveCreatureDefinition : CreatureDefinition
     readonly int DAMAGED_ANIM_HASH = Animator.StringToHash("Damaged");
     readonly int DEAD_ANIM_HASH = Animator.StringToHash("Dead");
 
+    /// <summary>Normal walking speed.</summary>
     [field: SerializeField] public float WalkSpeed { get; private set; }
+    /// <summary>Chasing it's target speed.</summary>
     [field: SerializeField] public float ChaseSpeed { get; private set; }
+    /// <summary>How long the creature stays idle for after wandering, and then going back to wander again.</summary>
     [field: SerializeField] public float IdleDuration { get; private set; }
+    /// <summary>The maximum range the creature can wander away from it's starting position.</summary>
     [field: SerializeField] public float MaxWanderRange { get; private set; }
+    /// <summary>The maximum distance at which the creature can attack.</summary>
     [field: SerializeField] public float AttackRange { get; private set; }
+    /// <summary>The cooldown time between attacking.</summary>
     [field: SerializeField] public float AttackCooldownTime { get; private set; }
 
 

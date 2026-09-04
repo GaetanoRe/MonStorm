@@ -53,6 +53,7 @@ public class AggressiveCreatureDefinition : CreatureDefinition
 
         idleTransitions.Initialize(
             new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(chaseState, () => creatureContext.GotHitThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(wanderState, () => idleState.StateTimer >= IdleDuration && !creatureContext.IsTargetInVision),
             new(chaseState, () => creatureContext.IsTargetInVision && (creatureContext.DistanceToTarget > AttackRange || !creatureContext.IsFacingTarget)),
@@ -61,6 +62,7 @@ public class AggressiveCreatureDefinition : CreatureDefinition
 
         wanderTransitions.Initialize(
             new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(chaseState, () => creatureContext.GotHitThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(idleState, () => creatureContext.HasReachedDestination),
             new(chaseState, () => creatureContext.IsTargetInVision && creatureContext.DistanceToTarget > AttackRange)

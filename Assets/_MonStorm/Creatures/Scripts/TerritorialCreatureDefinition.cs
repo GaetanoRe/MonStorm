@@ -59,6 +59,7 @@ public class TerritorialCreatureDefinition : CreatureDefinition
 
         idleTransitions.Initialize(
             new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(chaseState, () => creatureContext.GotHitThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(wanderState, () => idleState.StateTimer >= IdleDuration && !CanStartChase()),
             new(chaseState, CanStartChase),
@@ -67,6 +68,7 @@ public class TerritorialCreatureDefinition : CreatureDefinition
 
         wanderTransitions.Initialize(
             new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(chaseState, () => creatureContext.GotHitThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(idleState, () => creatureContext.HasReachedDestination),
             new(chaseState, CanStartChase)

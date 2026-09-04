@@ -44,6 +44,7 @@ public class SkittishCreatureDefinition : CreatureDefinition
 
         idleTransitions.Initialize(
             new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(runAwayState, () => creatureContext.GotHitThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(wanderState, () => idleState.StateTimer >= IdleDuration),
             new(runAwayState, () => creatureContext.IsTargetInVision)
@@ -51,6 +52,7 @@ public class SkittishCreatureDefinition : CreatureDefinition
 
         wanderTransitions.Initialize(
             new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(runAwayState, () => creatureContext.GotHitThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(idleState, () => creatureContext.HasReachedDestination),
             new(runAwayState, () => creatureContext.IsTargetInVision)
@@ -58,6 +60,7 @@ public class SkittishCreatureDefinition : CreatureDefinition
 
         runAwayTransitions.Initialize(
             new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(runAwayState, () => creatureContext.GotHitThisFrame),
             new(deadState, () => creatureContext.IsDead),
             new(idleState, () => creatureContext.HasReachedDestination)
             );

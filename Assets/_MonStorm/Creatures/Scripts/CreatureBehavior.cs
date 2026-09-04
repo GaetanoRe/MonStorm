@@ -33,6 +33,7 @@ public class CreatureBehavior : MonoBehaviour
     IFSMAdapterTransform adapterTransformTarget;
     IFSMAdapterSensorVision adapterSensorVision;
 
+    bool gotHitThisFrame;
     bool gotStaggeredThisFrame;
     float staggerDamageStored;
 
@@ -78,14 +79,16 @@ public class CreatureBehavior : MonoBehaviour
 
     void Update()
     {
-        creatureContext.UpdateContextValues(gotStaggeredThisFrame, health != null && health.IsDead);
+        creatureContext.UpdateContextValues(gotHitThisFrame, gotStaggeredThisFrame, health != null && health.IsDead);
         stateMachine.Tick(Time.deltaTime);
 
+        gotHitThisFrame = false;
         gotStaggeredThisFrame = false;
     }
 
     void HandleHit(HitApplier applier, HitDetector detector)
     {
+        gotHitThisFrame = true;
         OnHit?.Invoke(applier, detector);
 
         if (health == null) return;

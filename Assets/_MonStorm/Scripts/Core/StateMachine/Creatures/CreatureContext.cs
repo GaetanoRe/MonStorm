@@ -15,6 +15,7 @@ namespace MonStorm.Core.StateMachine
 
         public Action OnAttackAnimationEnd;
 
+        public bool GotHitThisFrame { get; private set; }
         public bool GotStaggeredThisFrame { get; private set; }
         public bool IsDead { get; private set; }
         public bool IsAnimationFinished { get; private set; }
@@ -36,8 +37,9 @@ namespace MonStorm.Core.StateMachine
             AdapterSensorVision = adapterSensorVision;
         }
 
-        public void UpdateContextValues(bool gotStaggeredThisFrame, bool isDead)
+        public void UpdateContextValues(bool gotHitThisFrame, bool gotStaggeredThisFrame, bool isDead)
         {
+            GotHitThisFrame = gotHitThisFrame;
             GotStaggeredThisFrame = gotStaggeredThisFrame;
             IsDead = isDead;
             IsAnimationFinished = AdapterAnimator.IsAnimationFinished;

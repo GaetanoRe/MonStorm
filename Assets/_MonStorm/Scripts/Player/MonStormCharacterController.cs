@@ -4,6 +4,7 @@ using Unity.Cinemachine;
 using MonStorm.Core.Player;
 using MonStorm.Core.StateMachine;
 using MonStorm.Adapters;
+using TMPro;
 
 [RequireComponent(typeof(CharacterController))]
 public class MonStormCharacterController : MonoBehaviour
@@ -16,9 +17,6 @@ public class MonStormCharacterController : MonoBehaviour
     public float rotationSpeed = 720f;
     public float gravity = -9.81f;
 
-    [SerializeField] public float rearmThreshold = 0.2f;
-    [SerializeField] public float deadzone = 0.5f;
-
     [SerializeField] public WeaponAsset _equippedWeapon;
     public HitApplier weapon;
 
@@ -26,13 +24,20 @@ public class MonStormCharacterController : MonoBehaviour
     private Vector3 velocity;
     [SerializeField] private float _lockOnRadius;
     [SerializeField] private LayerMask _enemyLayer;
+
+    [Header("Control Scheme")]
+    [SerializeField] ControlSchemeSettings _controlScheme;
     
 
     private InputSystem_Actions m_inputActions;
     private StateMachine<PlayerContext> m_stateMachine;
     private PlayerContext m_playerContext;
 
-    private ActionResolver actionResolver;
+    private InputSnapshot inputSnapshot;
+
+    private IActionResolver actionResolver;
+
+    private ActionResolverConfig resolverConfig;
 
     void Start()
     {
@@ -55,7 +60,23 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.DeathAnimHash = Animator.StringToHash("Death");
         m_playerContext.AttackAnimHash = Animator.StringToHash("MeleeAttack_TwoHanded");
         m_playerContext.DodgeAnimHash = Animator.StringToHash("RollForward");
-        actionResolver = new ActionResolver(rearmThreshold, deadzone);
+
+        if(_controlScheme != null)
+        {
+            resolverConfig = _controlScheme.Build();
+            if(_controlScheme.gamepadScheme == ControlScheme.Button)
+            {
+                actionResolver = new ButtonActionResolver(resolverConfig);
+            }
+
+            else
+            {
+                actionResolver = new GestureActionResolver(resolverConfig);
+            }
+
+            
+        }
+        
         
 
         m_stateMachine.TransitionTo(new PlayerIdleState());
@@ -81,8 +102,13 @@ public class MonStormCharacterController : MonoBehaviour
         Vector2 raw = m_inputActions.Player.Move.ReadValue<Vector2>();
 
         Vector2 rightStickGestures = m_inputActions.Player.AttackActions.ReadValue<Vector2>();
-        bool rightStickPressed = m_inputActions.Player.Action5.WasPerformedThisFrame();
-        bool specialAttackPressed = m_inputActions.Player.SpecialAction.WasPerformedThisFrame();
+        inputSnapshot.stickX = rightStickGestures.x;
+        inputSnapshot.stickY = rightStickGestures.y;
+        inputSnapshot.northPressed = m_inputActions.Player.AttackNorth.WasPerformedThisFrame();
+        inputSnapshot.eastPressed = m_inputActions.Player.AttackEast.WasPerformedThisFrame();
+        inputSnapshot.modifierHeld = m_inputActions.Player.ModifierLB.IsPressed();
+        inputSnapshot.stickClicked = m_inputActions.Player.Action5.WasPerformedThisFrame();
+        inputSnapshot.specialPressed = m_inputActions.Player.SpecialAction.WasPerformedThisFrame();
 
         Vector3 camForward = Camera.main.transform.forward;
         camForward.y = 0;
@@ -98,8 +124,16 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.isGrounded = controller.isGrounded;
         m_playerContext.isSprinting = m_inputActions.Player.Sprint.IsPressed();
         m_playerContext.dodgePressed = m_inputActions.Player.Dodge.WasPressedThisFrame();
-        m_playerContext.attackPressed = m_inputActions.Player.EnableAttack.WasPressedThisFrame();
-        m_playerContext.weaponAction = actionResolver.actionResolve(rightStickGestures.x, rightStickGestures.y, rightStickPressed, specialAttackPressed);
+        // m_playerContext.attackPressed = m_inputActions.Player.EnableAttack.WasPressedThisFrame();
+        if(_controlScheme != null)
+        {
+            m_playerContext.weaponAction = actionResolver.Resolve(inputSnapshot, Time.deltaTime);
+        }
+        else
+        {
+            Debug.Log("Control Scheme was never assigned");
+        }
+        
         if((m_playerContext.weaponAction != ActionInput.None || m_playerContext.attackPressed) && m_playerContext.attackTimer > 0)
         {
             m_playerContext.chainInput = m_playerContext.weaponAction;
@@ -140,8 +174,8 @@ public class MonStormCharacterController : MonoBehaviour
             _cameraController.SnapTo(target, transform);
         }
            
-        if (m_inputActions.Player.EnableAttack.WasPressedThisFrame())
-            Debug.Log("Pressed Attack");
+        //if (m_inputActions.Player.EnableAttack.WasPressedThisFrame())
+        //    Debug.Log("Pressed Attack");
     }
 
     Transform FindNearestTarget(){

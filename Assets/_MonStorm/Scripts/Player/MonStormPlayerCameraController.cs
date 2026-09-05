@@ -6,13 +6,21 @@ public class MonStormPlayerCameraController : MonoBehaviour
 {
     [SerializeField] CinemachineOrbitalFollow orbitalCamera;
     [SerializeField] float yawSpeedDegPerSec = 120;
+    [SerializeField] bool invertControllerX = false;
+    [SerializeField] bool invertControllerY = false;
+    [SerializeField] bool invertMouseX = false;
+    [SerializeField] bool invertMouseY = false;
     [SerializeField] float [] pitchPresets = {-5, 17.5f, 40};
     [SerializeField] int pitchIndex = 1;
     [SerializeField] float snapDurationSec = 0.15f;
     [SerializeField] float pitchSmoothTime = 0.2f;
     [SerializeField] float mousePitchSensitivity = 0.1f;
+    [SerializeField] float mouseYawSensitivity = 0.2f;
     [SerializeField] float controllerPitchSensitivity = 0.5f;
+    [SerializeField] float lookDeadzone = 0.15f;
+    [SerializeField] float dominanceRatio = 0.5f;
     [SerializeField] bool classicCam;
+    [SerializeField] private ControlSchemeSettings _controlScheme;
 
     private bool _snapping;
     private float _snapStartYaw;
@@ -45,13 +53,52 @@ public class MonStormPlayerCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 lookInput = inputActions.Player.Look.ReadValue<Vector2>();
+        Vector2 lookInput;
+        float invertControllerValueX = invertControllerX ? -1f : 1f;
+        float invertControllerValueY = invertControllerY ? -1f : 1f;
+        float invertMouseValueX = invertMouseX ? -1f : 1f;
+        float invertMouseValueY = invertMouseY ? -1f : 1f;
+
         
-        if(lookInput.x != 0)
+
+        if(_controlScheme.gamepadScheme == MonStorm.Core.Player.ControlScheme.Button)
         {
-            orbitalCamera.HorizontalAxis.Value += lookInput.x * yawSpeedDegPerSec * Time.deltaTime;
+            lookInput = inputActions.Player.LookStick.ReadValue<Vector2>();
+            classicCam = false;
+        }
+        else
+        {
+            lookInput = inputActions.Player.Look.ReadValue<Vector2>();
+            classicCam = true;
+        }
+
+        float absX = Mathf.Abs(lookInput.x);
+        float absY = Mathf.Abs(lookInput.y);
+        if(absX < lookDeadzone || absX < dominanceRatio * absY)
+        {
+            lookInput.x = 0;
+        }
+        if(absY < lookDeadzone || absY < dominanceRatio * absX)
+        {
+            lookInput.y = 0;
+        }
+
+        float localYaw;
+        float localPitch;
+
+        lookInput.x *= invertControllerValueX;
+        lookInput.y *= invertControllerValueY;
+
+        float mouseX = (Mouse.current?.delta.x.ReadValue() ?? 0f) * invertMouseValueX;
+        localYaw = (mouseX * mouseYawSensitivity) + (lookInput.x * yawSpeedDegPerSec * Time.deltaTime);
+
+        if(localYaw != 0)
+        {
             _snapping = false;
         }
+
+        orbitalCamera.HorizontalAxis.Value += localYaw;
+
 
         if (_snapping)
         {
@@ -62,18 +109,13 @@ public class MonStormPlayerCameraController : MonoBehaviour
             if (t >= 1f) _snapping = false;
         }
 
-        float mouseY = Mouse.current?.delta.y.ReadValue() ?? 0f;
-        if(mouseY != 0f)
+        if (!classicCam)
         {
-            // Camera vertically works regular
-            float mouseMoveY = mouseY * mousePitchSensitivity;
-            orbitalCamera.VerticalAxis.Value = Mathf.Clamp(orbitalCamera.VerticalAxis.Value + mouseMoveY, pitchPresets[0], pitchPresets[pitchPresets.Length - 1]);
-        }
-        else if (!classicCam)
-        {
-            float analogueY = lookInput.y * controllerPitchSensitivity * Time.deltaTime;
-            orbitalCamera.VerticalAxis.Value = Mathf.Clamp(orbitalCamera.VerticalAxis.Value + analogueY, pitchPresets[0], pitchPresets[pitchPresets.Length - 1]);
-        }
+            float mouseY = (Mouse.current?.delta.y.ReadValue() ?? 0f) * invertMouseValueY;
+
+            localPitch = (mouseY * mousePitchSensitivity) + (lookInput.y * controllerPitchSensitivity * Time.deltaTime);
+            orbitalCamera.VerticalAxis.Value = Mathf.Clamp(orbitalCamera.VerticalAxis.Value + localPitch, pitchPresets[0], pitchPresets[pitchPresets.Length - 1]);
+        }  
         else
         {
 
@@ -82,7 +124,6 @@ public class MonStormPlayerCameraController : MonoBehaviour
                 pitchIndex = Mathf.Clamp(pitchIndex + 1, 0, pitchPresets.Length - 1);
             else if (lookInput.y < -0.5f && _prevLookY >= -0.5f)
                 pitchIndex = Mathf.Clamp(pitchIndex - 1, 0, pitchPresets.Length - 1);                
-            _prevLookY = lookInput.y;
             orbitalCamera.VerticalAxis.Value = Mathf.SmoothDamp(
                 orbitalCamera.VerticalAxis.Value,
                 pitchPresets[pitchIndex],
@@ -90,6 +131,8 @@ public class MonStormPlayerCameraController : MonoBehaviour
                 pitchSmoothTime
             );
         }
+
+        _prevLookY = lookInput.y;
 
         
 

@@ -4013,6 +4013,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonStormPlayerCameraController
   orbitalCamera: {fileID: 0}
   yawSpeedDegPerSec: 120
+  invertControllerX: 0
+  invertControllerY: 0
+  invertMouseX: 0
+  invertMouseY: 0
   pitchPresets:
   - -5
   - 17.5
@@ -4021,7 +4025,10 @@ MonoBehaviour:
   snapDurationSec: 0.15
   pitchSmoothTime: 0.2
   mousePitchSensitivity: 0.1
-  controllerPitchSensitivity: 5
+  mouseYawSensitivity: 0.2
+  controllerPitchSensitivity: 50
+  lookDeadzone: 0.15
+  dominanceRatio: 0.5
   classicCam: 1
   _controlScheme: {fileID: 11400000, guid: 07be98a8f38eb4218996010d5e28c244, type: 2}
 --- !u!114 &6075346789437306493

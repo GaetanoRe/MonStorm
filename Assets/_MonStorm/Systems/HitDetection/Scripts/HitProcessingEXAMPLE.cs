@@ -10,7 +10,7 @@ public class HitProcessingEXAMPLE : MonoBehaviour, IHitReceiver
         float damageDealt = applier.Damage * detector.DamageMultiplier;
         health.Damage(damageDealt);
 
-        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.CurrentHealth}");
+        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.Current}");
     }
 
     void Awake()

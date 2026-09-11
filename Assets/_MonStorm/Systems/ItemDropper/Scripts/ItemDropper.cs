@@ -1,60 +1,48 @@
-using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
-public class ItemDropper : MonoBehaviour
+public class ItemDropper
 {
-    // Class used to configure the loot table in the inspector.
-    [Serializable] class InspectorItem
+    // Configures an InventoryItemData that can be selected by the ItemDropper.
+    [Serializable] public class LootTableItem
     {
         public InventoryItemData data;
         public int minAmount = 1;
         public int maxAmount = 1;
-        [Range(0f, 1f)] public float percentChance = 1f;
+        public float chance = 1f; // 0f through 1f, 0f = 0%, 1f = 100%
     }
 
-    // List of all items in this ItemDropper's loot table
-    [SerializeField] List<InspectorItem> items;
+    // List of LootTableItems which can be drawn from.
+    readonly List<LootTableItem> lootTable;
 
-    // The game object that spawns, which holds the item data
-    // In the future it can also hold the mesh associated with the item and whatever else is necessary
-    DroppedItem prefab;
-
-    readonly float yOffset = 1f;
+    readonly Random random = new();
 
 
-    /// <summary>Activates the ItemDropper to drop it's loot table, with an optional delay.</summary>
-    /// <param name="delay">The delay after which the effect will activate.</param>
-    public void Activate(float delay = 0f)
+    /// <summary>Initialize the component with the provided list of items it will draw from.</summary>
+    /// <param name="lootTable">The loot table this component will draw from.</param>
+    public ItemDropper(List<LootTableItem> lootTable)
     {
-        StartCoroutine(ActivateDelayed(delay));
-    }
+        this.lootTable = lootTable;
 
-    void Awake()
-    {
-        string path = "Prefabs/Dropped Item Default Prefab";
-        prefab = Resources.Load<DroppedItem>(path);
-
-        foreach (InspectorItem item in items)
+        foreach (LootTableItem item in this.lootTable)
         {
             // Max amount should never be smaller than min amount, so this is only for precaution.
-            item.maxAmount = Mathf.Max(item.minAmount, item.maxAmount);
+            item.maxAmount = Math.Max(item.minAmount, item.maxAmount);
         }
     }
 
-    IEnumerator ActivateDelayed(float delay)
+    /// <returns>A list of random InventoryItems from the loot table.</returns>
+    public List<InventoryItem> GetDrops()
     {
-        yield return new WaitForSeconds(delay);
-
-        foreach (InspectorItem item in items)
+        List<InventoryItem> returnItems = new();
+        foreach (LootTableItem item in lootTable)
         {
-            if (UnityEngine.Random.Range(0f, 1f) > item.percentChance) continue;
+            if (random.NextDouble() > item.chance) continue;
 
-            int amount = UnityEngine.Random.Range(item.minAmount, item.maxAmount + 1);
-
-            DroppedItem droppedItem = Instantiate(prefab, transform.position + new Vector3(0f, yOffset, 0f), Quaternion.identity);
-            droppedItem.Initialize(new InventoryItem(item.data, amount));
+            int amount = random.Next(item.minAmount, item.maxAmount + 1);
+            returnItems.Add(new(item.data, amount));
         }
+
+        return returnItems;
     }
 }

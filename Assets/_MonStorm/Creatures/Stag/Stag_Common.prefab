@@ -1091,8 +1091,8 @@ GameObject:
   - component: {fileID: 4814965865353371172}
   - component: {fileID: -4185536183462148604}
   - component: {fileID: -2689184706384411343}
-  - component: {fileID: -3295946042217426979}
-  - component: {fileID: 1126768294522662887}
+  - component: {fileID: 733511025881141114}
+  - component: {fileID: 7557523821512225771}
   - component: {fileID: 7189046606265324820}
   - component: {fileID: 8918956042086733663}
   m_Layer: 0
@@ -1161,7 +1161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47deccd3dcd15049a2efffd920fbb3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitReceiver
---- !u!114 &-3295946042217426979
+--- !u!114 &733511025881141114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1170,12 +1170,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1991521497733807413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e99b9849c6c165046863933ed7167921, type: 3}
+  m_Script: {fileID: 11500000, guid: cca5d79bfa0850340abbd72ecb6513fb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 100
-  isMaxHealthChangeable: 1
---- !u!114 &1126768294522662887
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponentConfigured
+--- !u!114 &7557523821512225771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1184,14 +1182,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1991521497733807413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82ca73147ba596843b3a469b9742bd51, type: 3}
+  m_Script: {fileID: 11500000, guid: bff878b237dd9054593204a7a580d278, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDropper
-  items:
-  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
-    minAmount: 1
-    maxAmount: 1
-    percentChance: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropperComponentConfigured
 --- !u!95 &7189046606265324820
 Animator:
   serializedVersion: 7

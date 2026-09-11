@@ -184,7 +184,7 @@ public class MonStormCharacterController : MonoBehaviour
         float nearestDist = float.MaxValue;
         foreach(Collider hit in hits)
         {
-            Health enemyHealth = hit.GetComponentInParent<Health>();
+            HealthComponentConfigured enemyHealth = hit.GetComponentInParent<HealthComponentConfigured>();
             if (enemyHealth == null) continue;
             Transform root = enemyHealth.transform;
             float dist = Vector3.Distance(transform.position, root.position);

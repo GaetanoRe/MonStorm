@@ -3699,9 +3699,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4060834700632211166}
+  - component: {fileID: 3140235776957704986}
   - component: {fileID: 5522115553352560050}
-  - component: {fileID: 7713395418069682710}
-  - component: {fileID: -8132281523312442769}
   - component: {fileID: 5535926596780791933}
   - component: {fileID: 7390463332031003472}
   - component: {fileID: 8139572176838623216}
@@ -3737,6 +3736,18 @@ Transform:
   - {fileID: 6266845615959660761}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3140235776957704986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811900067158531104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca5d79bfa0850340abbd72ecb6513fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponentConfigured
 --- !u!114 &5522115553352560050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3754,45 +3765,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   pickupRange: 3
---- !u!114 &7713395418069682710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4811900067158531104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82ca73147ba596843b3a469b9742bd51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDropper
-  items:
-  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
-    minAmount: 1
-    maxAmount: 1
-    percentChance: 1
-  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
-    minAmount: 1
-    maxAmount: 1
-    percentChance: 1
-  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
-    minAmount: 1
-    maxAmount: 1
-    percentChance: 1
---- !u!114 &-8132281523312442769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4811900067158531104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e99b9849c6c165046863933ed7167921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 100
-  isMaxHealthChangeable: 1
 --- !u!114 &5535926596780791933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3999,6 +3971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abaecaa236d7ef969b3fd811b2951e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  healthBar: {fileID: 0}
 --- !u!114 &8477860770400140179
 MonoBehaviour:
   m_ObjectHideFlags: 0

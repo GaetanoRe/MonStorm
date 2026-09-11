@@ -43,11 +43,11 @@ public class CreatureDebug : MonoBehaviour
         Debug.Log($"{detector.gameObject} got hit by {applier.gameObject}.");
     }
 
-    void LogDamaged(Health health, float damageDealt)
+    void LogDamaged(HealthComponentConfigured health, float damageDealt)
     {
         if (!logOnDamageTaken) return;
 
-        Debug.Log($"{health.gameObject} got damaged.\nDamage dealt: {damageDealt}, remaining health: {health.CurrentHealth}.");
+        Debug.Log($"{health.gameObject} got damaged.\nDamage dealt: {damageDealt}, remaining health: {health.Data.Current}.");
     }
 
     void LogStateTransition(IState<CreatureContext> stateFrom, IState<CreatureContext> stateTo)

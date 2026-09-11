@@ -3,38 +3,38 @@ using UnityEngine.InputSystem;
 
 public class HealthDemoEXAMPLE : MonoBehaviour
 {
-    Health health;
+    HealthComponentConfigured health;
 
 
     void Awake()
     {
-        health = FindFirstObjectByType<Health>();
+        health = FindFirstObjectByType<HealthComponentConfigured>();
     }
 
     void Update()
     {
         if (Keyboard.current.aKey.wasPressedThisFrame)
         {
-            health.Damage(10f);
-            Debug.Log("CURRENT: " + health.CurrentHealth);
+            health.Data.Damage(10f);
+            Debug.Log("CURRENT: " + health.Data.Current);
 
-            if (health.CurrentHealth == 0f)
+            if (health.Data.Current == 0f)
                 Debug.Log("Dead");
         }
         if (Keyboard.current.sKey.wasPressedThisFrame)
         {
-            health.Heal(4f);
-            Debug.Log("CURRENT: " + health.CurrentHealth);
+            health.Data.Heal(4f);
+            Debug.Log("CURRENT: " + health.Data.Current);
         }
         if (Keyboard.current.dKey.wasPressedThisFrame)
         {
-            health.ChangeMaxHealth(10f);
-            Debug.Log("MAX: " + health.MaxHealth);
+            health.Data.ChangeMax(10f);
+            Debug.Log("MAX: " + health.Data.Max);
         }
         if (Keyboard.current.fKey.wasPressedThisFrame)
         {
-            health.ChangeMaxHealth(-10f);
-            Debug.Log("MAX: " + health.MaxHealth);
+            health.Data.ChangeMax(-10f);
+            Debug.Log("MAX: " + health.Data.Max);
         }
     }
 }

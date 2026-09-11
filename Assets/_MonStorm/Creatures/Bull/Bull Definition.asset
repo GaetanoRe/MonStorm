@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37aa625488dccc45a3fd3812e5208d3, type: 3}
   m_Name: Bull Definition
   m_EditorClassIdentifier: Assembly-CSharp::TerritorialCreatureDefinition
-  creatureName: Bull
+  <Name>k__BackingField: Bull
+  <MaxHealth>k__BackingField: 200
+  <LootTable>k__BackingField:
+  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
+    minAmount: 1
+    maxAmount: 1
+    chance: 0.5
   <WalkSpeed>k__BackingField: 2
   <ChaseSpeed>k__BackingField: 6
   <IdleDuration>k__BackingField: 5

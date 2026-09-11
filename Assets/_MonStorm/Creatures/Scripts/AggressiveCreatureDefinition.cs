@@ -12,7 +12,7 @@ public class AggressiveCreatureDefinition : CreatureDefinition
     readonly int DAMAGED_ANIM_HASH = Animator.StringToHash("Damaged");
     readonly int DEAD_ANIM_HASH = Animator.StringToHash("Dead");
 
-    [field: SerializeField] public float WalkSpeed { get; private set; }
+    [field: Header("Aggressive Creature Properties"), SerializeField] public float WalkSpeed { get; private set; }
     [field: SerializeField] public float ChaseSpeed { get; private set; }
     [field: SerializeField] public float IdleDuration { get; private set; }
     [field: SerializeField] public float MaxWanderRange { get; private set; }

@@ -1000,8 +1000,6 @@ public class CharacterAI : MonoBehaviour, IHitReceiver
             HandleStandardDefeatedState();
 			enabled = false;
 
-            GetComponent<ItemDropper>().Activate();
-
             if (isHero)
 				GetComponent<MonStormCharacterController>().enabled = false;
         }
@@ -1228,7 +1226,7 @@ public class CharacterAI : MonoBehaviour, IHitReceiver
     {
         float damageDealt = applier.Damage * detector.DamageMultiplier;
         health.Damage(damageDealt);
-        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.CurrentHealth}");
+        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.Current}");
 
 		if (health.IsDead) return;
 

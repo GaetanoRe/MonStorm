@@ -12,7 +12,7 @@ public class CreatureBehavior : MonoBehaviour
     public event Action<HitApplier, HitDetector> OnHit;
 
     /// <summary>Invoked when the creature's Health component takes damage.</summary>
-    public event Action<Health, float> OnDamaged;
+    public event Action<HealthComponentConfigured, float> OnDamaged;
 
     public StateMachine<CreatureContext> StateMachine => stateMachine;
     public CreatureContext CreatureContext => creatureContext;
@@ -20,8 +20,8 @@ public class CreatureBehavior : MonoBehaviour
     [SerializeField] CreatureDefinition creatureDefinition;
 
     HitReceiver hitReceiver;
-    Health health;
-    ItemDropper itemDropper;
+    HealthComponentConfigured health;
+    ItemDropperComponentConfigured itemDropper;
 
     CreatureContext creatureContext;
     StateMachine<CreatureContext> stateMachine;
@@ -34,7 +34,7 @@ public class CreatureBehavior : MonoBehaviour
 
 
     public bool ConditionGotHitThisFrame() => gotHitThisFrame;
-    public bool ConditionIsDead() => health != null && health.IsDead;
+    public bool ConditionIsDead() => health != null && health.Data.IsDead;
     public bool ConditionIsAnimationFinished() => adapterAnimator.IsAnimationFinished;
     public bool ConditionHasReachedDestination() => adapterNavMeshAgent.HasActivePath;
 
@@ -47,8 +47,16 @@ public class CreatureBehavior : MonoBehaviour
         }
 
         TryGetComponent(out hitReceiver);
-        TryGetComponent(out health);
-        TryGetComponent(out itemDropper);
+
+        if (TryGetComponent(out health))
+        {
+            health.Initialize(new(creatureDefinition.MaxHealth));
+        }
+
+        if (TryGetComponent(out itemDropper))
+        {
+            itemDropper.Initialize(new(creatureDefinition.LootTable));
+        }
         
         adapterAnimator = TryGetComponent(out Animator animator) ? new FSMAdapterAnimator(animator) : new FSMAdapterAnimatorNull();
         adapterNavMeshAgent = TryGetComponent(out NavMeshAgent navMeshAgent) ? new FSMAdapterNavMeshAgent(navMeshAgent) : new FSMAdapterNavMeshAgentNull();
@@ -62,14 +70,14 @@ public class CreatureBehavior : MonoBehaviour
     {
         if (hitReceiver != null) hitReceiver.OnHit += HandleHit;
 
-        if (health != null) health.OnDeath += HandleDeath;
+        if (health != null) health.Data.OnDeath += HandleDeath;
     }
 
     void OnDisable()
     {
         if (hitReceiver != null) hitReceiver.OnHit -= HandleHit;
 
-        if (health != null) health.OnDeath -= HandleDeath;
+        if (health != null) health.Data.OnDeath -= HandleDeath;
     }
 
     void Update()
@@ -86,10 +94,10 @@ public class CreatureBehavior : MonoBehaviour
 
         if (health == null) return;
 
-        if (health.IsDead) return; // Hit can still occur after the Health has died and the gameobject hasn't been destroyed, hence this guard
+        if (health.Data.IsDead) return; // Hit can still occur after the Health has died and the gameobject hasn't been destroyed, hence this guard
 
         float damageDealt = DamageCalculator.Resolve(applier.Damage, detector.DamageMultiplier);
-        health.Damage(damageDealt);
+        health.Data.Damage(damageDealt);
         OnDamaged?.Invoke(health, damageDealt);
     }
 

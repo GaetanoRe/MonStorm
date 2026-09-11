@@ -1,14 +1,36 @@
-using UnityEngine;
 using System;
 
-public class Health : MonoBehaviour
+public class Health
 {
-    public event Action<float> OnCurrentHealthUpdated;
-    public event Action<float> OnMaxHealthUpdated;
+    public event Action<float> OnMaxUpdated;
+    public event Action<float> OnCurrentUpdated;
     public event Action OnDeath;
 
-    public float MaxHealth => maxHealth;
-    public float CurrentHealth => currentHealth;
+    public float Max
+    {
+        get => max;
+        set
+        {
+            max = value;
+            OnMaxUpdated?.Invoke(Max);
+        }
+    }
+
+    public float Current
+    {
+        get => current;
+        set
+        {
+            if (current == value) return;
+
+            current = value;
+            OnCurrentUpdated?.Invoke(value);
+
+            if (Current == 0f)
+                SetDeathState(true);
+        }
+    }
+
     public bool IsDead
     {
         get => isDead;
@@ -19,14 +41,18 @@ public class Health : MonoBehaviour
         }
     }
 
-    [SerializeField] float maxHealth = 100f;
-    [SerializeField] bool isMaxHealthChangeable = true;
-
-    float currentHealth;
+    float max;
+    float current;
     bool isDead;
 
     readonly float minMaxHealth = 1f; // The minimum amount max health can be
 
+
+    public Health(float maxHealth)
+    {
+        Max = maxHealth;
+        Current = maxHealth;
+    }
 
     /// <summary>Damages the Health by the amount provided.</summary>
     public void Damage(float amount)
@@ -35,15 +61,11 @@ public class Health : MonoBehaviour
 
         if (amount <= 0f)
         {
-            Debug.LogWarning("Trying to damage health component with an invalid value!");
+            //Debug.LogWarning("Trying to damage health component with an invalid value!");
             return;
         }
-
-        currentHealth = Mathf.Max(0f, currentHealth - amount);
-        OnCurrentHealthUpdated?.Invoke(currentHealth);
-
-        if (currentHealth == 0f)
-            SetDeathState(true);
+        
+        Current = Math.Max(0f, Current - amount);
     }
 
     /// <summary>Heals the Health by the amount provided.</summary>
@@ -53,12 +75,11 @@ public class Health : MonoBehaviour
 
         if (amount <= 0f)
         {
-            Debug.LogWarning("Trying to heal health component with an invalid value!");
+            //Debug.LogWarning("Trying to heal health component with an invalid value!");
             return;
         }
 
-        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
-        OnCurrentHealthUpdated?.Invoke(currentHealth);
+        Current = Math.Min(Max, Current + amount);
     }
 
     /// <summary>
@@ -66,32 +87,19 @@ public class Health : MonoBehaviour
     /// amount = 50, changes max health to max health + 50
     /// amount = -30, changes max health to max health - 30
     /// </summary>
-    public void ChangeMaxHealth(float amount)
+    public void ChangeMax(float amount)
     {
         if (isDead) return;
         if (amount == 0f) return;
 
-        if (!isMaxHealthChangeable)
-        {
-            Debug.LogWarning("Trying to change max health when it is not changeable!");
-            return;
-        }
+        Max = Math.Max(minMaxHealth, Max + amount);
 
-        maxHealth = Mathf.Max(minMaxHealth, maxHealth + amount);
-        OnMaxHealthUpdated?.Invoke(maxHealth);
-
-        if (currentHealth > maxHealth)
+        if (Current > Max)
         {
-            currentHealth = maxHealth;
-            OnCurrentHealthUpdated?.Invoke(currentHealth);
+            Current = Max;
         }
     }
 
     /// <summary>Sets "isDead" directly to the value provided.</summary>
     public void SetDeathState(bool value) => IsDead = value;
-
-    void Awake()
-    {
-        currentHealth = maxHealth;
-    }
 }

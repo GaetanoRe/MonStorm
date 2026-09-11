@@ -1,9 +1,13 @@
 using UnityEngine;
+using System.Collections.Generic;
 using MonStorm.Core.StateMachine;
 
 public abstract class CreatureDefinition : ScriptableObject
 {
-    [SerializeField] string creatureName;
+    [field: Header("Creature Properties"), SerializeField] public string Name { get; private set; }
+    [field: SerializeField] public float MaxHealth { get; private set; }
+
+    [field: Header("Loot Table"), SerializeField] public List<ItemDropper.LootTableItem> LootTable { get; private set; }
 
 
     /// <summary>Create the specific creature state machine with all of it's states, values and transitions.</summary>

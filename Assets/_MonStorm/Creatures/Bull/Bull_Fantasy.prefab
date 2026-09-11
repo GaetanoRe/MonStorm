@@ -1677,8 +1677,8 @@ GameObject:
   - component: {fileID: 85500681547981936}
   - component: {fileID: 478509418446450174}
   - component: {fileID: 784918050976292699}
-  - component: {fileID: 4177897810656464165}
-  - component: {fileID: 3075029551498889018}
+  - component: {fileID: 5576579485717526800}
+  - component: {fileID: 6893417805435790722}
   - component: {fileID: 5857492405639800903}
   - component: {fileID: 3028478462682515503}
   m_Layer: 0
@@ -1760,7 +1760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47deccd3dcd15049a2efffd920fbb3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitReceiver
---- !u!114 &4177897810656464165
+--- !u!114 &5576579485717526800
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1769,12 +1769,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3694635477524131205}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e99b9849c6c165046863933ed7167921, type: 3}
+  m_Script: {fileID: 11500000, guid: cca5d79bfa0850340abbd72ecb6513fb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 100
-  isMaxHealthChangeable: 1
---- !u!114 &3075029551498889018
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponentConfigured
+--- !u!114 &6893417805435790722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1783,14 +1781,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3694635477524131205}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82ca73147ba596843b3a469b9742bd51, type: 3}
+  m_Script: {fileID: 11500000, guid: bff878b237dd9054593204a7a580d278, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDropper
-  items:
-  - data: {fileID: 11400000, guid: 8c1475d85bdf8fe47951e95c6f7e7c6c, type: 2}
-    minAmount: 1
-    maxAmount: 3
-    percentChance: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropperComponentConfigured
 --- !u!95 &5857492405639800903
 Animator:
   serializedVersion: 7

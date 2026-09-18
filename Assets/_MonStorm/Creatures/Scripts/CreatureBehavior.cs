@@ -9,22 +9,19 @@ public class CreatureBehavior : MonoBehaviour
 {
     /// <summary>Invoked when the creature registers a hit, different from OnDamaged because the creature could get hit while immune, or some other restriction.</summary>
     /// <remarks>Always called first, before OnDamaged.</remarks>
-    public event Action<HitApplier, HitDetector> OnHit;
+    public event Action<HitApplierComponentConfigured, HitDetector> OnHit;
 
     /// <summary>Invoked when the creature's Health component takes damage.</summary>
     public event Action<HealthComponentConfigured, float> OnDamaged;
 
-    public StateMachine<CreatureContext> StateMachine => stateMachine;
-    public CreatureContext CreatureContext => creatureContext;
+    [field: SerializeField] public CreatureDefinition CreatureDefinition { get; private set; }
 
-    [SerializeField] CreatureDefinition creatureDefinition;
+    public CreatureContext CreatureContext { get; private set; }
+    public StateMachine<CreatureContext> StateMachine { get; private set; }
 
     HitReceiver hitReceiver;
     HealthComponentConfigured health;
     ItemDropperComponentConfigured itemDropper;
-
-    CreatureContext creatureContext;
-    StateMachine<CreatureContext> stateMachine;
 
     IFSMAdapterAnimator adapterAnimator;
     IFSMAdapterNavMeshAgent adapterNavMeshAgent;
@@ -40,7 +37,7 @@ public class CreatureBehavior : MonoBehaviour
 
     void Awake()
     {
-        if (creatureDefinition == null)
+        if (CreatureDefinition == null)
         {
             Debug.LogWarning($"CreatureDefinition asset not assigned to {gameObject.name}.");
             return;
@@ -50,20 +47,20 @@ public class CreatureBehavior : MonoBehaviour
 
         if (TryGetComponent(out health))
         {
-            health.Initialize(new(creatureDefinition.MaxHealth));
+            health.Initialize(new(CreatureDefinition.MaxHealth));
         }
 
         if (TryGetComponent(out itemDropper))
         {
-            itemDropper.Initialize(new(creatureDefinition.LootTable));
+            itemDropper.Initialize(new(CreatureDefinition.LootTable));
         }
         
         adapterAnimator = TryGetComponent(out Animator animator) ? new FSMAdapterAnimator(animator) : new FSMAdapterAnimatorNull();
         adapterNavMeshAgent = TryGetComponent(out NavMeshAgent navMeshAgent) ? new FSMAdapterNavMeshAgent(navMeshAgent) : new FSMAdapterNavMeshAgentNull();
         adapterLogger = new FSMAdapterLogger();
 
-        creatureContext = new(null, adapterAnimator, adapterNavMeshAgent, new FSMAdapterTransform(transform), adapterLogger, new FSMAdapterTransform(FindAnyObjectByType<MonStormCharacterController>().transform));
-        stateMachine = creatureDefinition.BuildStateMachine(creatureContext, this);
+        CreatureContext = new(null, adapterAnimator, adapterNavMeshAgent, new FSMAdapterTransform(transform), adapterLogger, new FSMAdapterTransform(FindAnyObjectByType<MonStormCharacterController>().transform));
+        StateMachine = CreatureDefinition.BuildStateMachine(CreatureContext, this);
     }
 
     void OnEnable()
@@ -82,12 +79,12 @@ public class CreatureBehavior : MonoBehaviour
 
     void Update()
     {
-        stateMachine.Tick(Time.deltaTime);
+        StateMachine.Tick(Time.deltaTime);
 
         gotHitThisFrame = false;
     }
 
-    void HandleHit(HitApplier applier, HitDetector detector)
+    void HandleHit(HitApplierComponentConfigured applier, HitDetector detector)
     {
         gotHitThisFrame = true;
         OnHit?.Invoke(applier, detector);
@@ -96,7 +93,7 @@ public class CreatureBehavior : MonoBehaviour
 
         if (health.Data.IsDead) return; // Hit can still occur after the Health has died and the gameobject hasn't been destroyed, hence this guard
 
-        float damageDealt = DamageCalculator.Resolve(applier.Damage, detector.DamageMultiplier);
+        float damageDealt = DamageCalculator.Resolve(applier.Data.Damage, detector.DamageMultiplier);
         health.Data.Damage(damageDealt);
         OnDamaged?.Invoke(health, damageDealt);
     }

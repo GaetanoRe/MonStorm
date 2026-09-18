@@ -3,7 +3,7 @@ using MonStorm.Core.StateMachine;
 
 [CreateAssetMenu(fileName = "AggressiveCreatureDefinition", menuName = "SO/CreatureDefinitions/Aggressive")]
 /// <inheritdoc/>
-public class AggressiveCreatureDefinition : CreatureDefinition
+public class AggressiveCreatureDefinition : CreatureDefinition, ICreatureWithAttack
 {
     readonly int IDLE_ANIM_HASH = Animator.StringToHash("Idle");
     readonly int WALK_ANIM_HASH = Animator.StringToHash("Walk");
@@ -17,6 +17,7 @@ public class AggressiveCreatureDefinition : CreatureDefinition
     [field: SerializeField] public float IdleDuration { get; private set; }
     [field: SerializeField] public float MaxWanderRange { get; private set; }
     [field: SerializeField] public float DetectionRange { get; private set; }
+    [field: SerializeField] public float AttackDamage { get; private set; }
     [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public float AttackCooldownTime { get; private set; }
 

@@ -18,7 +18,7 @@ public class MonStormCharacterController : MonoBehaviour
     public float gravity = -9.81f;
 
     [SerializeField] public WeaponAsset _equippedWeapon;
-    public HitApplier weapon;
+    public HitApplierComponentConfigured weapon;
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -54,6 +54,7 @@ public class MonStormCharacterController : MonoBehaviour
         m_playerContext.StateMachine = m_stateMachine;
         m_playerContext.AdapterAnimator = new FSMAdapterAnimator(GetComponent<Animator>());
         m_playerContext.equippedWeapon = _equippedWeapon.Build();
+        weapon = GetComponentInChildren<HitApplierComponentConfigured>();
         m_playerContext.AdapterHitApplier = new FSMAdapterHitApplier(weapon);
         m_playerContext.MovementTreeHash = Animator.StringToHash("MovementTree");
         m_playerContext.DamagedAnimHash = Animator.StringToHash("GetHit");

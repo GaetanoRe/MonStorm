@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class HitProcessingEXAMPLE : MonoBehaviour, IHitReceiver
 {
-    Health health;
+    HealthComponentConfigured health;
 
 
-    public void HandleHit(HitApplier applier, HitDetector detector)
+    public void HandleHit(HitApplierComponentConfigured applier, HitDetector detector)
     {
-        float damageDealt = applier.Damage * detector.DamageMultiplier;
-        health.Damage(damageDealt);
+        float damageDealt = applier.Data.Damage * detector.DamageMultiplier;
+        health.Data.Damage(damageDealt);
 
-        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.Current}");
+        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.Data.Current}");
     }
 
     void Awake()
     {
-        health = GetComponent<Health>();
-        health.OnDeath += Die;
+        health = GetComponent<HealthComponentConfigured>();
+        health.Data.OnDeath += Die;
     }
 
     void Die()
     {
-        health.OnDeath -= Die;
+        health.Data.OnDeath -= Die;
         Destroy(gameObject);
     }
 }

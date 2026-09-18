@@ -3,8 +3,8 @@ using System;
 
 public class HitReceiver : MonoBehaviour, IHitReceiver
 {
-    public event Action<HitApplier, HitDetector> OnHit;
+    public event Action<HitApplierComponentConfigured, HitDetector> OnHit;
 
 
-    public void HandleHit(HitApplier applier, HitDetector detector) => OnHit?.Invoke(applier, detector);
+    public void HandleHit(HitApplierComponentConfigured applier, HitDetector detector) => OnHit?.Invoke(applier, detector);
 }

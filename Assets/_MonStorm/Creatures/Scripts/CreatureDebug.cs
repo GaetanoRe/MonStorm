@@ -36,7 +36,7 @@ public class CreatureDebug : MonoBehaviour
         creatureBehavior.StateMachine.OnStateChanged -= LogStateTransition;
     }
 
-    void LogHit(HitApplier applier, HitDetector detector)
+    void LogHit(HitApplierComponentConfigured applier, HitDetector detector)
     {
         if (!logOnBeingHit) return;
 

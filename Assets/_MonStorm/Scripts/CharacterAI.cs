@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
-public class CharacterAI : MonoBehaviour, IHitReceiver
+public class CharacterAI : MonoBehaviour
 {
 	public bool isHero = false; //these bools are only used to play the correct animations right now, but may be useful in other ways later
 	public bool isDragon = false;

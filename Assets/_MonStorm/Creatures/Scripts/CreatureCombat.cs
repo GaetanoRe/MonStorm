@@ -3,16 +3,28 @@ using UnityEngine;
 public class CreatureCombat : MonoBehaviour
 {
     CreatureBehavior creatureBehavior;
-    HitApplier hitApplier;
+    HitApplierComponentConfigured hitApplier;
 
 
     void Awake()
     {
-        hitApplier = transform.GetComponentInChildren<HitApplier>();
+        if (!TryGetComponent(out creatureBehavior))
+        {
+            Debug.LogWarning($"CreatureBehavior not assigned to {gameObject}.");
+            return;
+        }
 
-        if (hitApplier == null) Debug.LogWarning($"HitApplier not assigned to {gameObject}.");
+        hitApplier = transform.GetComponentInChildren<HitApplierComponentConfigured>();
+        if (hitApplier == null)
+        {
+            Debug.LogWarning($"HitApplier not assigned to {gameObject}.");
+            return;
+        }
 
-        if (!TryGetComponent(out creatureBehavior)) Debug.LogWarning($"CreatureBehavior not assigned to {gameObject}.");
+        ICreatureWithAttack creatureAttack = (ICreatureWithAttack)creatureBehavior.CreatureDefinition;
+        if (creatureAttack == null) return;
+
+        hitApplier.Initialize(new(creatureAttack.AttackDamage, GetComponent<IHitReceiver>()));
     }
 
     void Start()
@@ -35,7 +47,7 @@ public class CreatureCombat : MonoBehaviour
     {
         if (creatureBehavior == null || hitApplier == null) return;
 
-        hitApplier.SetActive(true);
+        hitApplier.Data.SetActive(true);
     }
 
     /// <summary>Deactivates the associated weapon to no longer register hits.</summary>
@@ -44,6 +56,6 @@ public class CreatureCombat : MonoBehaviour
     {
         if (creatureBehavior == null || hitApplier == null) return;
 
-        hitApplier.SetActive(false);
+        hitApplier.Data.SetActive(false);
     }
 }

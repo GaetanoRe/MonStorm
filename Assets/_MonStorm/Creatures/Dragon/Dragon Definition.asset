@@ -28,5 +28,6 @@ MonoBehaviour:
   <IdleDuration>k__BackingField: 10
   <MaxWanderRange>k__BackingField: 6
   <DetectionRange>k__BackingField: 12
+  <AttackDamage>k__BackingField: 75
   <AttackRange>k__BackingField: 4
   <AttackCooldownTime>k__BackingField: 4

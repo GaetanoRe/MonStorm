@@ -1720,7 +1720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06734eab2359c714daeac7c620a6c82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreatureBehavior
-  creatureDefinition: {fileID: 11400000, guid: bb2cdc7278c29294c990ce8a1fbaf638, type: 2}
+  <CreatureDefinition>k__BackingField: {fileID: 11400000, guid: bb2cdc7278c29294c990ce8a1fbaf638, type: 2}
 --- !u!114 &85500681547981936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3549,8 +3549,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3049385875520257450}
-  - component: {fileID: 4794143069726540969}
   - component: {fileID: 1800641722679831824}
+  - component: {fileID: 9118627913628160248}
   m_Layer: 0
   m_Name: Hit Applier Collider
   m_TagString: Untagged
@@ -3573,19 +3573,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4039214057395451711}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4794143069726540969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7431047577819913615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2a9ea1dae469d4ea0ef72a44f203c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitApplier
-  <Damage>k__BackingField: 15
 --- !u!65 &1800641722679831824
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3607,6 +3594,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.25, y: 1.5, z: 2.7}
   m_Center: {x: 0, y: 1.5, z: 1}
+--- !u!114 &9118627913628160248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7431047577819913615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19272a8bd5b23964b848b3499a96f813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitApplierComponentConfigured
 --- !u!1 &7443597409408773127
 GameObject:
   m_ObjectHideFlags: 0

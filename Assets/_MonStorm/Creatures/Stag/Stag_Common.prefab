@@ -1133,7 +1133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06734eab2359c714daeac7c620a6c82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreatureBehavior
-  creatureDefinition: {fileID: 11400000, guid: 2bbc250fc13684d43b5ab8780ef8d134, type: 2}
+  <CreatureDefinition>k__BackingField: {fileID: 11400000, guid: 2bbc250fc13684d43b5ab8780ef8d134, type: 2}
 --- !u!114 &-4185536183462148604
 MonoBehaviour:
   m_ObjectHideFlags: 0

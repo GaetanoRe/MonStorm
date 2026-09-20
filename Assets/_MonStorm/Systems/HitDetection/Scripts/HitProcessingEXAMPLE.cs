@@ -5,9 +5,9 @@ public class HitProcessingEXAMPLE : MonoBehaviour, IHitReceiver
     HealthComponentConfigured health;
 
 
-    public void HandleHit(HitApplierComponentConfigured applier, HitDetector detector)
+    public void HandleHit(HitApplierComponentConfigured applier, HitDetectorComponentConfigured detector)
     {
-        float damageDealt = applier.Data.Damage * detector.DamageMultiplier;
+        float damageDealt = applier.Data.Damage * detector.Data.DamageMultiplier;
         health.Data.Damage(damageDealt);
 
         Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.Data.Current}");

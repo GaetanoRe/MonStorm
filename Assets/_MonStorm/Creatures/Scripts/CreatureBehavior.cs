@@ -9,7 +9,7 @@ public class CreatureBehavior : MonoBehaviour
 {
     /// <summary>Invoked when the creature registers a hit, different from OnDamaged because the creature could get hit while immune, or some other restriction.</summary>
     /// <remarks>Always called first, before OnDamaged.</remarks>
-    public event Action<HitApplierComponentConfigured, HitDetector> OnHit;
+    public event Action<HitApplierComponentConfigured, HitDetectorComponentConfigured> OnHit;
 
     /// <summary>Invoked when the creature's Health component takes damage.</summary>
     public event Action<HealthComponentConfigured, float> OnDamaged;
@@ -84,7 +84,7 @@ public class CreatureBehavior : MonoBehaviour
         gotHitThisFrame = false;
     }
 
-    void HandleHit(HitApplierComponentConfigured applier, HitDetector detector)
+    void HandleHit(HitApplierComponentConfigured applier, HitDetectorComponentConfigured detector)
     {
         gotHitThisFrame = true;
         OnHit?.Invoke(applier, detector);
@@ -93,7 +93,7 @@ public class CreatureBehavior : MonoBehaviour
 
         if (health.Data.IsDead) return; // Hit can still occur after the Health has died and the gameobject hasn't been destroyed, hence this guard
 
-        float damageDealt = DamageCalculator.Resolve(applier.Data.Damage, detector.DamageMultiplier);
+        float damageDealt = DamageCalculator.Resolve(applier.Data.Damage, detector.Data.DamageMultiplier);
         health.Data.Damage(damageDealt);
         OnDamaged?.Invoke(health, damageDealt);
     }

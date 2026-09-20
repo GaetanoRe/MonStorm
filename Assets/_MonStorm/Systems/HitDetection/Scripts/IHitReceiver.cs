@@ -1,4 +1,4 @@
 public interface IHitReceiver
 {
-    public void HandleHit(HitApplierComponentConfigured applier, HitDetector detector);
+    public void HandleHit(HitApplierComponentConfigured applier, HitDetectorComponentConfigured detector);
 }

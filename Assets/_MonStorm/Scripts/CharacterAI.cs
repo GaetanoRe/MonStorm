@@ -1226,7 +1226,6 @@ public class CharacterAI : MonoBehaviour
     {
         float damageDealt = applier.Damage * detector.DamageMultiplier;
         health.Damage(damageDealt);
-        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.Current}");
 
 		if (health.IsDead) return;
 

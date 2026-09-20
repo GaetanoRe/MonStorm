@@ -5480,7 +5480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7491184285496304430}
-  - component: {fileID: 1750123595090955554}
+  - component: {fileID: 6493092539129725381}
   - component: {fileID: 5300705826199346769}
   - component: {fileID: 29823655737032006}
   m_Layer: 0
@@ -5505,7 +5505,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7697587331504454473}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1750123595090955554
+--- !u!114 &6493092539129725381
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5514,10 +5514,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7607506627117329412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa48d51698759f74092f19302f51215f, type: 3}
+  m_Script: {fileID: 11500000, guid: e8d7aea0e15882240b2bf78c9b9d931e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitDetector
-  <DamageMultiplier>k__BackingField: 1
+  m_EditorClassIdentifier: Assembly-CSharp::HitDetectorComponentStandalone
+  damageMultiplier: 1
 --- !u!65 &5300705826199346769
 BoxCollider:
   m_ObjectHideFlags: 0

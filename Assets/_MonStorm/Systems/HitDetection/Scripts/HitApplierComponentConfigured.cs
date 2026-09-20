@@ -12,7 +12,7 @@ public class HitApplierComponentConfigured : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (!other.transform.TryGetComponent(out HitDetector hitDetector)) return;
+        if (!other.transform.TryGetComponent(out HitDetectorComponentConfigured hitDetector)) return;
 
         Data.UpdateCollisions(hitDetector, this);
     }

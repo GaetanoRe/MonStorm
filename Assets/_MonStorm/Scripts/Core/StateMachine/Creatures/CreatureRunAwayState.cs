@@ -24,7 +24,7 @@ namespace MonStorm.Core.StateMachine
             speedChange = runSpeed - navMeshAgent.AgentSpeed;
             navMeshAgent.ChangeSpeed(runSpeed);
 
-            Vector3 relativeMove = Vector3.Normalize(transform.Position - playerTransform.Position) * distance;
+            Vector3 relativeMove = Vector3.Normalize(transform.Position - targetTransform.Position) * distance;
             navMeshAgent.MoveRelative(relativeMove);
         }
 
@@ -34,6 +34,7 @@ namespace MonStorm.Core.StateMachine
 
             navMeshAgent.ChangeSpeed(navMeshAgent.AgentSpeed - speedChange);
             navMeshAgent.CancelMove();
+            navMeshAgent.RotateTowardsPosition(targetTransform.Position);
         }
     }
 }

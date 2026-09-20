@@ -1,13 +1,17 @@
 using UnityEngine;
-using System.Collections.Generic;
 using MonStorm.Core.StateMachine;
 
 public abstract class CreatureDefinition : ScriptableObject
 {
-    [field: Header("Creature Properties"), SerializeField] public string Name { get; private set; }
-    [field: SerializeField] public float MaxHealth { get; private set; }
-
-    [field: Header("Loot Table"), SerializeField] public List<ItemDropper.LootTableItem> LootTable { get; private set; }
+    /// <summary>The display name of the creature.</summary>
+    [field: SerializeField] public string CreatureName { get; private set; }
+    /// <summary>The amount of damage required for the creature to get staggered.</summary>
+    [field: SerializeField] public float StaggerDamageThreshold { get; private set; }
+    /// <summary>How far away a creature can detect it's target.</summary>
+    [field: SerializeField] public float VisionRadius { get; private set; }
+    /// <summary>The creature's vision angle, starting from the creature's forward direction.</summary>
+    /// <remarks>A value of 10f means 10 degrees on each side (left and right), 180f means full vision all around the creature (whole circle).</remarks>
+    [field: SerializeField, Range(0f, 180f)] public float VisionMaxAngle { get; private set; }
 
 
     /// <summary>Create the specific creature state machine with all of it's states, values and transitions.</summary>

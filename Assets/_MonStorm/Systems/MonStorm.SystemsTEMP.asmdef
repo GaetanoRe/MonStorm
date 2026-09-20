@@ -1,9 +1,8 @@
 {
-    "name": "Adapters",
-    "rootNamespace": "MonStorm.Adapters",
+    "name": "SystemsTEMP",
+    "rootNamespace": "MonStorm.SystemsTEMP",
     "references": [
-        "GUID:86cfc92dd79bc140b9f1e7fd9778ec2f",
-        "GUID:05212e0d653412848b246d68f83b32de"
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

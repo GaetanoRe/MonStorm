@@ -12,7 +12,7 @@ public class SkittishCreatureDefinition : CreatureDefinition
     readonly int DEAD_ANIM_HASH = Animator.StringToHash("Dead");
 
     /// <summary>Normal walking speed.</summary>
-    [field: SerializeField] public float WalkSpeed { get; private set; }
+    [field: Header("Skittish Creature Properties"), SerializeField] public float WalkSpeed { get; private set; }
     /// <summary>Run away speed.</summary>
     [field: SerializeField] public float RunSpeed { get; private set; }
     /// <summary>How long the creature stays idle for after wandering, and then going back to wander again.</summary>

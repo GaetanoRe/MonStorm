@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07dab974d2ff4154f905c4c6e2bd5438, type: 3}
   m_Name: Stag Common Definition
   m_EditorClassIdentifier: Assembly-CSharp::SkittishCreatureDefinition
-  <Name>k__BackingField: Stag Common
+  <CreatureName>k__BackingField: Stag
   <MaxHealth>k__BackingField: 150
+  <StaggerDamageThreshold>k__BackingField: 50
+  <VisionRadius>k__BackingField: 11
+  <VisionMaxAngle>k__BackingField: 90
   <LootTable>k__BackingField:
   - data: {fileID: 11400000, guid: 643bd5b9d126172468f339c97467c475, type: 2}
     minAmount: 1

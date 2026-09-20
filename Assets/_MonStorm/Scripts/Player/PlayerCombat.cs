@@ -21,15 +21,15 @@ public class PlayerCombat : MonoBehaviour, IHitReceiver
 
     private void OnEnable()
     {
-        //health.OnCurrentHealthUpdated += healthBar.SetValue;
-        //health.OnMaxHealthUpdated += healthBar.SetMax;       
+        health.Data.OnCurrentUpdated += healthBar.SetValue;
+        health.Data.OnMaxUpdated += healthBar.SetMax;
         health.Data.OnDeath += OnPlayerDeath;
     }
     
     private void Start()
     {
-        //healthBar.SetValue(health.CurrentHealth);
-        //healthBar.SetMax(health.MaxHealth);
+        healthBar.SetValue(health.Data.Current);
+        healthBar.SetMax(health.Data.Max);
     }
 
     
@@ -38,7 +38,7 @@ public class PlayerCombat : MonoBehaviour, IHitReceiver
         context.isDead = true;
     }
     
-    public void HandleHit(HitApplierComponentConfigured applier, HitDetector detector)
+    public void HandleHit(HitApplierComponentConfigured applier, HitDetectorComponentConfigured detector)
     {
         if (health.Data.IsDead) return;
 
@@ -46,7 +46,7 @@ public class PlayerCombat : MonoBehaviour, IHitReceiver
         hitDir.y = 0;
         hitDir.Normalize();
         context.knockbackDirection = new System.Numerics.Vector3(hitDir.x, hitDir.y, hitDir.z);
-        float damageDealt = DamageCalculator.Resolve(applier.Data.Damage, detector.DamageMultiplier);
+        float damageDealt = DamageCalculator.Resolve(applier.Data.Damage, detector.Data.DamageMultiplier);
         context.isHit = true;
         health.Data.Damage(damageDealt);
         Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.Data.Current}");
@@ -64,8 +64,8 @@ public class PlayerCombat : MonoBehaviour, IHitReceiver
 
     private void OnDisable()
     {
-        //health.OnCurrentHealthUpdated -= healthBar.SetValue;
-        //health.OnMaxHealthUpdated -= healthBar.SetMax;
+        health.Data.OnCurrentUpdated -= healthBar.SetValue;
+        health.Data.OnMaxUpdated -= healthBar.SetMax;
     }
 
     void OnDestroy()

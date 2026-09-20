@@ -13,13 +13,20 @@ MonoBehaviour:
   m_Name: Bull Definition
   m_EditorClassIdentifier: Assembly-CSharp::TerritorialCreatureDefinition
   <CreatureName>k__BackingField: Bull
+  <MaxHealth>k__BackingField: 200
   <StaggerDamageThreshold>k__BackingField: 100
   <VisionRadius>k__BackingField: 11
   <VisionMaxAngle>k__BackingField: 130
+  <LootTable>k__BackingField:
+  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
+    minAmount: 1
+    maxAmount: 1
+    chance: 1
   <WalkSpeed>k__BackingField: 2
   <ChaseSpeed>k__BackingField: 6
   <IdleDuration>k__BackingField: 5
   <MaxWanderRange>k__BackingField: 5
+  <AttackDamage>k__BackingField: 40
   <AttackRange>k__BackingField: 2
   <AttackCooldownTime>k__BackingField: 1.5
   <MaxTetherRange>k__BackingField: 20

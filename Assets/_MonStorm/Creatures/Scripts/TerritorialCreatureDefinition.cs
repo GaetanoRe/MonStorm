@@ -3,7 +3,7 @@ using MonStorm.Core.StateMachine;
 
 [CreateAssetMenu(fileName = "TerritorialCreatureDefinition", menuName = "SO/CreatureDefinitions/Territorial")]
 /// <inheritdoc/>
-public class TerritorialCreatureDefinition : CreatureDefinition
+public class TerritorialCreatureDefinition : CreatureDefinition, ICreatureWithAttack
 {
     readonly int IDLE_ANIM_HASH = Animator.StringToHash("Idle");
     readonly int WALK_ANIM_HASH = Animator.StringToHash("Walk");
@@ -13,18 +13,19 @@ public class TerritorialCreatureDefinition : CreatureDefinition
     readonly int DEAD_ANIM_HASH = Animator.StringToHash("Dead");
 
     /// <summary>Normal walking speed.</summary>
-    [field: SerializeField] public float WalkSpeed { get; private set; }
+    [field: Header("Territorial Creature Properties"), SerializeField] public float WalkSpeed { get; private set; }
     /// <summary>Chasing it's target speed.</summary>
     [field: SerializeField] public float ChaseSpeed { get; private set; }
     /// <summary>How long the creature stays idle for after wandering, and then going back to wander again.</summary>
     [field: SerializeField] public float IdleDuration { get; private set; }
     /// <summary>The maximum range the creature can wander away from it's starting position.</summary>
     [field: SerializeField] public float MaxWanderRange { get; private set; }
+    /// <summary>The amount of damage the creature does with it's attacks.</summary>
+    [field: SerializeField] public float AttackDamage { get; private set; }
     /// <summary>The maximum distance at which the creature can attack.</summary>
     [field: SerializeField] public float AttackRange { get; private set; }
     /// <summary>The cooldown time between attacking.</summary>
     [field: SerializeField] public float AttackCooldownTime { get; private set; }
-
     /// <summary>The creature's maximum guarding range, after exceeding it, the creature goes back to wandering around.</summary>
     [field: SerializeField] public float MaxTetherRange { get; private set; }
     /// <summary>After the target exits the creature's maximum tether range, the target needs to enter this range (ReEngageTetherRange) before the creature starts chasing again.</summary>

@@ -480,8 +480,8 @@ GameObject:
   - component: {fileID: 8531057590399945795}
   - component: {fileID: 2454293050148647651}
   - component: {fileID: 1495479772709386219}
-  - component: {fileID: 4280863083044455717}
-  - component: {fileID: 3376203042943474043}
+  - component: {fileID: 2218639774633446124}
+  - component: {fileID: 9094297267546541218}
   - component: {fileID: 567852775131639206}
   - component: {fileID: 9162010397704964020}
   m_Layer: 0
@@ -523,7 +523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06734eab2359c714daeac7c620a6c82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreatureBehavior
-  creatureDefinition: {fileID: 11400000, guid: fb1ad680d5cc1bb4a9f817c2caf18bf0, type: 2}
+  <CreatureDefinition>k__BackingField: {fileID: 11400000, guid: fb1ad680d5cc1bb4a9f817c2caf18bf0, type: 2}
 --- !u!114 &8531057590399945795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,7 +563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47deccd3dcd15049a2efffd920fbb3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitReceiver
---- !u!114 &4280863083044455717
+--- !u!114 &2218639774633446124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -572,12 +572,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 801643786782628966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e99b9849c6c165046863933ed7167921, type: 3}
+  m_Script: {fileID: 11500000, guid: cca5d79bfa0850340abbd72ecb6513fb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 200
-  isMaxHealthChangeable: 1
---- !u!114 &3376203042943474043
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponentConfigured
+--- !u!114 &9094297267546541218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -586,10 +584,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 801643786782628966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82ca73147ba596843b3a469b9742bd51, type: 3}
+  m_Script: {fileID: 11500000, guid: bff878b237dd9054593204a7a580d278, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDropper
-  items: []
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropperComponentConfigured
 --- !u!95 &567852775131639206
 Animator:
   serializedVersion: 7
@@ -3381,7 +3378,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5454981927377290082}
-  - component: {fileID: 2011658353698196557}
+  - component: {fileID: 1899663086602986934}
   - component: {fileID: 7332358991932609546}
   m_Layer: 0
   m_Name: Hit Applier Collider
@@ -3405,7 +3402,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 30349176309253852}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2011658353698196557
+--- !u!114 &1899663086602986934
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3414,10 +3411,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4805342677593246352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2a9ea1dae469d4ea0ef72a44f203c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 19272a8bd5b23964b848b3499a96f813, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitApplier
-  <Damage>k__BackingField: 30
+  m_EditorClassIdentifier: Assembly-CSharp::HitApplierComponentConfigured
 --- !u!65 &7332358991932609546
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5484,7 +5480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7491184285496304430}
-  - component: {fileID: 1750123595090955554}
+  - component: {fileID: 3379743988851781466}
   - component: {fileID: 5300705826199346769}
   - component: {fileID: 29823655737032006}
   m_Layer: 0
@@ -5509,7 +5505,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7697587331504454473}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1750123595090955554
+--- !u!114 &3379743988851781466
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5518,10 +5514,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7607506627117329412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa48d51698759f74092f19302f51215f, type: 3}
+  m_Script: {fileID: 11500000, guid: e8d7aea0e15882240b2bf78c9b9d931e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitDetector
-  <DamageMultiplier>k__BackingField: 1
+  m_EditorClassIdentifier: Assembly-CSharp::HitDetectorComponentStandalone
+  damageMultiplier: 1
 --- !u!65 &5300705826199346769
 BoxCollider:
   m_ObjectHideFlags: 0

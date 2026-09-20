@@ -3,7 +3,7 @@ using MonStorm.Core.StateMachine;
 
 [CreateAssetMenu(fileName = "AggressiveCreatureDefinition", menuName = "SO/CreatureDefinitions/Aggressive")]
 /// <inheritdoc/>
-public class AggressiveCreatureDefinition : CreatureDefinition
+public class AggressiveCreatureDefinition : CreatureDefinition, ICreatureWithAttack
 {
     readonly int IDLE_ANIM_HASH = Animator.StringToHash("Idle");
     readonly int WALK_ANIM_HASH = Animator.StringToHash("Walk");
@@ -13,13 +13,15 @@ public class AggressiveCreatureDefinition : CreatureDefinition
     readonly int DEAD_ANIM_HASH = Animator.StringToHash("Dead");
 
     /// <summary>Normal walking speed.</summary>
-    [field: SerializeField] public float WalkSpeed { get; private set; }
+    [field: Header("Aggressive Creature Properties"), SerializeField] public float WalkSpeed { get; private set; }
     /// <summary>Chasing it's target speed.</summary>
     [field: SerializeField] public float ChaseSpeed { get; private set; }
     /// <summary>How long the creature stays idle for after wandering, and then going back to wander again.</summary>
     [field: SerializeField] public float IdleDuration { get; private set; }
     /// <summary>The maximum range the creature can wander away from it's starting position.</summary>
     [field: SerializeField] public float MaxWanderRange { get; private set; }
+    /// <summary>The amount of damage the creature does with it's attacks.</summary>
+    [field: SerializeField] public float AttackDamage { get; private set; }
     /// <summary>The maximum distance at which the creature can attack.</summary>
     [field: SerializeField] public float AttackRange { get; private set; }
     /// <summary>The cooldown time between attacking.</summary>

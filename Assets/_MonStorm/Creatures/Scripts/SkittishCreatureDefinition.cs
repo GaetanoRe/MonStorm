@@ -11,10 +11,15 @@ public class SkittishCreatureDefinition : CreatureDefinition
     readonly int DAMAGED_ANIM_HASH = Animator.StringToHash("Damaged");
     readonly int DEAD_ANIM_HASH = Animator.StringToHash("Dead");
 
-    [field: SerializeField] public float WalkSpeed { get; private set; }
+    /// <summary>Normal walking speed.</summary>
+    [field: Header("Skittish Creature Properties"), SerializeField] public float WalkSpeed { get; private set; }
+    /// <summary>Run away speed.</summary>
     [field: SerializeField] public float RunSpeed { get; private set; }
+    /// <summary>How long the creature stays idle for after wandering, and then going back to wander again.</summary>
     [field: SerializeField] public float IdleDuration { get; private set; }
+    /// <summary>The maximum range the creature can wander away from it's starting position.</summary>
     [field: SerializeField] public float MaxWanderRange { get; private set; }
+    /// <summary>How far the creature runs away after being scared.</summary>
     [field: SerializeField] public float RunAwayDistance { get; private set; }
 
 
@@ -38,27 +43,32 @@ public class SkittishCreatureDefinition : CreatureDefinition
         CreatureDeadState deadState = new(creatureContext, deadTransitions, DEAD_ANIM_HASH);
 
         idleTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(wanderState, () => idleState.StateTimer >= IdleDuration)
+            new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(runAwayState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(wanderState, () => idleState.StateTimer >= IdleDuration),
+            new(runAwayState, () => creatureContext.IsTargetInVision)
             );
 
         wanderTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(idleState, creatureBehavior.ConditionHasReachedDestination)
+            new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(runAwayState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(idleState, () => creatureContext.HasReachedDestination),
+            new(runAwayState, () => creatureContext.IsTargetInVision)
             );
 
         runAwayTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(idleState, creatureBehavior.ConditionHasReachedDestination)
+            new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(runAwayState, () => creatureContext.GotHitThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(idleState, () => creatureContext.HasReachedDestination)
             );
 
         damagedTransitions.Initialize(
-            new(damagedState, creatureBehavior.ConditionGotHitThisFrame),
-            new(deadState, creatureBehavior.ConditionIsDead),
-            new(runAwayState, creatureBehavior.ConditionIsAnimationFinished)
+            new(damagedState, () => creatureContext.GotStaggeredThisFrame),
+            new(deadState, () => creatureContext.IsDead),
+            new(runAwayState, () => creatureContext.IsAnimationFinished)
             );
 
         stateMachine.TransitionTo(idleState);

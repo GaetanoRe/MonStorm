@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
-public class CharacterAI : MonoBehaviour, IHitReceiver
+public class CharacterAI : MonoBehaviour
 {
 	public bool isHero = false; //these bools are only used to play the correct animations right now, but may be useful in other ways later
 	public bool isDragon = false;
@@ -1000,8 +1000,6 @@ public class CharacterAI : MonoBehaviour, IHitReceiver
             HandleStandardDefeatedState();
 			enabled = false;
 
-            GetComponent<ItemDropper>().Activate();
-
             if (isHero)
 				GetComponent<MonStormCharacterController>().enabled = false;
         }
@@ -1228,7 +1226,6 @@ public class CharacterAI : MonoBehaviour, IHitReceiver
     {
         float damageDealt = applier.Damage * detector.DamageMultiplier;
         health.Damage(damageDealt);
-        Debug.Log($"Hit: {detector.gameObject.name}, damage dealt: {damageDealt}, remaining health: {health.CurrentHealth}");
 
 		if (health.IsDead) return;
 

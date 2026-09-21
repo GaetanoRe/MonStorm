@@ -14,5 +14,7 @@ namespace MonStorm.Adapters
             vector.z += numericsVector.Z;
             return vector;
         }
+
+        public static float NumericsAngle(System.Numerics.Vector3 vectorOne, System.Numerics.Vector3 vectorTwo) => Vector3.Angle(NumericsToUnityVector3(vectorOne), NumericsToUnityVector3(vectorTwo));
     }
 }

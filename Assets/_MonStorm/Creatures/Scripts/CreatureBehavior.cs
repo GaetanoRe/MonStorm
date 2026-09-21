@@ -9,87 +9,112 @@ public class CreatureBehavior : MonoBehaviour
 {
     /// <summary>Invoked when the creature registers a hit, different from OnDamaged because the creature could get hit while immune, or some other restriction.</summary>
     /// <remarks>Always called first, before OnDamaged.</remarks>
-    public event Action<HitApplier, HitDetector> OnHit;
+    public event Action<HitApplierComponentConfigured, HitDetectorComponentConfigured> OnHit;
 
     /// <summary>Invoked when the creature's Health component takes damage.</summary>
-    public event Action<Health, float> OnDamaged;
+    public event Action<HealthComponentConfigured, float> OnDamaged;
 
-    public StateMachine<CreatureContext> StateMachine => stateMachine;
-    public CreatureContext CreatureContext => creatureContext;
+    [field: SerializeField] public CreatureDefinition CreatureDefinition { get; private set; }
 
-    [SerializeField] CreatureDefinition creatureDefinition;
+    public CreatureContext CreatureContext { get; private set; }
+    public StateMachine<CreatureContext> StateMachine { get; private set; }
 
     HitReceiver hitReceiver;
-    Health health;
-    ItemDropper itemDropper;
-
-    CreatureContext creatureContext;
-    StateMachine<CreatureContext> stateMachine;
+    HealthComponentConfigured health;
+    ItemDropperComponentConfigured itemDropper;
 
     IFSMAdapterAnimator adapterAnimator;
     IFSMAdapterNavMeshAgent adapterNavMeshAgent;
     IFSMAdapterLogger adapterLogger;
+    IFSMAdapterTransform adapterTransform;
+    IFSMAdapterTransform adapterTransformTarget;
+    IFSMAdapterSensorVision adapterSensorVision;
 
     bool gotHitThisFrame;
-
+    bool gotStaggeredThisFrame;
+    float staggerDamageStored;
 
     public bool ConditionGotHitThisFrame() => gotHitThisFrame;
-    public bool ConditionIsDead() => health != null && health.IsDead;
+    public bool ConditionIsDead() => health != null && health.Data.IsDead;
     public bool ConditionIsAnimationFinished() => adapterAnimator.IsAnimationFinished;
     public bool ConditionHasReachedDestination() => adapterNavMeshAgent.HasActivePath;
 
+
     void Awake()
     {
-        if (creatureDefinition == null)
+        if (CreatureDefinition == null)
         {
             Debug.LogWarning($"CreatureDefinition asset not assigned to {gameObject.name}.");
             return;
         }
 
+        Transform target = FindAnyObjectByType<MonStormCharacterController>().transform;
+
         TryGetComponent(out hitReceiver);
-        TryGetComponent(out health);
-        TryGetComponent(out itemDropper);
-        
+
+        if (TryGetComponent(out health))
+        {
+            health.Initialize(new(CreatureDefinition.MaxHealth));
+        }
+
+        if (TryGetComponent(out itemDropper))
+        {
+            itemDropper.Initialize(new(CreatureDefinition.LootTable));
+        }
+
         adapterAnimator = TryGetComponent(out Animator animator) ? new FSMAdapterAnimator(animator) : new FSMAdapterAnimatorNull();
         adapterNavMeshAgent = TryGetComponent(out NavMeshAgent navMeshAgent) ? new FSMAdapterNavMeshAgent(navMeshAgent) : new FSMAdapterNavMeshAgentNull();
         adapterLogger = new FSMAdapterLogger();
+        adapterTransform = new FSMAdapterTransform(transform);
+        adapterTransformTarget = target != null ? new FSMAdapterTransform(target) : new FSMAdapterTransformNull();
+        adapterSensorVision = new FSMAdapterSensorVision(adapterTransform, adapterTransformTarget, CreatureDefinition.VisionRadius, CreatureDefinition.VisionMaxAngle);
 
-        creatureContext = new(null, adapterAnimator, adapterNavMeshAgent, new FSMAdapterTransform(transform), adapterLogger, new FSMAdapterTransform(FindAnyObjectByType<MonStormCharacterController>().transform));
-        stateMachine = creatureDefinition.BuildStateMachine(creatureContext, this);
+        CreatureContext = new(null, adapterAnimator, adapterNavMeshAgent, new FSMAdapterTransform(transform), adapterLogger, new FSMAdapterTransform(FindAnyObjectByType<MonStormCharacterController>().transform), adapterSensorVision);
+        StateMachine = CreatureDefinition.BuildStateMachine(CreatureContext, this);
     }
 
     void OnEnable()
     {
         if (hitReceiver != null) hitReceiver.OnHit += HandleHit;
 
-        if (health != null) health.OnDeath += HandleDeath;
+        if (health != null) health.Data.OnDeath += HandleDeath;
     }
 
     void OnDisable()
     {
         if (hitReceiver != null) hitReceiver.OnHit -= HandleHit;
 
-        if (health != null) health.OnDeath -= HandleDeath;
+        if (health != null) health.Data.OnDeath -= HandleDeath;
     }
 
     void Update()
     {
-        stateMachine.Tick(Time.deltaTime);
+        CreatureContext.UpdateContextValues(gotHitThisFrame, gotStaggeredThisFrame, health != null && health.Data.IsDead);
+        StateMachine.Tick(Time.deltaTime);
 
         gotHitThisFrame = false;
+        gotStaggeredThisFrame = false;
     }
 
-    void HandleHit(HitApplier applier, HitDetector detector)
+    void HandleHit(HitApplierComponentConfigured applier, HitDetectorComponentConfigured detector)
     {
         gotHitThisFrame = true;
         OnHit?.Invoke(applier, detector);
 
         if (health == null) return;
 
-        if (health.IsDead) return; // Hit can still occur after the Health has died and the gameobject hasn't been destroyed, hence this guard
+        if (health.Data.IsDead) return; // Hit can still occur after the Health has died and the gameobject hasn't been destroyed, hence this guard
 
-        float damageDealt = DamageCalculator.Resolve(applier.Damage, detector.DamageMultiplier);
-        health.Damage(damageDealt);
+        float damageDealt = DamageCalculator.Resolve(applier.Data.Damage, detector.Data.DamageMultiplier);
+
+        staggerDamageStored += damageDealt;
+        if (staggerDamageStored >= CreatureDefinition.StaggerDamageThreshold)
+        {
+            staggerDamageStored = 0f;
+            gotStaggeredThisFrame = true;
+        }
+
+        health.Data.Damage(damageDealt);
         OnDamaged?.Invoke(health, damageDealt);
     }
 

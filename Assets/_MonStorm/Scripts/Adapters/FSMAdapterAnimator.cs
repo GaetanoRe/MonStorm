@@ -3,6 +3,7 @@ using MonStorm.Core.StateMachine;
 
 namespace MonStorm.Adapters
 {
+    /// <inheritdoc/>
     public class FSMAdapterAnimator : IFSMAdapterAnimator
     {
         public bool IsAnimationFinished => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !animator.IsInTransition(0);

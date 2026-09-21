@@ -1,8 +1,9 @@
 {
     "name": "Adapters",
-    "rootNamespace": "MonStorm.Core",
+    "rootNamespace": "MonStorm.Adapters",
     "references": [
-        "GUID:86cfc92dd79bc140b9f1e7fd9778ec2f"
+        "GUID:86cfc92dd79bc140b9f1e7fd9778ec2f",
+        "GUID:05212e0d653412848b246d68f83b32de"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -2111,8 +2111,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6452851674762282599}
-  - component: {fileID: 2356083552880123081}
   - component: {fileID: 3324117298022012431}
+  - component: {fileID: 5006760227193259986}
+  - component: {fileID: 9009263168508519135}
   m_Layer: 0
   m_Name: Hit Applier (Weapon)
   m_TagString: Untagged
@@ -2136,19 +2137,6 @@ Transform:
   - {fileID: 6930789240388508467}
   m_Father: {fileID: 944556857870056528}
   m_LocalEulerAnglesHint: {x: 0.22, y: -14.838, z: 98.453}
---- !u!114 &2356083552880123081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2376432145778667243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2a9ea1dae469d4ea0ef72a44f203c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitApplier
-  <Damage>k__BackingField: 50
 --- !u!65 &3324117298022012431
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2170,6 +2158,32 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5006760227193259986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2376432145778667243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19272a8bd5b23964b848b3499a96f813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitApplierComponentConfigured
+--- !u!114 &9009263168508519135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2376432145778667243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded0b13a703d8209882a1a3a9d4e0fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitApplierVisual
+  hitApplier: {fileID: 5006760227193259986}
+  meshRenderer: {fileID: 5289719348649077989}
 --- !u!1 &2418629595899736084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,7 +2295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6817531563991821872}
-  - component: {fileID: 8145404504472941130}
+  - component: {fileID: 8186508106266732739}
   - component: {fileID: 2537945034623038134}
   m_Layer: 0
   m_Name: Body
@@ -2305,7 +2319,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5787562640345262396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8145404504472941130
+--- !u!114 &8186508106266732739
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2314,10 +2328,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2535483511737777402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa48d51698759f74092f19302f51215f, type: 3}
+  m_Script: {fileID: 11500000, guid: e8d7aea0e15882240b2bf78c9b9d931e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitDetector
-  <DamageMultiplier>k__BackingField: 1
+  m_EditorClassIdentifier: Assembly-CSharp::HitDetectorComponentStandalone
+  damageMultiplier: 1
 --- !u!65 &2537945034623038134
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3699,9 +3713,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4060834700632211166}
+  - component: {fileID: 3140235776957704986}
   - component: {fileID: 5522115553352560050}
-  - component: {fileID: 7713395418069682710}
-  - component: {fileID: -8132281523312442769}
   - component: {fileID: 5535926596780791933}
   - component: {fileID: 7390463332031003472}
   - component: {fileID: 8139572176838623216}
@@ -3737,6 +3750,18 @@ Transform:
   - {fileID: 6266845615959660761}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3140235776957704986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811900067158531104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca5d79bfa0850340abbd72ecb6513fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponentConfigured
 --- !u!114 &5522115553352560050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3754,45 +3779,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   pickupRange: 3
---- !u!114 &7713395418069682710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4811900067158531104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82ca73147ba596843b3a469b9742bd51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDropper
-  items:
-  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
-    minAmount: 1
-    maxAmount: 1
-    percentChance: 1
-  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
-    minAmount: 1
-    maxAmount: 1
-    percentChance: 1
-  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
-    minAmount: 1
-    maxAmount: 1
-    percentChance: 1
---- !u!114 &-8132281523312442769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4811900067158531104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e99b9849c6c165046863933ed7167921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 100
-  isMaxHealthChangeable: 1
 --- !u!114 &5535926596780791933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3810,7 +3796,7 @@ MonoBehaviour:
   rotationSpeed: 720
   gravity: -9.81
   _equippedWeapon: {fileID: 11400000, guid: 35a4ff18ec7540f73a527e7f7ee4f1cb, type: 2}
-  weapon: {fileID: 2356083552880123081}
+  weapon: {fileID: 5006760227193259986}
   _lockOnRadius: 0
   _enemyLayer:
     serializedVersion: 2
@@ -3999,6 +3985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abaecaa236d7ef969b3fd811b2951e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  hitApplier: {fileID: 5006760227193259986}
+  healthBar: {fileID: 0}
 --- !u!114 &8477860770400140179
 MonoBehaviour:
   m_ObjectHideFlags: 0

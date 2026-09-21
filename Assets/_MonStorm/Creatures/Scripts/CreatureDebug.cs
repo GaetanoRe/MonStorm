@@ -36,18 +36,18 @@ public class CreatureDebug : MonoBehaviour
         creatureBehavior.StateMachine.OnStateChanged -= LogStateTransition;
     }
 
-    void LogHit(HitApplier applier, HitDetector detector)
+    void LogHit(HitApplierComponentConfigured applier, HitDetectorComponentConfigured detector)
     {
         if (!logOnBeingHit) return;
 
         Debug.Log($"{detector.gameObject} got hit by {applier.gameObject}.");
     }
 
-    void LogDamaged(Health health, float damageDealt)
+    void LogDamaged(HealthComponentConfigured health, float damageDealt)
     {
         if (!logOnDamageTaken) return;
 
-        Debug.Log($"{health.gameObject} got damaged.\nDamage dealt: {damageDealt}, remaining health: {health.CurrentHealth}.");
+        Debug.Log($"{health.gameObject} got damaged.\nDamage dealt: {damageDealt}, remaining health: {health.Data.Current}.");
     }
 
     void LogStateTransition(IState<CreatureContext> stateFrom, IState<CreatureContext> stateTo)

@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07dab974d2ff4154f905c4c6e2bd5438, type: 3}
   m_Name: Stag Common Definition
   m_EditorClassIdentifier: Assembly-CSharp::SkittishCreatureDefinition
-  creatureName: Common Stag
-  prefab: {fileID: 1991521497733807413, guid: 0b880c838f3d551459e19679001abb85, type: 3}
-  lootDropTableItems:
-  - data: {fileID: 11400000, guid: db0a29804db13f348ab7f6c276037ea4, type: 2}
-    minAmount: 1
-    maxAmount: 1
-    percentChance: 1
+  <CreatureName>k__BackingField: Stag
+  <MaxHealth>k__BackingField: 150
+  <StaggerDamageThreshold>k__BackingField: 50
+  <VisionRadius>k__BackingField: 11
+  <VisionMaxAngle>k__BackingField: 90
+  <LootTable>k__BackingField:
   - data: {fileID: 11400000, guid: 643bd5b9d126172468f339c97467c475, type: 2}
     minAmount: 1
     maxAmount: 2
-    percentChance: 1
+    chance: 1
   <WalkSpeed>k__BackingField: 3.5
   <RunSpeed>k__BackingField: 6
   <IdleDuration>k__BackingField: 6

@@ -42,6 +42,8 @@ namespace MonStorm.Core.Player
         // Player timers
         public float damagedTimer = 0.667f;
         public float attackTimer = 0.667f;
+        public float sheatheTimer = 0.75f;
+        public float unsheatheTimer = 0.25f;
         
 
         // Inputs
@@ -85,6 +87,7 @@ namespace MonStorm.Core.Player
         public bool attackPressed;
         public bool isSprinting;
         public bool sprintHeld;
+        public bool isWeaponWielding;
         public float attackCoolDown;
         public float dodgeCoolDown;
         public Vector3 velocity;

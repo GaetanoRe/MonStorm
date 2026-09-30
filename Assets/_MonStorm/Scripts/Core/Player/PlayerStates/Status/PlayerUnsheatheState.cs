@@ -34,6 +34,7 @@ namespace MonStorm.Core.Player
 		public override void Exit(PlayerContext context)
 		{
             context.isWeaponWielding = true;
+            context.isWeaponSheathed = false;
             context.sheatheTimer = 0.75f; //This is so the timer returns to normal to sheathe again, no info on where the variable would be when it comes to sheathing
         }
     }

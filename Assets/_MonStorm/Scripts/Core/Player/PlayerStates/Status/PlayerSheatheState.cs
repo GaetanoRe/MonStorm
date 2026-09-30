@@ -18,6 +18,7 @@ namespace MonStorm.Core.Player
         public override void Enter(PlayerContext context)
         {
             base.Enter(context);
+            //Stays still when sheathing
             context.velocity.X = 0;
             context.velocity.Z = 0;
 
@@ -34,6 +35,7 @@ namespace MonStorm.Core.Player
         public override void Exit(PlayerContext context)
         {
             context.isWeaponWielding = false;
+            context.isWeaponSheathed = false;
             context.sheatheTimer = 0.25f; //This is so the timer returns to normal to sheathe again, no info on where the variable would be when it comes to sheathing
         }
     }

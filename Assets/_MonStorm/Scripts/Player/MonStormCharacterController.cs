@@ -166,8 +166,23 @@ public class MonStormCharacterController : MonoBehaviour
     {
         if (m_inputActions.Player.Interact.WasPressedThisFrame())
             Debug.Log("Pressed Interact");
-        if (m_inputActions.Player.SpecialAction.WasPressedThisFrame())
+        if (m_inputActions.Player.SpecialAction.WasPressedThisFrame()) 
+        {
             Debug.Log("Pressed Special Action");
+            if (!m_playerContext.isWeaponWielding) //Must be wielding the weapon in order to use the special action. Otherwise must sheathe to use the special action
+            {
+                m_playerContext.isWeaponSheathed = true;
+                Debug.Log("Needs to Wield weapon first");
+            }
+        }
+        if (m_inputActions.Player.Sprint.WasPressedThisFrame())
+        {
+            if(m_playerContext.isWeaponWielding) //Must not be wielding the weapon in order to sprint. Otherwise must sheathe first.
+            {
+                m_playerContext.isWeaponSheathed = true;
+                Debug.Log("Needs to Unwield weapon first");
+            }
+        }
         if (m_inputActions.Player.CenterCamera.WasPressedThisFrame())
         {
             Transform target = FindNearestTarget();

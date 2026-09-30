@@ -7,7 +7,8 @@ namespace MonStorm.Core.Player
         protected override void SetupTransitions(PlayerContext context)
         {
             transitionManager.Initialize(
-                new StateTransition<PlayerContext>(new PlayerIdleState(), () => context.damagedTimer <= 0),
+                new StateTransition<PlayerContext>(new PlayerIdleState(), () => context.damagedTimer <= 0 && !context.isWeaponWielding), //Needs to know if the player isn't holding a weapon to return to the suitable sheathe state
+                new StateTransition<PlayerContext>(new PlayerWeaponIdleState(), () => context.damagedTimer <= 0 && context.isWeaponWielding), //Needs to know if the player is holding a weapon to return to the suitable unsheathe state
                 new StateTransition<PlayerContext>(new PlayerDefeatedState(), () => context.isDead)
             );
         }

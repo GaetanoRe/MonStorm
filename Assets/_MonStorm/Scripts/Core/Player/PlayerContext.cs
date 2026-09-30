@@ -87,7 +87,7 @@ namespace MonStorm.Core.Player
         public bool attackPressed;
         public bool isSprinting;
         public bool sprintHeld;
-        public bool isWeaponWielding;
+        public bool isWeaponWielding = false;
         public float attackCoolDown;
         public float dodgeCoolDown;
         public Vector3 velocity;

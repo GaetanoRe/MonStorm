@@ -1,4 +1,5 @@
 using MonStorm.Core.StateMachine;
+using System.Numerics;
 
 namespace MonStorm.Core.Player
 {
@@ -7,11 +8,10 @@ namespace MonStorm.Core.Player
         protected override void SetupTransitions(PlayerContext context)
         {
             transitionManager.Initialize(
-                 new StateTransition<PlayerContext>(new PlayerDamagedState(), () => context.isHit) //Just putting this here in order to prevent null errors, this will include PlayerWeaponIdleState
-
-
-
-
+                 new StateTransition<PlayerContext>(new PlayerDamagedState(), () => context.isHit), //Just putting this here in order to prevent null errors, this will include PlayerWeaponIdleState
+                 new StateTransition<PlayerContext>(new PlayerWeaponIdleState(), () => context.moveInput == Vector2.Zero),
+                 new StateTransition<PlayerContext>(new PlayerWeaponDodgeState(), () => context.dodgePressed && context.dodgeCoolDown <= 0 && context.moveInput != Vector2.Zero),
+                 new StateTransition<PlayerContext>(new PlayerSheatheState(), () => (context.moveInput != Vector2.Zero && context.isSprinting) || context.isWeaponSheathed) //Needs to identify if the player wants to sprint, which therefore is determined if the player wants to sheathe
                 );
 
         }

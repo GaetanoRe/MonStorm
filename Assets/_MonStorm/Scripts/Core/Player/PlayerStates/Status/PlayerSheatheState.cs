@@ -36,7 +36,8 @@ namespace MonStorm.Core.Player
         {
             context.isWeaponWielding = false;
             context.isWeaponSheathed = false;
-            context.sheatheTimer = 0.25f; //This is so the timer returns to normal to sheathe again, no info on where the variable would be when it comes to sheathing
+            context.moveSpeed = 3; //For now whenever the player is sheathe it will be the same as the walkspeed (I cannot reference the constant float variable for some odd reason despite being a public variable.)
+            context.sheatheTimer = 1.25f; //This is so the timer returns to normal to sheathe again, no info on where the variable would be when it comes to sheathing
         }
     }
 }

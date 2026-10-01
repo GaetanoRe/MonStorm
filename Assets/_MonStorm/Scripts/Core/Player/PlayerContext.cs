@@ -42,8 +42,8 @@ namespace MonStorm.Core.Player
         // Player timers
         public float damagedTimer = 0.667f;
         public float attackTimer = 0.667f;
-        public float sheatheTimer = 0.75f;
-        public float unsheatheTimer = 0.25f;
+        public float sheatheTimer = 1.25f;
+        public float unsheatheTimer = 1.75f;
         
 
         // Inputs

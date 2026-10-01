@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace MonStorm.Core.Player
 {
-    public class PlayerWeaponDodgeState : PlayerBaseState
+    public class PlayerWeaponDodgeState : PlayerDodgeState
     {
         protected override void SetupTransitions(PlayerContext context)
         {
@@ -18,20 +18,20 @@ namespace MonStorm.Core.Player
         }
 
 
-        public override void Enter(PlayerContext context)
-        {
-            base.Enter(context);
-        }
+        //public override void Enter(PlayerContext context)
+        //{
+        //    base.Enter(context);
+        //}
 
 
-        public override void Tick(PlayerContext context, float deltaTime)
-        {
-            base.Tick(context, deltaTime);
-        }
+        //public override void Tick(PlayerContext context, float deltaTime)
+        //{
+        //    base.Tick(context, deltaTime);
+        //}
 
 
-        public override void Exit(PlayerContext context)
-        {
-        }
+        //public override void Exit(PlayerContext context)
+        //{
+        //}
     }
 }

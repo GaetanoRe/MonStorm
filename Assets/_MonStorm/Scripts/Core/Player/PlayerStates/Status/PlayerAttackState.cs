@@ -10,7 +10,7 @@ namespace MonStorm.Core.Player
         {
             transitionManager.Initialize(
                 new StateTransition<PlayerContext>(new PlayerDamagedState(), () => context.isHit),
-                new StateTransition<PlayerContext>(new PlayerIdleState(), () => context.attackTimer <= 0),
+                new StateTransition<PlayerContext>(new PlayerWeaponIdleState(), () => context.attackTimer <= 0),
                 new StateTransition<PlayerContext>(new PlayerAttackState(), () => context.chainInput != ActionInput.None)
             );
         }
